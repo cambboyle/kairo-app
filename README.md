@@ -11,6 +11,15 @@ combining a smart timer with lightweight post-session reflections.
 
 ****
 
+## About the Project
+
+Kairo isn't just a timer — it's a tool to build *awareness* around how you work and how you feel during focused effort.  
+The goal is to help people build intentional habits, not just squeeze out more productivity.
+
+This project is also a personal challenge: building and scaling a full-stack app from scratch using the skills I'm learning as a web developer.
+
+****
+
 ## Table of Contents
 
 - [Installation](#installation)
@@ -58,6 +67,35 @@ combining a smart timer with lightweight post-session reflections.
 - Post-session reflections.
 - Local persistence or MongoDB
 - Switch between Focus, Short Break or Long Break timers
+
+****
+
+## Roadmap
+
+### Short-Term Goals
+- [ ] Basic timer with session types
+- [ ] Post-session reflections
+- [ ] LocalStorage persistence
+- [ ] Minimal mobile-friendly design
+
+### Long-Term Goals
+- [ ] User accounts and MongoDB integration
+- [ ] Reflection tagging (emotions, themes)
+- [ ] Productivity analytics dashboard (basic)
+- [ ] Dark/light mode toggle
+- [ ] Shareable reflection exports
+- [ ] Chrome extension or mobile app
+- [ ] Account setup for deeper analytics and other goodies
+
+****
+
+## Tech Stack
+
+- **Frontend:** Vanilla JavaScript, HTML5, CSS3
+- **Build Tool:** Vite
+- **Backend:** Node.js, MongoDB (planned)
+- **Tooling:** ESLint, Prettier, Husky, Commitlint, Jest
+- **Deployment:** Vercel
 
 ****
 
