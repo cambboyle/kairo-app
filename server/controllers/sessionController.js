@@ -13,7 +13,7 @@ const createSession = async (req, res) => {
   console.log('Received POST /api/sessions:', req.body)
   const { duration, type, reflection, startedAt, endedAt } = req.body
 
-  if (!duration || !type || !startedAt || !endedAt) {
+  if (!duration || duration <= 0 || !type || !startedAt || !endedAt) {
     return res.status(400).json({ message: 'Missing required fields' })
   }
 

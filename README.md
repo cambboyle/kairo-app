@@ -107,6 +107,13 @@ This project is also a personal challenge: building and scaling a full-stack app
 
 ---
 
+## Troubleshooting
+
+- If you see "Database connection failed", check your `.env` file and MongoDB status.
+- If you get CORS errors, make sure the Vite proxy is set up and both servers are running.
+
+---
+
 ## License
 
 This project is licensed under the MIT License
