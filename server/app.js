@@ -1,23 +1,25 @@
-const express = require("express");
-const dotenv = require("dotenv");
+const express = require('express')
+const dotenv = require('dotenv')
 
 // Load environment variables
-dotenv.config();
+dotenv.config()
 
 // Initialize app
-const app = express();
+const app = express()
 
 // Middleware
-app.use(express.json());
+app.use(express.json())
 
 // Routes
-const userRoutes = require("./routes/userRoutes");
-app.use("/api/users", userRoutes);
+const userRoutes = require('./routes/userRoutes')
+app.use('/api/users', userRoutes)
+const sessionRoutes = require('./routes/sessionRoutes')
+app.use('/api/sessions', sessionRoutes)
 
 // Handle 404 errors
 app.use((req, res) => {
-  res.status(404).json({ message: "Route not found" });
-});
+  res.status(404).json({ message: 'Route not found' })
+})
 
 // Export the app instance
-module.exports = app;
+module.exports = app
