@@ -10,7 +10,7 @@ const sessionSchema = new mongoose.Schema(
     },
     reflection: { type: String },
     startedAt: { type: Date, required: true },
-    EndedAt: { type: Date, required: true },
+    endedAt: { type: Date, required: true },
   },
   { timestamps: true },
 )

@@ -2,7 +2,7 @@ const express = require('express')
 const {
   getSessions,
   createSession,
-} = require('../controller/sessionController')
+} = require('../controllers/sessionController')
 
 const router = express.Router()
 
