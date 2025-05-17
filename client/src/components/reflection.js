@@ -42,6 +42,9 @@ export function renderReflection(container) {
       await saveSession(sessionData)
       message.textContent = 'Session saved!'
       form.reset()
+      setTimeout(() => {
+        container.style.display = 'none'
+      }, 1000)
     } catch (err) {
       message.textContent = 'Failed to save session.'
     }
