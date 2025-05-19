@@ -1,4 +1,70 @@
-export function startTimer() {}
+export function startTimer(container) {
+  let isTimerActive = false
+  let timeLeft = 0
+  let timerInterval
+  let startTime = null
+  let endTime = null
+  let intervalId = null
+
+  function formatTime(secs) {
+    const minutes = String(Math.floor(secs / 60)).padStart(2, '0')
+    const seconds = String(secs % 60).padStart(2, '0')
+    return `${minutes}:${seconds}`
+  }
+
+  function showStartButton() {
+    container.innerHTML = `<button id="start-timer-btn">Start Timer</button>`
+    document.getElementById('start-timer-btn').onclick = () => {
+      console.log('This works')
+      showTimerPopup()
+    }
+  }
+
+  function showTimerPopup() {
+    container.innerHTML = `
+    <div class="modal"><label>Duration (minutes): <input id=timer-minutes type="number" min="1" value="25"></label><br>
+    <button id="popup-start">Start</button>`
+    document.getElementById('popup-start').onclick = () => {
+      const mins = parseInt(document.getElementById('timer-minutes').value, 10)
+      if (isNaN(mins) || mins < 1) {
+        alert('Please enter a duration of at least 1 minutes.')
+        return
+      }
+      startCountdown()
+    }
+  }
+
+  function startCountdown() {
+    const mins = parseInt(document.getElementById('timer-minutes').value, 10)
+    isTimerActive = true
+    startTime = new Date()
+    timeLeft = mins * 60
+    showTimerDisplay()
+    intervalId = setInterval(() => {
+      timeLeft--
+      updateTimerDisplay()
+      if (timeLeft <= 0) {
+        clearInterval(intervalId)
+        isTimerActive = false
+        endTime = new Date()
+      }
+    })
+  }
+
+  function showTimerDisplay() {
+    container.innerHTML = `
+    <div>
+        <h2>Timer</h2>
+        <div id="timer-countdown">${formatTime(timeLeft)}</div>
+    </div>`
+  }
+
+  function updateTimerDisplay() {
+    const el = document.getElementById('timer-countdown')
+    if (el) el.textContent = formatTime(timeLeft)
+  }
+  showStartButton()
+}
 
 // 1. On page load, create and display a "Start Timer" button
 
