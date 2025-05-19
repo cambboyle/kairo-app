@@ -1,8 +1,8 @@
 const express = require('express')
-const dotenv = require('dotenv')
+const { config } = require('dotenv')
 
 // Load environment variables
-dotenv.config()
+config()
 
 // Initialize app
 const app = express()
@@ -11,10 +11,8 @@ const app = express()
 app.use(express.json())
 
 // Routes
-const userRoutes = require('./routes/userRoutes')
-app.use('/api/users', userRoutes)
-const sessionRoutes = require('./routes/sessionRoutes')
-app.use('/api/sessions', sessionRoutes)
+// const userRoutes = require('./routes/userRoutes')
+// app.use('/api/users', userRoutes)
 
 // Handle 404 errors
 app.use((req, res) => {
