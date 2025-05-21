@@ -1,10 +1,12 @@
 export function startTimer(container) {
   let isTimerActive = false
   let timeLeft = 0
+  let timerType
   let timerInterval
   let startTime = null
   let endTime = null
   let intervalId = null
+  let isTimerPaused
 
   function formatTime(secs) {
     const minutes = String(Math.floor(secs / 60)).padStart(2, '0')
@@ -14,16 +16,26 @@ export function startTimer(container) {
 
   function showStartButton() {
     container.innerHTML = `<button id="start-timer-btn">Start Timer</button>`
-    document.getElementById('start-timer-btn').onclick = () => {
-      console.log('This works')
-      showTimerPopup()
-    }
+    document.getElementById('start-timer-btn').onclick = showTimerPopup
   }
 
   function showTimerPopup() {
     container.innerHTML = `
-    <div class="modal"><label>Duration (minutes): <input id=timer-minutes type="number" min="1" value="25"></label><br>
-    <button id="popup-start">Start</button>`
+    <div class="modal">
+      <label>Duration (minutes): <input id=timer-minutes type="number" min="1" value="25"></label><br>
+      <label>Timer Mode:
+        <select id="timer-type">
+          <option>Deep Work</option>
+          <option>Shallow Work</option>
+          <option>Short Break</option>
+          <option>Long Break</option>
+        </select>
+      </label>
+      <div>
+        <button id="popup-start">Start</button>
+        <button id="popup-cancel">Cancel</button>
+      </div>
+    </div>`
     document.getElementById('popup-start').onclick = () => {
       const mins = parseInt(document.getElementById('timer-minutes').value, 10)
       if (isNaN(mins) || mins < 1) {
@@ -32,13 +44,17 @@ export function startTimer(container) {
       }
       startCountdown()
     }
+    document.getElementById('popup-cancel').onclick = () => {
+      showStartButton()
+    }
   }
 
   function startCountdown() {
     const mins = parseInt(document.getElementById('timer-minutes').value, 10)
+    timerType = document.getElementById('timer-type').value
+    timeLeft = mins * 60
     isTimerActive = true
     startTime = new Date()
-    timeLeft = mins * 60
     showTimerDisplay()
     intervalId = setInterval(() => {
       timeLeft--
@@ -48,15 +64,50 @@ export function startTimer(container) {
         isTimerActive = false
         endTime = new Date()
       }
-    })
+    }, 1000)
   }
 
   function showTimerDisplay() {
     container.innerHTML = `
-    <div>
-        <h2>Timer</h2>
-        <div id="timer-countdown">${formatTime(timeLeft)}</div>
-    </div>`
+      <div>
+        <div class="timer-circle">
+          <div id="timer-mode">${timerType}</div>
+          <div id="timer-countdown">${formatTime(timeLeft)}</div>
+        </div>
+          <div class="timer-buttons">
+            <button id="timer-status">${isTimerActive ? 'Pause' : 'Resume'} Timer</button>
+            <button id="timer-cancel">Cancel Timer</button>
+          </div>
+      </div>`
+    document.getElementById('timer-status').onclick = togglePauseTimer
+    document.getElementById('timer-cancel').onclick = cancelTimer
+  }
+
+  function togglePauseTimer() {
+    if (isTimerActive) {
+      clearInterval(intervalId)
+      isTimerActive = false
+      showTimerDisplay()
+    } else {
+      isTimerActive = true
+      intervalId = setInterval(() => {
+        timeLeft--
+        updateTimerDisplay()
+        if (timeLeft <= 0) {
+          clearInterval(intervalId)
+          isTimerActive = false
+          endedAt = new Date()
+          showReflectionPrompt()
+        }
+      }, 1000)
+      showTimerDisplay()
+    }
+  }
+
+  function cancelTimer() {
+    clearInterval(intervalId)
+    isTimerActive = false
+    showStartButton()
   }
 
   function updateTimerDisplay() {
@@ -65,7 +116,6 @@ export function startTimer(container) {
   }
   showStartButton()
 }
-
 // 1. On page load, create and display a "Start Timer" button
 
 // 2. When "Start Timer" is clicked:
