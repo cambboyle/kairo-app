@@ -119,3 +119,17 @@ button:focus-visible {
   font-weight: bold;
   color: #333;
 }
+
+#timer {
+  padding-bottom: 25px;
+}
+
+.history-list {
+  list-style-type: none;
+}
+
+.history-item {
+  border: 2px solid black;
+  border-radius: 0.75rem;
+  margin: 1rem 0;
+}

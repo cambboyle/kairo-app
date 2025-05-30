@@ -11,8 +11,8 @@ const app = express()
 app.use(express.json())
 
 // Routes
-// const userRoutes = require('./routes/userRoutes')
-// app.use('/api/users', userRoutes)
+const sessionRoutes = require('./routes/sessionRoutes')
+app.use('/api/sessions', sessionRoutes)
 
 // Handle 404 errors
 app.use((req, res) => {

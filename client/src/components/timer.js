@@ -1,3 +1,6 @@
+import { saveSession } from '../utils/saveSession'
+import { sessionHistory } from './history'
+
 export function startTimer(container) {
   let isTimerActive = false
   let timeLeft = 0
@@ -7,6 +10,7 @@ export function startTimer(container) {
   let endTime = null
   let intervalId = null
   let isTimerPaused
+  let isEnded = false
 
   function formatTime(secs) {
     const minutes = String(Math.floor(secs / 60)).padStart(2, '0')
@@ -42,6 +46,7 @@ export function startTimer(container) {
         alert('Please enter a duration of at least 1 minutes.')
         return
       }
+      isEnded = false
       startCountdown()
     }
     document.getElementById('popup-cancel').onclick = () => {
@@ -62,7 +67,9 @@ export function startTimer(container) {
       if (timeLeft <= 0) {
         clearInterval(intervalId)
         isTimerActive = false
+        isEnded = true
         endTime = new Date()
+        showRefectionModal()
       }
     }, 1000)
   }
@@ -114,6 +121,46 @@ export function startTimer(container) {
     const el = document.getElementById('timer-countdown')
     if (el) el.textContent = formatTime(timeLeft)
   }
+
+  function showRefectionModal() {
+    if (isEnded) {
+      container.innerHTML = `
+      <div id="reflectionModal">
+        <h3>How did this session go?</h3>
+        <input type="text" placeholder="write your reflection here..." id="reflection-text">
+        <button id="saveButton" type="button">Save session</button>
+        <button id="dontSaveButton" type="button">Don't save session</button>
+      </div>
+      `
+      document.getElementById('saveButton').onclick = saveCurrentSession
+      document.getElementById('dontSaveButton').onclick = showStartButton
+    }
+  }
+
+  async function saveCurrentSession() {
+    console.log('Session saved')
+    const reflection = document.getElementById('reflection-text').value
+    const sessionData = {
+      duration: Math.max(1, Math.round((endTime - startTime) / 60000)),
+      type: timerType,
+      reflection,
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString(),
+    }
+    console.log('Saving session:', sessionData)
+    try {
+      await saveSession(sessionData)
+      showStartButton()
+      const historyContainer = document.getElementById('history')
+      if (sessionHistory.showHistory && historyContainer) {
+        sessionHistory.showHistory.call(null, historyContainer)
+      }
+    } catch (err) {
+      container.innerHTML = `<div>Error saving session.</div>`
+      setTimeout(showStartButton, 2000)
+    }
+  }
+
   showStartButton()
 }
 // 1. On page load, create and display a "Start Timer" button
