@@ -17,4 +17,14 @@ router.get('/', async (req, res) => {
   res.json(sessions)
 })
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await Session.findByIdAndDelete(req.params.id)
+    if (!deleted) return res.status(404).json({ message: 'Session not found' })
+    res.json({ message: 'Session deleted' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 module.exports = router

@@ -1,6 +1,24 @@
 import { saveSession } from '../utils/saveSession'
 import { sessionHistory } from './history'
 
+export function setupThemeToggle() {
+  const btn = document.querySelector('.theme-toggle')
+  if (!btn) return
+  btn.onclick = () => {
+    const isLight = document.body.getAttribute('data-theme') === 'light'
+    document.body.setAttribute('data-theme', isLight ? '' : 'light')
+    btn.setAttribute('aria-pressed', String(!isLight))
+    btn.title = isLight ? 'Switch to light mode' : 'Switch to dark mode'
+  }
+}
+
+export function setTimerProgress(percent) {
+  const circle = document.querySelector('.timer-circle')
+  if (circle) {
+    circle.style.setProperty('--progress', percent)
+  }
+}
+
 export function startTimer(container) {
   let isTimerActive = false
   let timeLeft = 0
@@ -74,18 +92,30 @@ export function startTimer(container) {
     }, 1000)
   }
 
+  // Modify showTimerDisplay to include the progress ring
   function showTimerDisplay() {
+    const percent =
+      (timeLeft /
+        (timerType && timerType !== ''
+          ? parseInt(
+              document.getElementById('timer-minutes')?.value || 25,
+              10,
+            ) * 60
+          : 1500)) *
+        100 || 0
     container.innerHTML = `
       <div>
         <div class="timer-circle">
+          <div class="timer-progress"></div>
           <div id="timer-mode">${timerType}</div>
           <div id="timer-countdown">${formatTime(timeLeft)}</div>
         </div>
-          <div class="timer-buttons">
-            <button id="timer-status">${isTimerActive ? 'Pause' : 'Resume'} Timer</button>
-            <button id="timer-cancel">Cancel Timer</button>
-          </div>
+        <div class="timer-buttons">
+          <button id="timer-status">${isTimerActive ? 'Pause' : 'Resume'} Timer</button>
+          <button id="timer-cancel">Cancel Timer</button>
+        </div>
       </div>`
+    setTimerProgress(percent)
     document.getElementById('timer-status').onclick = togglePauseTimer
     document.getElementById('timer-cancel').onclick = cancelTimer
   }
@@ -103,8 +133,9 @@ export function startTimer(container) {
         if (timeLeft <= 0) {
           clearInterval(intervalId)
           isTimerActive = false
-          endedAt = new Date()
-          showReflectionPrompt()
+          isEnded = true
+          endTime = new Date()
+          showRefectionModal()
         }
       }, 1000)
       showTimerDisplay()
@@ -124,10 +155,13 @@ export function startTimer(container) {
 
   function showRefectionModal() {
     if (isEnded) {
+      // Inject modal CSS if not present
+      injectReflectionModalStyles()
       container.innerHTML = `
-      <div id="reflectionModal">
+      <div id="reflectionModal" class="reflection-modal">
         <h3>How did this session go?</h3>
         <input type="text" placeholder="write your reflection here..." id="reflection-text">
+        <div id="reflection-feedback" style="min-height:1.5em;"></div>
         <button id="saveButton" type="button">Save session</button>
         <button id="dontSaveButton" type="button">Don't save session</button>
       </div>
@@ -138,7 +172,11 @@ export function startTimer(container) {
   }
 
   async function saveCurrentSession() {
-    console.log('Session saved')
+    const saveBtn = document.getElementById('saveButton')
+    const feedback = document.getElementById('reflection-feedback')
+    saveBtn.disabled = true
+    saveBtn.textContent = 'Saving...'
+    feedback.textContent = ''
     const reflection = document.getElementById('reflection-text').value
     const sessionData = {
       duration: Math.max(1, Math.round((endTime - startTime) / 60000)),
@@ -147,22 +185,67 @@ export function startTimer(container) {
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString(),
     }
-    console.log('Saving session:', sessionData)
     try {
       await saveSession(sessionData)
-      showStartButton()
-      const historyContainer = document.getElementById('history')
-      if (sessionHistory.showHistory && historyContainer) {
-        sessionHistory.showHistory.call(null, historyContainer)
-      }
+      feedback.textContent = 'Session saved!'
+      feedback.style.color = 'green'
+      setTimeout(() => {
+        showStartButton()
+        const historyContainer = document.getElementById('history')
+        if (sessionHistory.showHistory && historyContainer) {
+          sessionHistory.showHistory.call(null, historyContainer)
+        }
+      }, 1000)
     } catch (err) {
-      container.innerHTML = `<div>Error saving session.</div>`
-      setTimeout(showStartButton, 2000)
+      feedback.textContent = 'Error saving session.'
+      feedback.style.color = 'red'
+      saveBtn.disabled = false
+      saveBtn.textContent = 'Save session'
     }
+  }
+
+  function injectReflectionModalStyles() {
+    if (document.getElementById('reflection-modal-style')) return
+    const style = document.createElement('style')
+    style.id = 'reflection-modal-style'
+    style.textContent = `
+      .reflection-modal {
+        background: #fff;
+        color: #222;
+        border-radius: 12px;
+        box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+        max-width: 350px;
+        margin: 80px auto;
+        padding: 2em 1.5em 1.5em 1.5em;
+        position: relative;
+        z-index: 1001;
+        text-align: center;
+      }
+      #reflectionModal input[type="text"] {
+        width: 90%;
+        padding: 0.5em;
+        margin-bottom: 1em;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+      }
+      #reflectionModal button {
+        margin: 0.5em 0.5em 0 0.5em;
+      }
+      #reflection-feedback {
+        font-size: 1em;
+        margin-bottom: 0.5em;
+        min-height: 1.5em;
+      }
+    `
+    document.head.appendChild(style)
   }
 
   showStartButton()
 }
+// INSTRUCTIONS: To enable the theme toggle, add this button to your HTML (e.g. in index.html or as the first child of #app):
+// <button class="theme-toggle" aria-pressed="false" title="Switch to light mode">🌙</button>
+// Then call setupThemeToggle() once on page load.
 // 1. On page load, create and display a "Start Timer" button
 
 // 2. When "Start Timer" is clicked:

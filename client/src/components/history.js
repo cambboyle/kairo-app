@@ -1,5 +1,14 @@
 import { fetchSessions } from '../utils/fetchSession'
 
+async function deleteSession(sessionId, showHistory) {
+  try {
+    await fetch(`/api/sessions/${sessionId}`, { method: 'DELETE' })
+    showHistory()
+  } catch (err) {
+    alert('Failed to delete session')
+  }
+}
+
 export function sessionHistory(container) {
   async function showHistory() {
     container.innerHTML = `<div>Session history will be displayed here.</div>`
@@ -20,6 +29,7 @@ export function sessionHistory(container) {
                         <strong class="history-type">${s.type}</strong> (${s.duration} min)
                         <strong>${new Date(s.startTime).toLocaleString()}</strong><br>
                         <strong>Reflection:</strong> ${s.reflection || '-'}
+                        <button class="delete-session-btn" data-id="${s._id}">Delete</button>
                     </li>
                 `,
                   )
@@ -27,6 +37,11 @@ export function sessionHistory(container) {
             </ul>
         </div>
     `
+      // Add event listeners for delete buttons
+      container.querySelectorAll('.delete-session-btn').forEach((btn) => {
+        btn.onclick = () =>
+          deleteSession(btn.getAttribute('data-id'), showHistory)
+      })
     } catch (err) {
       container.innerHTML = `<div>Error loading sessions.</div>`
     }

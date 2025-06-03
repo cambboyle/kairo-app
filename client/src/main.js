@@ -1,6 +1,6 @@
 // main.js
 import './style.css'
-import { startTimer } from './components/timer'
+import { startTimer, setupThemeToggle } from './components/timer'
 import { sessionHistory } from './components/history'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,4 +12,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   startTimer(document.getElementById('timer'))
   sessionHistory(document.getElementById('history'))
+  setupThemeToggle()
 })
