@@ -1,1 +1,1134 @@
-/* All styles removed as requested. */
+/* Kairo - Japanese Zen Minimalism Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  /* Japanese Zen Color Palette - Earth & Stone */
+  --stone-50: #fafafa;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e4;
+  --stone-300: #d6d3d1;
+  --stone-400: #a8a29e;
+  --stone-500: #78716c;
+  --stone-600: #57534e;
+  --stone-700: #44403c;
+  --stone-800: #292524;
+  --stone-900: #1c1917;
+
+  --sage-50: #f6f7f6;
+  --sage-100: #f1f3f1;
+  --sage-200: #e4e7e4;
+  --sage-300: #d1d5d1;
+  --sage-400: #9ca3a0;
+  --sage-500: #6b7169;
+  --sage-600: #4f564f;
+  --sage-700: #3f443f;
+  --sage-800: #343734;
+  --sage-900: #2d302d;
+
+  --warm-50: #fdfcfb;
+  --warm-100: #faf9f7;
+  --warm-200: #f2f0ed;
+  --warm-300: #e8e4df;
+  --warm-400: #d3ccc4;
+  --warm-500: #b8ad9f;
+  --warm-600: #9c8f7d;
+  --warm-700: #7c6f5d;
+  --warm-800: #5d544a;
+  --warm-900: #4a4239;
+
+  /* Primary Colors - Natural & Grounded */
+  --primary: var(--sage-600);
+  --primary-hover: var(--sage-700);
+  --primary-light: var(--sage-400);
+  --primary-lighter: var(--sage-200);
+  --accent: var(--warm-600);
+  --accent-hover: var(--warm-700);
+  --accent-light: var(--warm-400);
+
+  /* Error colors for delete buttons */
+  --error: #dc2626;
+  --error-light: #fee2e2;
+
+  /* Light Mode Colors (Default) */
+  --bg-primary: var(--stone-50);
+  --bg-secondary: #ffffff;
+  --bg-tertiary: var(--stone-100);
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --text-primary: var(--stone-900);
+  --text-secondary: var(--stone-700);
+  --text-muted: var(--stone-500);
+  --border-subtle: var(--stone-200);
+  --border-emphasis: var(--stone-300);
+
+  /* Japanese Design Elements - Clean & Minimal */
+  --shadow-subtle: 0 1px 2px rgba(28, 25, 23, 0.04);
+  --shadow-soft:
+    0 2px 4px rgba(28, 25, 23, 0.06), 0 1px 2px rgba(28, 25, 23, 0.02);
+  --shadow-medium:
+    0 4px 8px rgba(28, 25, 23, 0.08), 0 2px 4px rgba(28, 25, 23, 0.04);
+  --shadow-large:
+    0 8px 16px rgba(28, 25, 23, 0.12), 0 4px 8px rgba(28, 25, 23, 0.06);
+
+  /* Accessibility */
+  --focus-ring: 2px solid var(--accent);
+  --focus-ring-offset: 2px;
+
+  /* Japanese Spacing - Ma (間) - Negative Space */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
+  --spacing-4xl: 6rem; /* 96px */
+  --spacing-5xl: 8rem; /* 128px */
+
+  /* Typography Scale - Harmonious Proportions */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+  --text-5xl: 3rem; /* 48px */
+  --text-6xl: 3.75rem; /* 60px */
+
+  /* Animation & Transition - Gentle & Natural */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Breathing Animation for Timer */
+  --breath-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Dark Mode */
+[data-theme='dark'] {
+  --bg-primary: var(--stone-900);
+  --bg-secondary: var(--stone-800);
+  --bg-tertiary: var(--stone-800);
+  --surface: var(--stone-800);
+  --surface-elevated: var(--stone-700);
+  --text-primary: var(--stone-100);
+  --text-secondary: var(--stone-300);
+  --text-muted: var(--stone-400);
+  --primary: var(--sage-400);
+  --primary-hover: var(--sage-300);
+  --accent: var(--warm-400);
+  --accent-hover: var(--warm-300);
+  --border-subtle: var(--stone-700);
+  --border-emphasis: var(--stone-600);
+  --error: #ef4444;
+  --error-light: rgba(239, 68, 68, 0.1);
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --text-muted: #333333;
+    --border-subtle: #000000;
+    --border-emphasis: #000000;
+    --focus-ring: 3px solid #000000;
+  }
+
+  [data-theme='dark'] {
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --text-muted: #cccccc;
+    --border-subtle: #ffffff;
+    --border-emphasis: #ffffff;
+    --focus-ring: 3px solid #ffffff;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .timer-circle.active {
+    animation: none;
+  }
+
+  .breathe {
+    animation: none;
+  }
+}
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Skip Links for Accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--surface);
+  color: var(--text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  z-index: 1000;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-emphasis);
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Main Application Container */
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    var(--bg-tertiary) 100%
+  );
+  position: relative;
+  padding: var(--spacing-lg);
+}
+
+/* Header - Clean & Minimal */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg) 0;
+  margin-bottom: var(--spacing-2xl);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.logo {
+  font-family: 'Crimson Text', serif;
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* Theme Toggle - Zen-inspired */
+.theme-toggle {
+  position: fixed;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+  z-index: 100;
+}
+
+.theme-toggle:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-emphasis);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.theme-toggle:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Main Content Area - Single Viewport Layout */
+.main-content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+  max-width: 1400px;
+  width: 95vw;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  margin: 0 auto;
+  gap: var(--spacing-2xl);
+  min-height: calc(100vh - 120px);
+  box-sizing: border-box;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .main-content {
+    max-width: 98vw;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    max-width: 100vw;
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+  }
+}
+
+/* Timer Container - Card Style Alignment with History */
+.timer-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+  width: 100%;
+  max-width: 480px;
+  margin: 0;
+  min-height: 400px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.timer-header {
+  padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-subtle);
+  background: linear-gradient(
+    135deg,
+    var(--surface) 0%,
+    var(--bg-tertiary) 100%
+  );
+}
+
+.timer-heading {
+  font-family: 'Crimson Text', serif;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.timer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xl);
+  width: 100%;
+  flex: 1;
+  padding: var(--spacing-2xl);
+  background: none;
+  min-height: 360px;
+}
+
+.timer-controls {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 0;
+}
+
+/* Responsive tweaks for timer panel */
+@media (max-width: 640px) {
+  .timer-container {
+    max-width: 100vw;
+    border-radius: var(--radius-lg);
+    min-height: 320px;
+  }
+  .timer-header {
+    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
+  }
+  .timer-content {
+    padding: var(--spacing-lg);
+    min-height: 280px;
+    gap: var(--spacing-lg);
+  }
+  .timer-settings {
+    padding: var(--spacing-md);
+    max-width: 280px;
+  }
+  .timer-circle {
+    width: 180px;
+    height: 180px;
+  }
+  .timer-display {
+    font-size: var(--text-3xl);
+  }
+  .control-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    min-width: 80px;
+    font-size: var(--text-xs);
+  }
+}
+
+/* Timer Heading Styling */
+/* (Keep only the version inside the timer-header section) */
+/* Duplicate removed */
+
+/* Timer Content Area - Column Layout */
+/* (Keep only the version with padding and background: none) */
+/* Duplicate removed */
+
+/* Timer Circle */
+.timer-circle {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-slow);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.02),
+    0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+.timer-circle.active {
+  border-color: var(--primary);
+  animation: breathe 4s var(--breath-timing) infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.02),
+      0 4px 8px rgba(0, 0, 0, 0.04);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.02),
+      0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.timer-display {
+  font-family: 'Inter', monospace;
+  font-size: var(--text-4xl);
+  font-weight: 300;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--spacing-xs);
+  padding: 0;
+  text-align: center;
+}
+
+.timer-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+/* Progress Ring */
+.progress-ring {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 206px;
+  height: 206px;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.progress-ring__circle {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray var(--transition-normal);
+  opacity: 0.8;
+}
+
+/* Control Buttons - Minimal & Tactile */
+
+.control-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  min-width: 100px;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.control-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-emphasis);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.control-btn:active {
+  transform: translateY(0);
+}
+
+.control-btn:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.control-btn.primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.control-btn.primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+/* Additional Button Styles */
+.btn {
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-emphasis);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn:disabled:hover {
+  background: var(--surface);
+  border-color: var(--border-subtle);
+  transform: none;
+  box-shadow: none;
+}
+
+.btn.btn-primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.btn.btn-primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.btn.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-color: var(--border-emphasis);
+}
+
+.btn.btn-secondary:hover {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
+.btn.btn-warning {
+  background: #f59e0b;
+  color: white;
+  border-color: #f59e0b;
+}
+
+.btn.btn-warning:hover {
+  background: #d97706;
+  border-color: #d97706;
+}
+
+/* Zen Divider - Ma (間) Aesthetic */
+.divider {
+  width: 100%;
+  max-width: 200px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--border-subtle) 20%,
+    var(--border-emphasis) 50%,
+    var(--border-subtle) 80%,
+    transparent 100%
+  );
+  margin: var(--spacing-3xl) auto;
+  position: relative;
+  opacity: 0.6;
+}
+
+.divider::before {
+  content: '◦';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-primary);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  padding: 0 var(--spacing-sm);
+  font-weight: 300;
+}
+
+/* History Section - Inspired by Japanese Scrolls */
+.history-section {
+  width: 100%;
+  max-width: 600px;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  grid-column: 2;
+  align-self: stretch;
+  justify-self: center;
+  max-height: calc(100vh - 200px);
+  margin: 0;
+}
+
+.history-header {
+  padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-subtle);
+  background: linear-gradient(
+    135deg,
+    var(--surface) 0%,
+    var(--bg-tertiary) 100%
+  );
+}
+
+.history-title {
+  font-family: 'Crimson Text', serif;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.history-list {
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-subtle) transparent;
+}
+
+.history-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.history-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+  background: var(--border-emphasis);
+}
+
+.history-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: all var(--transition-normal);
+  background: var(--surface);
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-item:hover {
+  background: var(--bg-tertiary);
+  transform: translateX(2px);
+}
+
+.history-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: var(--spacing-md);
+}
+
+.history-main {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex: 1;
+}
+
+.history-icon {
+  font-size: var(--text-xl);
+  color: var(--primary);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--primary-lighter);
+  font-weight: 300;
+}
+
+.history-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 0;
+}
+
+.history-type {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.history-date {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+.history-duration {
+  font-family: 'Inter', monospace;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+}
+
+.history-delete-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--text-lg);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: var(--spacing-md);
+  opacity: 0;
+  transform: translateX(8px);
+}
+
+.history-item:hover .history-delete-btn {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.history-delete-btn:hover {
+  background: var(--error-light);
+  border-color: var(--error);
+  color: var(--error);
+  transform: scale(1.05);
+}
+
+.history-delete-btn:focus {
+  outline: 2px solid var(--error);
+  outline-offset: 2px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Timer Settings - Japanese Minimalist Style */
+.timer-settings {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  align-items: center;
+  width: 100%;
+  max-width: 200px;
+}
+
+.setting-label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+  text-align: center;
+}
+
+.setting-input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-family: inherit;
+  transition: all var(--transition-normal);
+  width: 100%;
+  text-align: center;
+}
+
+.setting-input:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-color: var(--primary);
+}
+
+.setting-input:hover {
+  border-color: var(--border-emphasis);
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .timer-settings {
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+    max-width: 280px;
+  }
+  .setting-input,
+  .timer-input,
+  .timer-select {
+    font-size: var(--text-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .timer-settings {
+    padding: var(--spacing-md);
+  }
+  .setting-input,
+  .timer-input,
+  .timer-select {
+    font-size: var(--text-xs);
+    padding: var(--spacing-xs);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .theme-toggle,
+  .history-delete-btn,
+  .toast {
+    display: none !important;
+  }
+
+  #app {
+    background: white !important;
+    color: black !important;
+  }
+
+  .timer-container,
+  .history-section {
+    box-shadow: none !important;
+    border: 2px solid #000 !important;
+  }
+
+  .history-list {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+/* Japanese Typography Refinements */
+@supports (font-feature-settings: 'kern') {
+  .logo,
+  .history-title {
+    font-feature-settings:
+      'kern' 1,
+      'liga' 1,
+      'calt' 1;
+  }
+}
+
+/* Subtle Entrance Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.history-item {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.history-item:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.history-item:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+.history-item:nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+.history-item:nth-child(5) {
+  animation-delay: 0.2s;
+}
+
+/* Enhanced Focus Indicators for Better Accessibility */
+.history-item:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  background: var(--bg-tertiary);
+}
+
+.timer-circle:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Micro-interactions for Zen Feel */
+.timer-container:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.history-section:hover {
+  box-shadow: var(--shadow-medium);
+}
+
+/* Japanese-inspired scrollbar for webkit browsers */
+.history-list::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Large Screen Layout - Keep Simple */
+@media (min-width: 1024px) {
+  .timer-container {
+    max-width: 500px;
+  }
+
+  .timer-content {
+    padding: var(--spacing-3xl);
+    min-height: 400px;
+    gap: var(--spacing-3xl);
+  }
+
+  .timer-settings {
+    max-width: 360px;
+    padding: var(--spacing-xl);
+  }
+
+  .timer-circle {
+    width: 220px;
+    height: 220px;
+  }
+
+  .timer-display {
+    font-size: var(--text-5xl);
+  }
+}
+
+/* Medium Screen Layout */
+@media (max-width: 1023px) {
+  .timer-container {
+    max-width: 500px;
+  }
+}
+
+/* History Section - Compact Side Layout */
+.history-section {
+  grid-column: 2;
+  align-self: stretch;
+  justify-self: center;
+  max-height: calc(100vh - 200px);
+  margin: 0;
+}
+
+/* Divider - Hidden in Grid Layout */
+.divider {
+  display: none;
+}
+
+/* Responsive - Stack on Smaller Screens */
+@media (max-width: 1024px) {
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+    min-height: auto;
+    padding: var(--spacing-lg);
+  }
+
+  .timer-container {
+    grid-column: unset;
+    align-self: unset;
+    justify-self: unset;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .history-section {
+    grid-column: unset;
+    align-self: unset;
+    justify-self: unset;
+    max-height: 500px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .divider {
+    display: block;
+    max-width: 300px;
+    margin: var(--spacing-xl) auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    padding: var(--spacing-md);
+    gap: var(--spacing-lg);
+  }
+
+  .timer-circle {
+    width: 180px;
+    height: 180px;
+  }
+
+  .timer-container {
+    padding: 0;
+    gap: 0;
+    max-width: 100%;
+  }
+
+  .timer-display {
+    font-size: var(--text-3xl);
+  }
+
+  .history-section {
+    max-width: 100%;
+  }
+}
