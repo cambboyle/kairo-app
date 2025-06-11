@@ -209,15 +209,10 @@ export function sessionHistory(container) {
         })
     } catch (err) {
       console.error('Error loading sessions:', err)
-      console.error('Error details:', {
-        message: err.message,
-        stack: err.stack,
-        name: err.name,
-      })
       container.innerHTML = `
         <div class="history-list">
           <div class="history-item" style="text-align: center; color: var(--text-muted);">
-            Error loading sessions: ${err.message}
+            Error loading sessions
           </div>
         </div>
       `

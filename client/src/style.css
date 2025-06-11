@@ -610,41 +610,6 @@ body {
   border-color: var(--primary-hover);
 }
 
-.control-btn.tertiary {
-  background: transparent;
-  color: var(--text-muted);
-  border: 1px solid var(--border-subtle);
-  padding: var(--spacing-sm);
-  min-width: 44px;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.control-btn.tertiary:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
-  border-color: var(--border-emphasis);
-}
-
-.control-btn.secondary {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
-}
-
-.control-btn.secondary:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--border-emphasis);
-}
-
-.control-btn.secondary:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
-}
-
 /* Additional Button Styles */
 .btn {
   padding: var(--spacing-md) var(--spacing-xl);
@@ -1437,14 +1402,12 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 1;
 }
 
 .progress-ring {
   transform: rotate(-90deg);
-  width: 200px;
-  height: 200px;
-  display: block;
+  width: 280px;
+  height: 280px;
 }
 
 .progress-ring-circle {
@@ -1452,8 +1415,8 @@ body {
 }
 
 .progress-ring-progress {
-  stroke-dasharray: calc(2 * 3.14159 * 95);
-  stroke-dashoffset: calc(2 * 3.14159 * 95 * (1 - var(--progress, 0) / 100));
+  stroke-dasharray: calc(2 * 3.14159 * 135);
+  stroke-dashoffset: calc(2 * 3.14159 * 135 * (1 - var(--progress, 0) / 100));
   transition: stroke-dashoffset 0.5s ease;
   stroke-linecap: round;
   filter: drop-shadow(0 0 3px rgba(79, 86, 79, 0.3));
@@ -1733,181 +1696,5 @@ body {
 
   .tip-content {
     padding: var(--spacing-sm);
-  }
-}
-
-/* Session Notes Styles */
-.session-notes-container {
-  margin: var(--spacing-lg) 0;
-  width: 100%;
-}
-
-.session-notes-toggle {
-  display: flex;
-  justify-content: center;
-  margin-bottom: var(--spacing-sm);
-}
-
-.notes-toggle-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-sm) var(--spacing-md);
-  color: var(--text-secondary);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  min-width: 80px;
-}
-
-.notes-toggle-btn:hover {
-  background: var(--surface);
-  border-color: var(--border-emphasis);
-  color: var(--text-primary);
-  transform: translateY(-1px);
-}
-
-.notes-toggle-btn:focus {
-  outline: var(--focus-ring);
-  outline-offset: var(--focus-ring-offset);
-}
-
-.notes-toggle-btn[aria-expanded='true'] {
-  background: var(--primary-lighter);
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-.notes-icon {
-  font-size: var(--text-base);
-}
-
-.notes-label {
-  font-size: var(--text-sm);
-}
-
-.session-notes {
-  background: var(--surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
-  margin-top: var(--spacing-sm);
-  box-shadow: var(--shadow-subtle);
-  animation: slideDown 0.3s ease-out;
-}
-
-.session-notes textarea {
-  width: 100%;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-sm);
-  color: var(--text-primary);
-  font-family: inherit;
-  font-size: var(--text-sm);
-  line-height: 1.5;
-  resize: vertical;
-  min-height: 60px;
-  transition: all var(--transition-fast);
-  box-sizing: border-box;
-}
-
-.session-notes textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-  background: var(--surface);
-  box-shadow: 0 0 0 2px rgba(79, 86, 79, 0.1);
-}
-
-.session-notes textarea::placeholder {
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.notes-hint {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  text-align: center;
-  margin-top: var(--spacing-xs);
-  font-style: italic;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Session Templates Integration */
-.templates-header-nav {
-  margin-bottom: var(--spacing-lg);
-}
-
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.back-btn:hover {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border-color: var(--border-emphasis);
-}
-
-.back-btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.3);
-}
-
-/* Timer controls layout for multiple buttons */
-.timer-controls {
-  display: flex;
-  gap: var(--spacing-sm);
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.timer-controls .control-btn:not(.tertiary) {
-  flex: 1;
-  min-width: 120px;
-  max-width: 160px;
-}
-
-.timer-controls .control-btn.tertiary {
-  flex: 0 0 auto;
-}
-
-@media (max-width: 480px) {
-  .timer-controls {
-    flex-direction: column;
-  }
-  
-  .timer-controls .control-btn:not(.tertiary) {
-    max-width: none;
-    width: 100%;
-  }
-  
-  .timer-controls .control-btn.tertiary {
-    width: 44px;
-    align-self: center;
   }
 }

@@ -8,7 +8,7 @@ import {
 } from './components/analytics'
 import { addSettingsButton, injectSettingsStyles } from './components/settings'
 import { initializeTheme } from './utils/theme'
-import { injectTemplateStyles } from './components/sessionTemplates'
+import { keyboardManager } from './utils/keyboardManager'
 
 let historyApi
 let analyticsApi
@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inject styles
   injectAnalyticsStyles()
   injectSettingsStyles()
-  injectTemplateStyles()
 
   // Initialize theme
   initializeTheme()
