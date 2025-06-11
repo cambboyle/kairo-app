@@ -14,12 +14,7 @@ import {
   DURATION_PRESETS,
   getSessionIcon,
   getDefaultDuration,
-  trackTemplateUsage,
 } from '../config/sessionConfig'
-import {
-  createSessionTemplates,
-  injectTemplateStyles,
-} from './sessionTemplates'
 
 export function startTimer(container) {
   console.log('startTimer called', container)
@@ -32,11 +27,6 @@ export function startTimer(container) {
   let intervalId = null
   let isTimerPaused = false
   let isEnded = false
-  let showingTemplates = false
-  let templatesApi = null
-
-  // Inject template styles
-  injectTemplateStyles()
 
   function formatTime(secs) {
     const minutes = String(Math.floor(secs / 60)).padStart(2, '0')
@@ -119,15 +109,7 @@ export function startTimer(container) {
           <button id="start-btn" class="control-btn primary" aria-describedby="start-help">
             Start Session
           </button>
-          <button id="templates-btn" class="control-btn secondary" aria-describedby="templates-help">
-            📋 Templates
-          </button>
-          <button id="save-template-btn" class="control-btn tertiary" aria-describedby="save-help" title="Save current settings as template">
-            💾
-          </button>
           <div id="start-help" class="sr-only">Begin your focus session</div>
-          <div id="templates-help" class="sr-only">Choose from pre-configured session templates</div>
-          <div id="save-help" class="sr-only">Save current settings as a custom template</div>
         </div>
       </div>
     `
@@ -190,8 +172,6 @@ export function startTimer(container) {
     })
 
     document.getElementById('start-btn').onclick = startSession
-    document.getElementById('templates-btn').onclick = showTemplates
-    document.getElementById('save-template-btn').onclick = saveCustomTemplate
   }
 
   async function startSession() {
@@ -216,47 +196,30 @@ export function startTimer(container) {
       <div class="timer-content">
         <div class="timer-circle active" role="timer" aria-live="polite">
           <div class="timer-progress">
-            <svg class="progress-ring" width="200" height="200">
+            <svg class="progress-ring" width="280" height="280">
               <circle
                 class="progress-ring-circle"
                 stroke="rgba(79, 86, 79, 0.2)"
                 stroke-width="3"
                 fill="transparent"
-                r="95"
-                cx="100"
-                cy="100"
+                r="135"
+                cx="140"
+                cy="140"
               />
               <circle
                 class="progress-ring-progress"
                 stroke="var(--primary)"
                 stroke-width="3"
                 fill="transparent"
-                r="95"
-                cx="100"
-                cy="100"
+                r="135"
+                cx="140"
+                cy="140"
                 style="--progress: 0"
               />
             </svg>
           </div>
           <div class="timer-display" id="timer-display">${formatTime(timeLeft)}</div>
           <div class="timer-label">${timerType} Session</div>
-        </div>
-        <div class="session-notes-container">
-          <div class="session-notes-toggle">
-            <button id="toggle-notes-btn" class="notes-toggle-btn" aria-expanded="false" aria-controls="session-notes">
-              <span class="notes-icon">📝</span>
-              <span class="notes-label">Notes</span>
-            </button>
-          </div>
-          <div id="session-notes" class="session-notes" style="display: none;" role="region" aria-label="Session notes">
-            <textarea 
-              id="session-notes-input"
-              placeholder="Capture thoughts during your session..."
-              rows="3"
-              aria-label="Session notes"
-            ></textarea>
-            <div class="notes-hint">Notes auto-save and can be included in your reflection</div>
-          </div>
         </div>
         <div class="timer-controls">
           <button id="pause-btn" class="control-btn" aria-describedby="pause-help">
@@ -271,43 +234,8 @@ export function startTimer(container) {
       </div>
     `
 
-    // Session notes functionality
-    const notesToggleBtn = document.getElementById('toggle-notes-btn')
-    const notesContainer = document.getElementById('session-notes')
-    const notesInput = document.getElementById('session-notes-input')
-    let sessionNotes = ''
-
-    // Toggle notes visibility
-    notesToggleBtn.onclick = () => {
-      const isExpanded = notesToggleBtn.getAttribute('aria-expanded') === 'true'
-      const newExpanded = !isExpanded
-
-      notesToggleBtn.setAttribute('aria-expanded', newExpanded)
-      notesContainer.style.display = newExpanded ? 'block' : 'none'
-
-      if (newExpanded) {
-        // Focus the textarea when opened
-        setTimeout(() => notesInput.focus(), 100)
-      }
-    }
-
-    // Auto-save notes as user types
-    notesInput.addEventListener('input', () => {
-      sessionNotes = notesInput.value
-      // Store in session storage for persistence during session
-      sessionStorage.setItem('currentSessionNotes', sessionNotes)
-    })
-
-    // Load any existing notes from session storage
-    const existingNotes = sessionStorage.getItem('currentSessionNotes')
-    if (existingNotes) {
-      notesInput.value = existingNotes
-      sessionNotes = existingNotes
-    }
-
     // Start countdown
     const totalTime = timeLeft
-
     intervalId = setInterval(() => {
       if (!isTimerPaused && timeLeft > 0) {
         timeLeft--
@@ -449,17 +377,6 @@ export function startTimer(container) {
           >
           <div id="reflection-help" class="sr-only">Optional: Share your thoughts about this session (maximum 500 characters)</div>
         </div>
-        ${
-          sessionStorage.getItem('currentSessionNotes')
-            ? `
-        <div class="session-notes-preview">
-          <label>📝 Session Notes</label>
-          <div class="notes-preview">${sessionStorage.getItem('currentSessionNotes').substring(0, 150)}${sessionStorage.getItem('currentSessionNotes').length > 150 ? '...' : ''}</div>
-          <div class="notes-preview-hint">Your notes will be saved with this session</div>
-        </div>
-        `
-            : ''
-        }
         <div class="reflection-actions" role="group" aria-label="Session completion actions">
           <button 
             id="saveButton" 
@@ -526,8 +443,6 @@ export function startTimer(container) {
   async function saveCurrentSession(selectedMood = null) {
     const saveBtn = document.getElementById('saveButton')
     const reflection = document.getElementById('reflection-text').value
-    const sessionNotes = sessionStorage.getItem('currentSessionNotes') || ''
-
     saveBtn.disabled = true
     saveBtn.textContent = '💾 Saving...'
     // Calculate duration in minutes
@@ -536,7 +451,6 @@ export function startTimer(container) {
       duration,
       type: timerType,
       reflection,
-      notes: sessionNotes,
       mood: selectedMood,
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString(),
@@ -555,9 +469,6 @@ export function startTimer(container) {
           'Session saved successfully! Your progress has been recorded.',
         )
       }
-
-      // Clear session notes from storage after successful save
-      sessionStorage.removeItem('currentSessionNotes')
 
       setTimeout(() => {
         showWelcomeScreen()
@@ -757,42 +668,6 @@ export function startTimer(container) {
         flex: 1;
         max-width: 200px;
       }
-
-      .session-notes-preview {
-        margin-bottom: var(--spacing-lg);
-        text-align: left;
-      }
-      
-      .session-notes-preview label {
-        display: block;
-        font-weight: 600;
-        color: var(--text-primary);
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: var(--spacing-xs);
-      }
-      
-      .notes-preview {
-        background: rgba(255, 255, 255, 0.03);
-        border: var(--glass-border);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-sm);
-        color: var(--text-secondary);
-        font-family: inherit;
-        font-size: 0.9rem;
-        line-height: 1.4;
-        max-height: 80px;
-        overflow: hidden;
-        white-space: pre-wrap;
-      }
-      
-      .notes-preview-hint {
-        font-size: var(--text-xs);
-        color: var(--text-muted);
-        margin-top: var(--spacing-xs);
-        font-style: italic;
-      }
       
       @media (max-width: 480px) {
         .reflection-modal {
@@ -812,109 +687,6 @@ export function startTimer(container) {
     `
     document.head.appendChild(style)
   }
-
-  function handleTemplateSelection(template) {
-    if (template === null) {
-      // Custom session - show regular timer setup
-      showingTemplates = false
-      showWelcomeScreen()
-      return
-    }
-
-    // Track template usage
-    trackTemplateUsage(template.id)
-
-    // Apply template settings
-    document.getElementById('timer-minutes').value = template.duration
-    document.getElementById('timer-type').value = template.type
-
-    // Update display
-    const display = document.getElementById('timer-display')
-    if (display) {
-      display.textContent = formatTime(template.duration * 60)
-    }
-
-    // Update preset button selection
-    const presetButtons = document.querySelectorAll('.duration-preset-btn')
-    presetButtons.forEach((btn) => btn.removeAttribute('data-selected'))
-    const matchingPreset = [...presetButtons].find(
-      (btn) =>
-        parseInt(btn.getAttribute('data-duration')) === template.duration,
-    )
-    if (matchingPreset) {
-      matchingPreset.setAttribute('data-selected', 'true')
-    }
-
-    // Show success message
-    toast.success(`${template.icon} ${template.name} template applied`)
-
-    // Switch back to welcome screen
-    showingTemplates = false
-    showWelcomeScreen()
-  }
-
-  function showTemplates() {
-    showingTemplates = true
-
-    container.innerHTML = `
-      <div class="timer-content">
-        <div class="templates-header-nav">
-          <button id="back-to-timer" class="back-btn" aria-label="Back to timer setup">
-            <span>←</span> Back to Timer
-          </button>
-        </div>
-        <div id="session-templates-container"></div>
-      </div>
-    `
-
-    // Initialize templates component
-    const templatesContainer = document.getElementById(
-      'session-templates-container',
-    )
-    templatesApi = createSessionTemplates(
-      templatesContainer,
-      handleTemplateSelection,
-    )
-
-    // Add back button functionality
-    document.getElementById('back-to-timer').onclick = () => {
-      showingTemplates = false
-      showWelcomeScreen()
-    }
-  }
-
-  function saveCustomTemplate() {
-    const minutes =
-      parseInt(document.getElementById('timer-minutes').value, 10) || 25
-    const type = document.getElementById('timer-type').value
-
-    // Simple prompt for template name (could be enhanced with a modal later)
-    const templateName = prompt('Enter a name for your custom template:')
-    if (!templateName || templateName.trim() === '') return
-
-    const customTemplate = {
-      id: `custom-${Date.now()}`,
-      name: templateName.trim(),
-      description: `Custom ${type.toLowerCase()} session`,
-      icon: getSessionIcon(type),
-      type: type,
-      duration: minutes,
-      category: 'custom',
-      tags: ['custom', 'personal'],
-      isCustom: true,
-    }
-
-    // Save to localStorage
-    const savedTemplates = JSON.parse(
-      localStorage.getItem('customTemplates') || '[]',
-    )
-    savedTemplates.push(customTemplate)
-    localStorage.setItem('customTemplates', JSON.stringify(savedTemplates))
-
-    toast.success(`${customTemplate.icon} "${templateName}" template saved!`)
-  }
-
-  // ...existing code...
 }
 
 // TIMER COMPONENT INSTRUCTIONS:
