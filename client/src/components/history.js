@@ -1,96 +1,74 @@
 // history.js - Japanese Zen Minimalism Design
 import { fetchSessions } from '../utils/fetchSession'
-import { toast } from '../utils/toast'
-
-function getSessionIcon(type) {
-  switch (type) {
-    case 'Deep Work':
-      return '●'
-    case 'Focus':
-      return '○'
-    case 'Break':
-      return '◐'
-    case 'Creative':
-      return '◑'
-    case 'Learning':
-      return '◒'
-    default:
-      return '◯'
-  }
-}
+import { getSessionIcon } from '../config/sessionConfig'
+import { toast, showConfirmation } from '../utils/feedback'
+import { recalculateAnalytics } from '../utils/streakManager'
 
 async function deleteSession(sessionId, showHistory) {
-  // Create a confirmation modal
-  const modal = document.createElement('div')
-  modal.className = 'delete-modal-overlay'
-  modal.innerHTML = `
-    <div class="delete-modal" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
-      <div class="delete-modal-header">
-        <h3 id="delete-modal-title">Delete Session?</h3>
-      </div>
-      <div class="delete-modal-body">
-        <p>Are you sure you want to delete this session? This action cannot be undone.</p>
-      </div>
-      <div class="delete-modal-actions">
-        <button class="btn btn-danger" id="confirm-delete-btn">Delete</button>
-        <button class="btn btn-secondary" id="cancel-delete-btn">Cancel</button>
-      </div>
-    </div>
-  `
-  document.body.appendChild(modal)
-  // Focus the cancel button for accessibility
-  setTimeout(() => {
-    document.getElementById('cancel-delete-btn').focus()
-  }, 0)
+  const confirmed = await showConfirmation(
+    'Delete Session?',
+    'Are you sure you want to delete this session? This will remove it from your history and may affect your streak and analytics data. This action cannot be undone.',
+    'Delete',
+    'Cancel',
+  )
 
-  // Handle confirm/cancel
-  document.getElementById('confirm-delete-btn').onclick = async () => {
+  if (!confirmed) return
+
+  try {
+    const response = await fetch(`/api/sessions/${sessionId}`, {
+      method: 'DELETE',
+    })
+    if (!response.ok) throw new Error('Failed to delete session')
+
+    toast.delete('Session deleted and removed from analytics')
+
+    // Recalculate analytics based on remaining sessions
     try {
-      const response = await fetch(`/api/sessions/${sessionId}`, {
-        method: 'DELETE',
-      })
-      if (!response.ok) throw new Error('Failed to delete session')
-      toast.delete('Session deleted')
-      // Announce deletion to screen readers
-      const announcement = document.createElement('div')
-      announcement.setAttribute('aria-live', 'polite')
-      announcement.className = 'sr-only'
-      announcement.textContent = 'Session deleted successfully'
-      document.body.appendChild(announcement)
-      setTimeout(() => {
-        if (announcement.parentNode) {
-          announcement.parentNode.removeChild(announcement)
-        }
-      }, 2000)
-      showHistory()
-    } catch (err) {
-      console.error('Delete error:', err)
-      toast.error('Failed to delete session')
-      // Announce error to screen readers
-      const errorAnnouncement = document.createElement('div')
-      errorAnnouncement.setAttribute('aria-live', 'assertive')
-      errorAnnouncement.className = 'sr-only'
-      errorAnnouncement.textContent =
-        'Failed to delete session. Please try again.'
-      document.body.appendChild(errorAnnouncement)
-      setTimeout(() => {
-        if (errorAnnouncement.parentNode) {
-          errorAnnouncement.parentNode.removeChild(errorAnnouncement)
-        }
-      }, 3000)
-    } finally {
-      if (modal.parentNode) modal.parentNode.removeChild(modal)
+      const remainingSessions = await fetchSessions()
+      await recalculateAnalytics(remainingSessions)
+
+      // Refresh analytics dashboard if it exists
+      if (
+        window.analyticsApi &&
+        typeof window.analyticsApi.refresh === 'function'
+      ) {
+        window.analyticsApi.refresh()
+      }
+    } catch (analyticsError) {
+      console.warn('Could not update analytics after deletion:', analyticsError)
     }
+
+    // Announce deletion to screen readers
+    const announcement = document.createElement('div')
+    announcement.setAttribute('aria-live', 'polite')
+    announcement.className = 'sr-only'
+    announcement.textContent =
+      'Session deleted successfully and analytics updated'
+    document.body.appendChild(announcement)
+    setTimeout(() => {
+      if (announcement.parentNode) {
+        announcement.parentNode.removeChild(announcement)
+      }
+    }, 2000)
+
+    showHistory()
+  } catch (err) {
+    console.error('Delete error:', err)
+    toast.error('Failed to delete session')
+
+    // Announce error to screen readers
+    const errorAnnouncement = document.createElement('div')
+    errorAnnouncement.setAttribute('aria-live', 'assertive')
+    errorAnnouncement.className = 'sr-only'
+    errorAnnouncement.textContent =
+      'Failed to delete session. Please try again.'
+    document.body.appendChild(errorAnnouncement)
+    setTimeout(() => {
+      if (errorAnnouncement.parentNode) {
+        errorAnnouncement.parentNode.removeChild(errorAnnouncement)
+      }
+    }, 3000)
   }
-  document.getElementById('cancel-delete-btn').onclick = () => {
-    if (modal.parentNode) modal.parentNode.removeChild(modal)
-  }
-  // Keyboard accessibility: ESC closes modal
-  modal.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      if (modal.parentNode) modal.parentNode.removeChild(modal)
-    }
-  })
 }
 
 export function sessionHistory(container) {

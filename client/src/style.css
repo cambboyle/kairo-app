@@ -259,39 +259,6 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* Theme Toggle - Zen-inspired */
-.theme-toggle {
-  position: fixed;
-  top: var(--spacing-lg);
-  right: var(--spacing-lg);
-  width: 48px;
-  height: 48px;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  color: var(--text-secondary);
-  font-size: var(--text-lg);
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-soft);
-  z-index: 100;
-}
-
-.theme-toggle:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--border-emphasis);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-medium);
-}
-
-.theme-toggle:focus {
-  outline: var(--focus-ring);
-  outline-offset: var(--focus-ring-offset);
-}
-
 /* Main Content Area - Improved Side-by-Side Layout */
 .main-content {
   flex: 1;
@@ -443,6 +410,58 @@ body {
   margin-top: 0;
 }
 
+/* Enhanced Timer Settings - Duration Presets and Controls */
+.duration-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.duration-presets {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-sm);
+}
+
+.duration-preset-btn {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 50px;
+  text-align: center;
+}
+
+.duration-preset-btn:hover {
+  background: var(--surface);
+  border-color: var(--border-emphasis);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.duration-preset-btn[data-selected='true'] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  box-shadow: 0 2px 8px rgba(79, 86, 79, 0.3);
+}
+
+.duration-preset-btn:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.duration-input {
+  max-width: 120px;
+}
+
 /* Responsive tweaks for timer panel */
 @media (max-width: 640px) {
   .timer-container {
@@ -514,6 +533,8 @@ body {
 }
 
 .timer-display {
+  position: relative;
+  z-index: 2;
   font-family: 'Inter', monospace;
   font-size: var(--text-4xl);
   font-weight: 300;
@@ -525,6 +546,8 @@ body {
 }
 
 .timer-label {
+  position: relative;
+  z-index: 2;
   font-size: var(--text-xs);
   color: var(--text-muted);
   text-transform: uppercase;
@@ -972,7 +995,6 @@ body {
   flex-shrink: 0;
   opacity: 0.8;
   box-sizing: border-box;
-  position: relative; /* Needed for tooltip positioning */
 }
 
 .expansion-text {
@@ -1036,52 +1058,10 @@ body {
   display: none; /* Hidden in icon-only design */
 }
 
-.history-item.has-reflection .history-row-main:hover .dropdown-arrow {
-  color: var(--primary);
-}
-
-/* Tooltip styling */
-.expansion-indicator::after {
-  content: attr(title);
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition-fast);
-  box-shadow: var(--shadow-medium);
-  border: 1px solid var(--border-subtle);
-  z-index: 10;
-}
-
-.expansion-indicator::before {
-  content: '';
-  position: absolute;
-  bottom: calc(100% + 2px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid var(--bg-secondary);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition-fast);
-  z-index: 10;
-}
-
-.history-item.has-reflection
+.history-item.has_reflection
   .history-row-main:hover
   .expansion-indicator::after,
-.history-item.has-reflection
+.history-item.has_reflection
   .history-row-main:hover
   .expansion-indicator::before {
   opacity: 1;
@@ -1237,12 +1217,6 @@ body {
   border-color: rgba(239, 68, 68, 0.2);
 }
 
-[data-theme='dark'] .delete-indicator:hover,
-[data-theme='dark'] .delete-indicator:focus {
-  background: rgba(239, 68, 68, 0.2);
-  border-color: rgba(239, 68, 68, 0.4);
-}
-
 /* Reflection content - harmonious with history-item design */
 .reflection-row {
   border-top: 1px solid var(--border-subtle);
@@ -1301,14 +1275,13 @@ body {
 
 .reflection-row .reflection-content::after {
   content: '"';
-  position: absolute;
-  bottom: -8px;
-  right: 0;
+  display: inline;
   font-size: var(--text-2xl);
   color: var(--primary);
   opacity: 0.4;
   font-family: 'Crimson Text', serif;
   font-weight: 600;
+  margin-left: 2px;
 }
 
 /* Dark mode adjustments for reflection */
@@ -1420,4 +1393,54 @@ body {
     height: 32px;
     opacity: 0.8;
   }
+}
+
+/* Progress Ring Animation */
+.timer-progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  width: 280px;
+  height: 280px;
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+.progress-ring-progress {
+  stroke-dasharray: calc(2 * 3.14159 * 135);
+  stroke-dashoffset: calc(2 * 3.14159 * 135 * (1 - var(--progress, 0) / 100));
+  transition: stroke-dashoffset 0.5s ease;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px rgba(79, 86, 79, 0.3));
+}
+
+/* Enhanced timer circle positioning */
+.timer-circle {
+  position: relative;
+}
+
+.timer-display,
+.timer-label {
+  position: relative;
+  z-index: 2;
+}
+
+/* Reduced motion support for progress ring */
+@media (prefers-reduced-motion: reduce) {
+  .progress-ring-progress {
+    transition: none;
+  }
+}
+
+/* Dark mode adjustments for progress ring */
+[data-theme='dark'] .progress-ring-progress {
+  filter: drop-shadow(0 0 3px rgba(156, 163, 160, 0.4));
 }

@@ -1,9 +1,16 @@
 // main.js - Japanese Zen Minimalism Design
 import './style.css'
-import { startTimer, setupThemeToggle } from './components/timer'
+import { startTimer } from './components/timer'
 import { sessionHistory } from './components/history'
+import {
+  createAnalyticsDashboard,
+  injectAnalyticsStyles,
+} from './components/analytics'
+import { addSettingsButton, injectSettingsStyles } from './components/settings'
+import { initializeTheme } from './utils/theme'
 
 let historyApi
+let analyticsApi
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = document.getElementById('app')
@@ -30,14 +37,26 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="history-header">
           <h2 id="history-heading" class="history-title">Session History</h2>
         </div>
+        <div id="analytics" class="analytics-container"></div>
         <div id="history" aria-live="polite" aria-atomic="false"></div>
       </aside>
     </main>
   `
 
+  // Inject styles
+  injectAnalyticsStyles()
+  injectSettingsStyles()
+
+  // Initialize theme
+  initializeTheme()
+
   startTimer(document.getElementById('timer'))
   historyApi = sessionHistory(document.getElementById('history'))
-  setupThemeToggle()
+  analyticsApi = createAnalyticsDashboard(document.getElementById('analytics'))
+  addSettingsButton()
+
+  // Make analytics API globally available for other components
+  window.analyticsApi = analyticsApi
 
   // Announce app readiness to screen readers
   const announcement = document.createElement('div')
@@ -56,4 +75,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000)
 })
 
-export { historyApi }
+export { historyApi, analyticsApi }

@@ -1,51 +1,20 @@
 // timer.js - Japanese Zen Minimalism Design
 import { saveSession } from '../utils/saveSession'
-import { historyApi } from '../main'
-import { toast } from '../utils/toast'
-
-export function setupThemeToggle() {
-  const btn = document.querySelector('.theme-toggle')
-  if (!btn) return
-
-  // Initialize theme state
-  const currentTheme = document.body.getAttribute('data-theme') || 'light'
-  btn.setAttribute('aria-pressed', String(currentTheme === 'dark'))
-  btn.title =
-    currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-  btn.textContent = currentTheme === 'dark' ? '☀️' : '🌙'
-
-  btn.onclick = () => {
-    const isDark = document.body.getAttribute('data-theme') === 'dark'
-    const newTheme = isDark ? '' : 'dark'
-
-    document.body.setAttribute('data-theme', newTheme)
-    btn.setAttribute('aria-pressed', String(!isDark))
-    btn.title = isDark ? 'Switch to dark mode' : 'Switch to light mode'
-    btn.textContent = isDark ? '🌙' : '☀️'
-
-    // Announce theme change to screen readers
-    const announcement = document.createElement('div')
-    announcement.setAttribute('aria-live', 'polite')
-    announcement.className = 'sr-only'
-    announcement.textContent = `Switched to ${isDark ? 'light' : 'dark'} mode`
-    document.body.appendChild(announcement)
-
-    setTimeout(() => {
-      if (announcement.parentNode) {
-        announcement.parentNode.removeChild(announcement)
-      }
-    }, 2000)
-
-    // Save preference to localStorage
-    localStorage.setItem('kairo-theme', newTheme || 'light')
-  }
-
-  // Load saved theme preference
-  const savedTheme = localStorage.getItem('kairo-theme')
-  if (savedTheme && savedTheme !== currentTheme) {
-    btn.click()
-  }
-}
+import { historyApi, analyticsApi } from '../main'
+import { notifications } from '../utils/notifications'
+import { toast } from '../utils/feedback'
+import {
+  recordSession,
+  getStreakData,
+  getStreakMessage,
+} from '../utils/streakManager'
+import {
+  SESSION_TYPES,
+  MOOD_OPTIONS,
+  DURATION_PRESETS,
+  getSessionIcon,
+  getDefaultDuration,
+} from '../config/sessionConfig'
 
 export function startTimer(container) {
   console.log('startTimer called', container)
@@ -66,20 +35,52 @@ export function startTimer(container) {
   }
 
   function showWelcomeScreen() {
+    // Get current streak data
+    const streakData = getStreakData()
+    const streakMessage = getStreakMessage(streakData)
+
     container.innerHTML = `
       <div class="timer-content">
+        ${
+          streakData.currentStreak > 0
+            ? `
+          <div class="streak-display" role="status" aria-live="polite">
+            <div class="streak-counter">🔥 ${streakData.currentStreak} day streak</div>
+            <div class="streak-message">${streakMessage}</div>
+          </div>
+        `
+            : ''
+        }
         <div class="timer-settings">
           <div class="setting-group">
             <label class="setting-label" for="timer-minutes">Duration (min)</label>
-            <input 
-              id="timer-minutes" 
-              type="number" 
-              min="1" 
-              max="120" 
-              value="25" 
-              class="setting-input" 
-              aria-label="Session duration in minutes"
-            >
+            <div class="duration-controls">
+              <div class="duration-presets">
+                ${DURATION_PRESETS.map(
+                  (preset) => `
+                  <button 
+                    type="button" 
+                    class="duration-preset-btn" 
+                    data-duration="${preset.value}" 
+                    aria-label="${preset.label} session"
+                    ${preset.value === 25 ? 'data-selected="true"' : ''}
+                  >
+                    ${preset.label}
+                  </button>
+                `,
+                ).join('')}
+              </div>
+              <input 
+                id="timer-minutes" 
+                type="number" 
+                min="1" 
+                max="120" 
+                value="25" 
+                class="setting-input duration-input" 
+                aria-label="Session duration in minutes"
+                placeholder="Custom"
+              >
+            </div>
           </div>
           
           <div class="setting-group">
@@ -90,11 +91,13 @@ export function startTimer(container) {
               style="width: 140px;"
               aria-label="Select focus session type"
             >
-              <option value="Focus">Focus</option>
-              <option value="Deep Work">Deep Work</option>
-              <option value="Break">Break</option>
-              <option value="Creative">Creative</option>
-              <option value="Learning">Learning</option>
+              ${Object.values(SESSION_TYPES)
+                .map(
+                  (type) => `
+                <option value="${type.id}">${type.icon} ${type.name}</option>
+              `,
+                )
+                .join('')}
             </select>
           </div>
         </div>
@@ -113,17 +116,65 @@ export function startTimer(container) {
 
     // Update display when settings change
     const minutesInput = document.getElementById('timer-minutes')
+    const typeSelect = document.getElementById('timer-type')
     const display = document.getElementById('timer-display')
+    const presetButtons = document.querySelectorAll('.duration-preset-btn')
 
     minutesInput.addEventListener('input', () => {
       const mins = parseInt(minutesInput.value, 10) || 25
       display.textContent = formatTime(mins * 60)
+
+      // Update preset button selection
+      presetButtons.forEach((btn) => btn.removeAttribute('data-selected'))
+      const matchingPreset = [...presetButtons].find(
+        (btn) => parseInt(btn.getAttribute('data-duration')) === mins,
+      )
+      if (matchingPreset) {
+        matchingPreset.setAttribute('data-selected', 'true')
+      }
+    })
+
+    // Handle duration preset clicks
+    presetButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const duration = btn.getAttribute('data-duration')
+        if (duration && duration !== 'null') {
+          minutesInput.value = duration
+          display.textContent = formatTime(parseInt(duration) * 60)
+
+          // Update visual selection
+          presetButtons.forEach((b) => b.removeAttribute('data-selected'))
+          btn.setAttribute('data-selected', 'true')
+        } else {
+          // Custom duration - focus input
+          minutesInput.focus()
+          minutesInput.select()
+        }
+      })
+    })
+
+    // Update duration when session type changes
+    typeSelect.addEventListener('change', () => {
+      const selectedType = typeSelect.value
+      const defaultDuration = getDefaultDuration(selectedType)
+      minutesInput.value = defaultDuration
+      display.textContent = formatTime(defaultDuration * 60)
+
+      // Update preset button selection
+      presetButtons.forEach((btn) => btn.removeAttribute('data-selected'))
+      const matchingPreset = [...presetButtons].find(
+        (btn) =>
+          parseInt(btn.getAttribute('data-duration')) === defaultDuration,
+      )
+      if (matchingPreset) {
+        matchingPreset.setAttribute('data-selected', 'true')
+      }
     })
 
     document.getElementById('start-btn').onclick = startSession
   }
 
-  function startSession() {
+  async function startSession() {
     console.log('startSession called')
     const mins =
       parseInt(document.getElementById('timer-minutes').value, 10) || 25
@@ -134,10 +185,39 @@ export function startTimer(container) {
     isEnded = false
     startTime = new Date()
 
+    // Request notification permission if this is user's first session
+    await notifications.requestNotificationPermission()
+
+    // Play start sound and notify
+    await notifications.notifySessionStart(timerType, mins)
+
     // Show active timer UI
     container.innerHTML = `
       <div class="timer-content">
         <div class="timer-circle active" role="timer" aria-live="polite">
+          <div class="timer-progress">
+            <svg class="progress-ring" width="280" height="280">
+              <circle
+                class="progress-ring-circle"
+                stroke="rgba(79, 86, 79, 0.2)"
+                stroke-width="3"
+                fill="transparent"
+                r="135"
+                cx="140"
+                cy="140"
+              />
+              <circle
+                class="progress-ring-progress"
+                stroke="var(--primary)"
+                stroke-width="3"
+                fill="transparent"
+                r="135"
+                cx="140"
+                cy="140"
+                style="--progress: 0"
+              />
+            </svg>
+          </div>
           <div class="timer-display" id="timer-display">${formatTime(timeLeft)}</div>
           <div class="timer-label">${timerType} Session</div>
         </div>
@@ -155,12 +235,21 @@ export function startTimer(container) {
     `
 
     // Start countdown
+    const totalTime = timeLeft
     intervalId = setInterval(() => {
       if (!isTimerPaused && timeLeft > 0) {
         timeLeft--
         const display = document.getElementById('timer-display')
+        const progressRing = document.querySelector('.progress-ring-progress')
+
         if (display) {
           display.textContent = formatTime(timeLeft)
+        }
+
+        // Update progress ring
+        if (progressRing) {
+          const progress = ((totalTime - timeLeft) / totalTime) * 100
+          progressRing.style.setProperty('--progress', progress)
         }
 
         // Check if timer is complete
@@ -174,7 +263,7 @@ export function startTimer(container) {
     const pauseBtn = document.getElementById('pause-btn')
     const stopBtn = document.getElementById('stop-btn')
 
-    pauseBtn.onclick = () => {
+    pauseBtn.onclick = async () => {
       isTimerPaused = !isTimerPaused
       pauseBtn.textContent = isTimerPaused ? 'Resume' : 'Pause'
 
@@ -182,6 +271,7 @@ export function startTimer(container) {
       const circle = document.querySelector('.timer-circle')
       if (isTimerPaused) {
         circle.classList.remove('active')
+        await notifications.notifySessionPause()
       } else {
         circle.classList.add('active')
       }
@@ -203,7 +293,12 @@ export function startTimer(container) {
     isTimerActive = false
     isEnded = true
     endTime = new Date()
+
     if (completed) {
+      // Calculate duration for notification
+      const duration = Math.max(1, Math.round((endTime - startTime) / 60000))
+      // Notify session completion with sound and browser notification
+      notifications.notifySessionComplete(timerType, duration)
       showRefectionModal()
     } else {
       // If session was stopped/cancelled, do not save
@@ -246,8 +341,30 @@ export function startTimer(container) {
       <div id="reflectionModal" class="reflection-modal" role="dialog" aria-labelledby="reflection-title" aria-describedby="reflection-description">
         <div class="reflection-header">
           <h3 id="reflection-title">🎯 Session Complete!</h3>
-          <p id="reflection-description">Would you like to reflect and/or save this session?</p>
+          <p id="reflection-description">How was your session? Share your thoughts and mood.</p>
         </div>
+        
+        <div class="mood-selector-group">
+          <label class="mood-label">How did this session feel?</label>
+          <div class="mood-options" role="radiogroup" aria-labelledby="mood-label">
+            ${MOOD_OPTIONS.map(
+              (mood) => `
+              <button 
+                type="button" 
+                class="mood-btn" 
+                data-mood="${mood.id}"
+                aria-label="${mood.label}"
+                title="${mood.label}"
+                style="--mood-color: ${mood.color}"
+              >
+                <span class="mood-icon">${mood.icon}</span>
+                <span class="mood-text">${mood.label}</span>
+              </button>
+            `,
+            ).join('')}
+          </div>
+        </div>
+        
         <div class="reflection-input-group">
           <label for="reflection-text">💭 Your Reflection</label>
           <input 
@@ -288,7 +405,26 @@ export function startTimer(container) {
       'Modal HTML rendered:',
       document.getElementById('reflectionModal'),
     )
-    document.getElementById('saveButton').onclick = saveCurrentSession
+
+    // Handle mood selection
+    let selectedMood = null
+    const moodButtons = document.querySelectorAll('.mood-btn')
+    moodButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        // Clear previous selection
+        moodButtons.forEach((b) => b.classList.remove('selected'))
+        // Select current
+        btn.classList.add('selected')
+        selectedMood = btn.getAttribute('data-mood')
+
+        // Update button states for accessibility
+        moodButtons.forEach((b) => b.setAttribute('aria-checked', 'false'))
+        btn.setAttribute('aria-checked', 'true')
+      })
+    })
+
+    document.getElementById('saveButton').onclick = () =>
+      saveCurrentSession(selectedMood)
     document.getElementById('dontSaveButton').onclick = () => {
       toast.info('Session skipped. Ready for your next focus session!')
       showWelcomeScreen()
@@ -304,7 +440,7 @@ export function startTimer(container) {
     })
   }
 
-  async function saveCurrentSession() {
+  async function saveCurrentSession(selectedMood = null) {
     const saveBtn = document.getElementById('saveButton')
     const reflection = document.getElementById('reflection-text').value
     saveBtn.disabled = true
@@ -315,16 +451,32 @@ export function startTimer(container) {
       duration,
       type: timerType,
       reflection,
+      mood: selectedMood,
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString(),
     }
     try {
       await saveSession(sessionData)
-      toast.save('Session saved successfully! Your progress has been recorded.')
+
+      // Record session for streak tracking
+      const { streakData } = recordSession(timerType, endTime)
+
+      // Show appropriate success message based on streak
+      if (streakData.currentStreak > 1) {
+        toast.save(`Session saved! 🔥 ${streakData.currentStreak} day streak!`)
+      } else {
+        toast.save(
+          'Session saved successfully! Your progress has been recorded.',
+        )
+      }
+
       setTimeout(() => {
         showWelcomeScreen()
         if (historyApi && typeof historyApi.refresh === 'function') {
           historyApi.refresh()
+        }
+        if (analyticsApi && typeof analyticsApi.refresh === 'function') {
+          analyticsApi.refresh()
         }
       }, 1000)
     } catch (err) {
@@ -384,6 +536,76 @@ export function startTimer(container) {
         color: var(--text-secondary);
         font-size: 1rem;
         margin: 0;
+      }
+      
+      .mood-selector-group {
+        margin-bottom: var(--spacing-lg);
+        text-align: left;
+      }
+      
+      .mood-label {
+        display: block;
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: var(--spacing-sm);
+      }
+      
+      .mood-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing-md);
+      }
+      
+      .mood-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-sm);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-md);
+        color: var(--text-secondary);
+        font-family: inherit;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .mood-btn:hover {
+        background: rgba(var(--mood-color), 0.1);
+        border-color: rgba(var(--mood-color), 0.3);
+        color: var(--text-primary);
+        transform: translateY(-1px);
+      }
+      
+      .mood-btn.selected {
+        background: rgba(var(--mood-color), 0.15);
+        border-color: rgba(var(--mood-color), 0.5);
+        color: var(--text-primary);
+        box-shadow: 0 0 10px rgba(var(--mood-color), 0.3);
+      }
+      
+      .mood-btn:focus {
+        outline: 2px solid rgba(79, 172, 254, 0.5);
+        outline-offset: 2px;
+      }
+      
+      .mood-icon {
+        font-size: 1.2rem;
+        display: block;
+      }
+      
+      .mood-text {
+        font-weight: 500;
+        font-size: 0.75rem;
+        text-align: center;
       }
       
       .reflection-input-group {
@@ -467,9 +689,7 @@ export function startTimer(container) {
   }
 }
 
-// INSTRUCTIONS: To enable the theme toggle, add this button to your HTML (e.g. in index.html or as the first child of #app):
-// <button class="theme-toggle" aria-pressed="false" title="Switch to light mode">🌙</button>
-// Then call setupThemeToggle() once on page load.
+// TIMER COMPONENT INSTRUCTIONS:
 // 1. On page load, create and display a "Start Timer" button
 
 // 2. When "Start Timer" is clicked:
