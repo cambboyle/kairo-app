@@ -610,6 +610,41 @@ body {
   border-color: var(--primary-hover);
 }
 
+.control-btn.tertiary {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  padding: var(--spacing-sm);
+  min-width: 44px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-btn.tertiary:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-color: var(--border-emphasis);
+}
+
+.control-btn.secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.control-btn.secondary:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-emphasis);
+}
+
+.control-btn.secondary:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+}
+
 /* Additional Button Styles */
 .btn {
   padding: var(--spacing-md) var(--spacing-xl);
@@ -1402,12 +1437,14 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  z-index: 1;
 }
 
 .progress-ring {
   transform: rotate(-90deg);
-  width: 280px;
-  height: 280px;
+  width: 200px;
+  height: 200px;
+  display: block;
 }
 
 .progress-ring-circle {
@@ -1415,8 +1452,8 @@ body {
 }
 
 .progress-ring-progress {
-  stroke-dasharray: calc(2 * 3.14159 * 135);
-  stroke-dashoffset: calc(2 * 3.14159 * 135 * (1 - var(--progress, 0) / 100));
+  stroke-dasharray: calc(2 * 3.14159 * 95);
+  stroke-dashoffset: calc(2 * 3.14159 * 95 * (1 - var(--progress, 0) / 100));
   transition: stroke-dashoffset 0.5s ease;
   stroke-linecap: round;
   filter: drop-shadow(0 0 3px rgba(79, 86, 79, 0.3));
@@ -1810,18 +1847,67 @@ body {
   }
 }
 
-/* Mobile responsive adjustments */
-@media (max-width: 640px) {
-  .session-notes-container {
-    margin: var(--spacing-md) 0;
-  }
+/* Session Templates Integration */
+.templates-header-nav {
+  margin-bottom: var(--spacing-lg);
+}
 
-  .session-notes {
-    padding: var(--spacing-sm);
-  }
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
 
-  .session-notes textarea {
-    font-size: var(--text-xs);
-    padding: var(--spacing-xs);
+.back-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-emphasis);
+}
+
+.back-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.3);
+}
+
+/* Timer controls layout for multiple buttons */
+.timer-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.timer-controls .control-btn:not(.tertiary) {
+  flex: 1;
+  min-width: 120px;
+  max-width: 160px;
+}
+
+.timer-controls .control-btn.tertiary {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 480px) {
+  .timer-controls {
+    flex-direction: column;
+  }
+  
+  .timer-controls .control-btn:not(.tertiary) {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .timer-controls .control-btn.tertiary {
+    width: 44px;
+    align-self: center;
   }
 }

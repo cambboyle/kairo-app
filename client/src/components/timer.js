@@ -14,7 +14,12 @@ import {
   DURATION_PRESETS,
   getSessionIcon,
   getDefaultDuration,
+  trackTemplateUsage,
 } from '../config/sessionConfig'
+import {
+  createSessionTemplates,
+  injectTemplateStyles,
+} from './sessionTemplates'
 
 export function startTimer(container) {
   console.log('startTimer called', container)
@@ -27,6 +32,11 @@ export function startTimer(container) {
   let intervalId = null
   let isTimerPaused = false
   let isEnded = false
+  let showingTemplates = false
+  let templatesApi = null
+
+  // Inject template styles
+  injectTemplateStyles()
 
   function formatTime(secs) {
     const minutes = String(Math.floor(secs / 60)).padStart(2, '0')
@@ -109,7 +119,15 @@ export function startTimer(container) {
           <button id="start-btn" class="control-btn primary" aria-describedby="start-help">
             Start Session
           </button>
+          <button id="templates-btn" class="control-btn secondary" aria-describedby="templates-help">
+            📋 Templates
+          </button>
+          <button id="save-template-btn" class="control-btn tertiary" aria-describedby="save-help" title="Save current settings as template">
+            💾
+          </button>
           <div id="start-help" class="sr-only">Begin your focus session</div>
+          <div id="templates-help" class="sr-only">Choose from pre-configured session templates</div>
+          <div id="save-help" class="sr-only">Save current settings as a custom template</div>
         </div>
       </div>
     `
@@ -172,6 +190,8 @@ export function startTimer(container) {
     })
 
     document.getElementById('start-btn').onclick = startSession
+    document.getElementById('templates-btn').onclick = showTemplates
+    document.getElementById('save-template-btn').onclick = saveCustomTemplate
   }
 
   async function startSession() {
@@ -196,24 +216,24 @@ export function startTimer(container) {
       <div class="timer-content">
         <div class="timer-circle active" role="timer" aria-live="polite">
           <div class="timer-progress">
-            <svg class="progress-ring" width="280" height="280">
+            <svg class="progress-ring" width="200" height="200">
               <circle
                 class="progress-ring-circle"
                 stroke="rgba(79, 86, 79, 0.2)"
                 stroke-width="3"
                 fill="transparent"
-                r="135"
-                cx="140"
-                cy="140"
+                r="95"
+                cx="100"
+                cy="100"
               />
               <circle
                 class="progress-ring-progress"
                 stroke="var(--primary)"
                 stroke-width="3"
                 fill="transparent"
-                r="135"
-                cx="140"
-                cy="140"
+                r="95"
+                cx="100"
+                cy="100"
                 style="--progress: 0"
               />
             </svg>
@@ -287,6 +307,7 @@ export function startTimer(container) {
 
     // Start countdown
     const totalTime = timeLeft
+
     intervalId = setInterval(() => {
       if (!isTimerPaused && timeLeft > 0) {
         timeLeft--
@@ -791,6 +812,109 @@ export function startTimer(container) {
     `
     document.head.appendChild(style)
   }
+
+  function handleTemplateSelection(template) {
+    if (template === null) {
+      // Custom session - show regular timer setup
+      showingTemplates = false
+      showWelcomeScreen()
+      return
+    }
+
+    // Track template usage
+    trackTemplateUsage(template.id)
+
+    // Apply template settings
+    document.getElementById('timer-minutes').value = template.duration
+    document.getElementById('timer-type').value = template.type
+
+    // Update display
+    const display = document.getElementById('timer-display')
+    if (display) {
+      display.textContent = formatTime(template.duration * 60)
+    }
+
+    // Update preset button selection
+    const presetButtons = document.querySelectorAll('.duration-preset-btn')
+    presetButtons.forEach((btn) => btn.removeAttribute('data-selected'))
+    const matchingPreset = [...presetButtons].find(
+      (btn) =>
+        parseInt(btn.getAttribute('data-duration')) === template.duration,
+    )
+    if (matchingPreset) {
+      matchingPreset.setAttribute('data-selected', 'true')
+    }
+
+    // Show success message
+    toast.success(`${template.icon} ${template.name} template applied`)
+
+    // Switch back to welcome screen
+    showingTemplates = false
+    showWelcomeScreen()
+  }
+
+  function showTemplates() {
+    showingTemplates = true
+
+    container.innerHTML = `
+      <div class="timer-content">
+        <div class="templates-header-nav">
+          <button id="back-to-timer" class="back-btn" aria-label="Back to timer setup">
+            <span>←</span> Back to Timer
+          </button>
+        </div>
+        <div id="session-templates-container"></div>
+      </div>
+    `
+
+    // Initialize templates component
+    const templatesContainer = document.getElementById(
+      'session-templates-container',
+    )
+    templatesApi = createSessionTemplates(
+      templatesContainer,
+      handleTemplateSelection,
+    )
+
+    // Add back button functionality
+    document.getElementById('back-to-timer').onclick = () => {
+      showingTemplates = false
+      showWelcomeScreen()
+    }
+  }
+
+  function saveCustomTemplate() {
+    const minutes =
+      parseInt(document.getElementById('timer-minutes').value, 10) || 25
+    const type = document.getElementById('timer-type').value
+
+    // Simple prompt for template name (could be enhanced with a modal later)
+    const templateName = prompt('Enter a name for your custom template:')
+    if (!templateName || templateName.trim() === '') return
+
+    const customTemplate = {
+      id: `custom-${Date.now()}`,
+      name: templateName.trim(),
+      description: `Custom ${type.toLowerCase()} session`,
+      icon: getSessionIcon(type),
+      type: type,
+      duration: minutes,
+      category: 'custom',
+      tags: ['custom', 'personal'],
+      isCustom: true,
+    }
+
+    // Save to localStorage
+    const savedTemplates = JSON.parse(
+      localStorage.getItem('customTemplates') || '[]',
+    )
+    savedTemplates.push(customTemplate)
+    localStorage.setItem('customTemplates', JSON.stringify(savedTemplates))
+
+    toast.success(`${customTemplate.icon} "${templateName}" template saved!`)
+  }
+
+  // ...existing code...
 }
 
 // TIMER COMPONENT INSTRUCTIONS:
