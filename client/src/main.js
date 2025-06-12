@@ -8,7 +8,6 @@ import {
 } from './components/analytics'
 import { addSettingsButton, injectSettingsStyles } from './components/settings'
 import { initializeTheme } from './utils/theme'
-import { keyboardManager } from './utils/keyboardManager'
 
 let historyApi
 let analyticsApi
