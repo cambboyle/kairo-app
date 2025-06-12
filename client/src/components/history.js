@@ -95,10 +95,12 @@ export function sessionHistory(container) {
           ${sessions
             .map((s, index) => {
               const hasReflection = s.reflection && s.reflection.trim()
+              const hasNotes = s.notes && s.notes.trim()
+              const hasExpandableContent = hasReflection || hasNotes
               const reflectionId = `reflection-${index}`
               return `
-                <div class="history-item${hasReflection ? ' has-reflection' : ''}" role="listitem" tabindex="${hasReflection ? '0' : '-1'}" aria-expanded="false" aria-controls="${hasReflection ? reflectionId : ''}" id="history-item-${index}">
-                  <button class="history-row-main" tabindex="-1" aria-label="${s.type} session on ${new Date(s.startTime).toLocaleDateString()}${hasReflection ? ', expand to view reflection' : ''}" ${hasReflection ? '' : 'disabled'}>
+                <div class="history-item${hasExpandableContent ? ' has-reflection' : ''}" role="listitem" tabindex="${hasExpandableContent ? '0' : '-1'}" aria-expanded="false" aria-controls="${hasExpandableContent ? reflectionId : ''}" id="history-item-${index}">
+                  <button class="history-row-main" tabindex="-1" aria-label="${s.type} session on ${new Date(s.startTime).toLocaleDateString()}${hasExpandableContent ? ', expand to view details' : ''}" ${hasExpandableContent ? '' : 'disabled'}>
                     <span class="history-icon" aria-hidden="true">${getSessionIcon(s.type)}</span>
                     <div class="history-content">
                       <div class="history-session-type">${s.type}</div>
@@ -110,8 +112,8 @@ export function sessionHistory(container) {
                   </button>
                   <div class="history-actions">
                     ${
-                      hasReflection
-                        ? `<div class="expansion-indicator" title="Click to view reflection">
+                      hasExpandableContent
+                        ? `<div class="expansion-indicator" title="Click to view details">
                       <span class="dropdown-arrow" aria-hidden="true">▼</span>
                     </div>`
                         : ''
@@ -129,10 +131,35 @@ export function sessionHistory(container) {
                   </div>
                 </div>
                 ${
-                  hasReflection
+                  hasExpandableContent
                     ? `
                   <div id="${reflectionId}" class="reflection-row" style="display:none;">
-                    <div class="reflection-content">${s.reflection.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                    ${
+                      hasNotes
+                        ? `
+                      <div class="session-details-section">
+                        <div class="session-details-header">
+                          <span class="details-icon">📝</span>
+                          <span class="details-title">Session Notes</span>
+                        </div>
+                        <div class="session-notes-content">${s.notes.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>')}</div>
+                      </div>
+                    `
+                        : ''
+                    }
+                    ${
+                      hasReflection
+                        ? `
+                      <div class="session-details-section">
+                        <div class="session-details-header">
+                          <span class="details-icon">💭</span>
+                          <span class="details-title">Reflection</span>
+                        </div>
+                        <div class="reflection-content">${s.reflection.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                      </div>
+                    `
+                        : ''
+                    }
                   </div>
                 `
                     : ''

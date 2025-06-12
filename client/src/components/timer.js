@@ -191,6 +191,11 @@ export function startTimer(container) {
     // Play start sound and notify
     await notifications.notifySessionStart(timerType, mins)
 
+    // Initialize session notes
+    if (window.sessionNotesManager) {
+      window.sessionNotesManager.onSessionStart()
+    }
+
     // Show active timer UI
     container.innerHTML = `
       <div class="timer-content">
@@ -294,6 +299,11 @@ export function startTimer(container) {
     isEnded = true
     endTime = new Date()
 
+    // Handle session notes
+    if (window.sessionNotesManager) {
+      window.sessionNotesManager.onSessionEnd()
+    }
+
     if (completed) {
       // Calculate duration for notification
       const duration = Math.max(1, Math.round((endTime - startTime) / 60000))
@@ -337,12 +347,34 @@ export function startTimer(container) {
   function showRefectionModal() {
     console.log('showRefectionModal called')
     injectReflectionModalStyles()
+
+    // Get session notes if available
+    const sessionNotes = window.sessionNotesManager
+      ? window.sessionNotesManager.onSessionSave()
+      : ''
+
     container.innerHTML = `
       <div id="reflectionModal" class="reflection-modal" role="dialog" aria-labelledby="reflection-title" aria-describedby="reflection-description">
         <div class="reflection-header">
           <h3 id="reflection-title">🎯 Session Complete!</h3>
           <p id="reflection-description">How was your session? Share your thoughts and mood.</p>
         </div>
+        
+        ${
+          sessionNotes
+            ? `
+        <div class="session-notes-summary">
+          <div class="notes-summary-header">
+            <span class="notes-icon">📝</span>
+            <span class="notes-title">Your Session Notes</span>
+          </div>
+          <div class="notes-summary-content">
+            <div class="notes-text">${sessionNotes}</div>
+          </div>
+        </div>
+        `
+            : ''
+        }
         
         <div class="mood-selector-group">
           <label class="mood-label">How did this session feel?</label>
@@ -430,19 +462,17 @@ export function startTimer(container) {
       showWelcomeScreen()
     }
     document.getElementById('reflection-text').focus()
-    // Keyboard navigation support
-    const modal = document.getElementById('reflectionModal')
-    modal.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        toast.info('Session skipped. Ready for your next focus session!')
-        showWelcomeScreen()
-      }
-    })
   }
 
   async function saveCurrentSession(selectedMood = null) {
     const saveBtn = document.getElementById('saveButton')
     const reflection = document.getElementById('reflection-text').value
+
+    // Get session notes
+    const sessionNotes = window.sessionNotesManager
+      ? window.sessionNotesManager.onSessionSave()
+      : ''
+
     saveBtn.disabled = true
     saveBtn.textContent = '💾 Saving...'
     // Calculate duration in minutes
@@ -451,6 +481,7 @@ export function startTimer(container) {
       duration,
       type: timerType,
       reflection,
+      notes: sessionNotes,
       mood: selectedMood,
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString(),
@@ -460,6 +491,11 @@ export function startTimer(container) {
 
       // Record session for streak tracking
       const { streakData } = recordSession(timerType, endTime)
+
+      // Clean up session notes after successful save
+      if (window.sessionNotesManager) {
+        window.sessionNotesManager.cleanup()
+      }
 
       // Show appropriate success message based on streak
       if (streakData.currentStreak > 1) {
@@ -536,6 +572,52 @@ export function startTimer(container) {
         color: var(--text-secondary);
         font-size: 1rem;
         margin: 0;
+      }
+      
+      .session-notes-summary {
+        background: var(--surface-subtle);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+        text-align: left;
+      }
+      
+      .notes-summary-header {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing-sm);
+      }
+      
+      .notes-summary-header .notes-icon {
+        color: var(--text-secondary);
+        font-size: 1rem;
+      }
+      
+      .notes-summary-header .notes-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      
+      .notes-summary-content {
+        background: var(--surface-glass);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        padding: var(--spacing-sm);
+      }
+      
+      .notes-text {
+        color: var(--text-primary);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        max-height: 80px;
+        overflow-y: auto;
       }
       
       .mood-selector-group {

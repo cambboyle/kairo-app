@@ -8,6 +8,7 @@ import {
 } from './components/analytics'
 import { addSettingsButton, injectSettingsStyles } from './components/settings'
 import { initializeTheme } from './utils/theme'
+import { sessionNotesManager } from './utils/sessionNotes'
 
 let historyApi
 let analyticsApi
@@ -73,6 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
       announcement.parentNode.removeChild(announcement)
     }
   }, 3000)
+
+  // Make managers available globally for component integration
+  window.sessionNotesManager = sessionNotesManager
+  window.analyticsApi = analyticsApi
 })
 
-export { historyApi, analyticsApi }
+export { historyApi, analyticsApi, sessionNotesManager }
