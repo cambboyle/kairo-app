@@ -523,13 +523,11 @@ class EnhancedSessionNotesManager {
   }
 
   clearNotes() {
-    this.notes = ''
-    const textarea = this.notesContainer.querySelector(
-      '.session-notes-textarea',
-    )
-    textarea.value = ''
-    this.updateWordCount()
-    this.updateStatus('saved')
+    if (this.notesTextarea) {
+      this.notesTextarea.value = ''
+      this.notesTextarea.focus()
+      this.updateSaveStatus('cleared')
+    }
   }
 
   setNotes(notes) {
@@ -640,21 +638,24 @@ class EnhancedSessionNotesManager {
   }
 
   updateSaveStatus(status) {
-    const saveStatus = this.notesContainer.querySelector('.save-status')
-    if (!saveStatus) return
-
-    if (status === 'saving') {
-      saveStatus.textContent = '⋯'
-      saveStatus.title = 'Saving...'
-      saveStatus.style.opacity = '0.6'
-    } else if (status === 'saved') {
-      saveStatus.textContent = '✓'
-      saveStatus.title = 'Auto-saved'
-      saveStatus.style.opacity = '1'
-    } else if (status === 'error') {
-      saveStatus.textContent = '⚠'
-      saveStatus.title = 'Save failed'
-      saveStatus.style.opacity = '1'
+    if (this.statusElement) {
+      switch (status) {
+        case 'saving':
+          this.statusElement.textContent = '💾 Saving...'
+          this.statusElement.className = 'notes-status saving'
+          break
+        case 'saved':
+          this.statusElement.textContent = '✓ Saved'
+          this.statusElement.className = 'notes-status saved'
+          break
+        case 'cleared':
+          this.statusElement.textContent = '🗑️ Cleared'
+          this.statusElement.className = 'notes-status cleared'
+          break
+        default:
+          this.statusElement.textContent = ''
+          this.statusElement.className = 'notes-status'
+      }
     }
   }
 }
