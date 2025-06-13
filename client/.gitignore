@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Production build
+dist/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files - NOT COMMITTED (local development only)
+*test*.html
+test-*.html
+diagnostic.html
+dev.html
+integration-test.html
+progress-test.html
+
+# Development utilities
+SECURITY.md
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

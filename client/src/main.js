@@ -8,7 +8,7 @@ import {
 } from './components/analytics'
 import { addSettingsButton, injectSettingsStyles } from './components/settings'
 import { initializeTheme } from './utils/theme'
-import { sessionNotesManager } from './utils/sessionNotes'
+import { enhancedSessionNotesManager } from './utils/sessionNotesImproved'
 
 let historyApi
 let analyticsApi
@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000)
 
   // Make managers available globally for component integration
-  window.sessionNotesManager = sessionNotesManager
+  window.sessionNotesManager = enhancedSessionNotesManager
   window.analyticsApi = analyticsApi
 })
 
-export { historyApi, analyticsApi, sessionNotesManager }
+export { historyApi, analyticsApi, enhancedSessionNotesManager }

@@ -171,15 +171,18 @@ export function createSettingsPanel() {
       const sessions = await response.json()
 
       // Convert to CSV
-      const csvHeader = 'Date,Type,Duration (min),Reflection,Mood\n'
+      const csvHeader = 'Date,Type,Duration (min),Notes,Reflection,Mood\n'
       const csvData = sessions
         .map((session) => {
           const date = new Date(session.startTime).toLocaleDateString()
+          const notes = session.notes
+            ? `"${session.notes.replace(/"/g, '""')}"`
+            : ''
           const reflection = session.reflection
             ? `"${session.reflection.replace(/"/g, '""')}"`
             : ''
           const mood = session.mood || ''
-          return `${date},${session.type},${session.duration},${reflection},${mood}`
+          return `${date},${session.type},${session.duration},${notes},${reflection},${mood}`
         })
         .join('\n')
 
