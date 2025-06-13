@@ -58,3 +58,4 @@ lerna-debug.log*
 /client/src/components/historyOld.js
 /client/src/utils/sessionNotesEnhanced.js
 /client/src/utils/keyboardManager.js
+.vercel
