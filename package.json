@@ -15,7 +15,13 @@
   "scripts": {
     "lint": "eslint .",
     "prepare": "husky",
-    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\""
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "build": "npm run build --prefix client",
+    "start": "npm run preview --prefix client",
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "build:client": "npm run build --prefix client",
+    "preview": "npm run preview --prefix client"
   },
   "lint-staged": {
     "**/*.js": [
