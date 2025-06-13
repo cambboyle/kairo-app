@@ -254,7 +254,14 @@ export function startTimer(container) {
         // Update progress ring
         if (progressRing) {
           const progress = ((totalTime - timeLeft) / totalTime) * 100
+          const circumference = 2 * Math.PI * 135 // radius = 135
+          const offset = circumference * (1 - progress / 100)
+          
+          progressRing.style.strokeDasharray = circumference
+          progressRing.style.strokeDashoffset = offset
           progressRing.style.setProperty('--progress', progress)
+          
+          console.log(`Timer progress: ${progress.toFixed(1)}% (${timeLeft}/${totalTime})`)
         }
 
         // Check if timer is complete

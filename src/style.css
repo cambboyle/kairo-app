@@ -1416,7 +1416,7 @@ body {
 
 .progress-ring-progress {
   stroke-dasharray: calc(2 * 3.14159 * 135);
-  stroke-dashoffset: calc(2 * 3.14159 * 135 * (1 - var(--progress, 0) / 100));
+  stroke-dashoffset: calc(2 * 3.14159 * 135);
   transition: stroke-dashoffset 0.5s ease;
   stroke-linecap: round;
   filter: drop-shadow(0 0 3px rgba(79, 86, 79, 0.3));
