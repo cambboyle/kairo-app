@@ -32,3 +32,30 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Documentation and summaries (development-only)
+*_SUMMARY.md
+*SUMMARY.md
+
+# Test files and development utilities
+/client/test-*.html
+/client/integration-test.html
+/client/enhanced-notes-test.html
+/client/diagnostic.html
+/client/dev.html
+/client/progress-test.html
+/client/TESTING.md
+/client/SECURITY.md
+/client/CSS_REFACTOR_SUMMARY.md
+/client/ENHANCED_NOTES_MERGE_SUMMARY.md
+
+# Development environment files
+/client/.env.development
+/client/.env.production
+
+# Experimental and development-only code files
+/client/src/components/historyNew.js
+/client/src/components/historyOld.js
+/client/src/utils/sessionNotesEnhanced.js
+/client/src/utils/keyboardManager.js
+.vercel

@@ -201,24 +201,24 @@ export function startTimer(container) {
       <div class="timer-content">
         <div class="timer-circle active" role="timer" aria-live="polite">
           <div class="timer-progress">
-            <svg class="progress-ring" width="280" height="280">
+            <svg class="progress-ring" width="200" height="200">
               <circle
                 class="progress-ring-circle"
                 stroke="rgba(79, 86, 79, 0.2)"
                 stroke-width="3"
                 fill="transparent"
-                r="135"
-                cx="140"
-                cy="140"
+                r="95"
+                cx="100"
+                cy="100"
               />
               <circle
                 class="progress-ring-progress"
                 stroke="var(--primary)"
                 stroke-width="3"
                 fill="transparent"
-                r="135"
-                cx="140"
-                cy="140"
+                r="95"
+                cx="100"
+                cy="100"
                 style="--progress: 0"
               />
             </svg>
@@ -249,12 +249,19 @@ export function startTimer(container) {
 
         if (display) {
           display.textContent = formatTime(timeLeft)
-        }
-
-        // Update progress ring
+        } // Update progress ring
         if (progressRing) {
           const progress = ((totalTime - timeLeft) / totalTime) * 100
+          const circumference = 2 * Math.PI * 95 // radius = 95
+          const offset = circumference * (1 - progress / 100)
+
+          progressRing.style.strokeDasharray = circumference
+          progressRing.style.strokeDashoffset = offset
           progressRing.style.setProperty('--progress', progress)
+
+          console.log(
+            `Timer progress: ${progress.toFixed(1)}% (${timeLeft}/${totalTime})`,
+          )
         }
 
         // Check if timer is complete
@@ -350,7 +357,7 @@ export function startTimer(container) {
 
     // Get session notes if available
     const sessionNotes = window.sessionNotesManager
-      ? window.sessionNotesManager.onSessionSave()
+      ? window.sessionNotesManager.getNotes()
       : ''
 
     container.innerHTML = `
@@ -470,7 +477,7 @@ export function startTimer(container) {
 
     // Get session notes
     const sessionNotes = window.sessionNotesManager
-      ? window.sessionNotesManager.onSessionSave()
+      ? window.sessionNotesManager.getNotes()
       : ''
 
     saveBtn.disabled = true
