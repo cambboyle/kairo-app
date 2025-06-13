@@ -3,6 +3,7 @@
 ## 🚀 Deployment
 
 ### Branches
+
 - **`main`** - Production branch (auto-deploys to Vercel)
 - **`dev`** - Development branch (preview deployments)
 - **`feature/*`** - Feature branches (preview deployments)
@@ -10,6 +11,7 @@
 ### Environment Setup
 
 #### Development
+
 ```bash
 # Install dependencies
 npm install
@@ -21,6 +23,7 @@ npm run dev
 ```
 
 #### Production Build
+
 ```bash
 # Build for production
 npm run build
@@ -32,11 +35,13 @@ npm run preview
 ### Deployment Strategy
 
 #### Frontend (Vercel)
+
 - **Production**: Auto-deploy from `main` branch
 - **Preview**: Auto-deploy from `dev` and feature branches
 - **Domain**: [Will be set after Vercel deployment]
 
 #### Backend (Current: Local)
+
 - MongoDB connection via environment variables
 - API endpoints running locally during development
 - TODO: Consider deploying to Vercel Functions or Railway
@@ -44,12 +49,14 @@ npm run preview
 ### Environment Variables
 
 #### Required for Production:
+
 ```env
 VITE_API_URL=https://your-backend-url.com
 VITE_ENVIRONMENT=production
 ```
 
 #### Development:
+
 ```env
 VITE_API_URL=http://localhost:3000
 VITE_ENVIRONMENT=development
@@ -58,6 +65,7 @@ VITE_ENVIRONMENT=development
 ### Workflow
 
 1. **Feature Development**:
+
    ```bash
    git checkout dev
    git checkout -b feature/new-feature
@@ -67,6 +75,7 @@ VITE_ENVIRONMENT=development
    ```
 
 2. **Testing**:
+
    ```bash
    git checkout dev
    git merge feature/new-feature

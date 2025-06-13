@@ -10,18 +10,18 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
-    "prettier": "^3.5.3"
+    "prettier": "^3.5.3",
+    "vite": "^6.3.5"
   },
   "scripts": {
     "lint": "eslint .",
     "prepare": "husky",
-    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
-    "build": "npm run build --prefix client",
-    "start": "npm run preview --prefix client",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "dev:client": "npm run dev --prefix client",
     "dev:server": "npm run dev --prefix server",
-    "build:client": "npm run build --prefix client",
-    "preview": "npm run preview --prefix client"
+    "build:client": "npm run build --prefix client"
   },
   "lint-staged": {
     "**/*.js": [

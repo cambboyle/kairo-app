@@ -1,0 +1,104 @@
+/* Kairo - Modular CSS Architecture */
+/* Japanese Zen Minimalism Design System */
+
+/* Foundation Layer - Core design tokens and resets */
+@import './foundation/variables.css';
+@import './foundation/reset.css';
+
+/* Component Layer - Reusable UI components */
+@import './components/buttons.css';
+
+/* Feature Layer - Feature-specific styles */
+@import './features/timer.css';
+@import './features/history.css';
+@import './features/session-notes.css';
+
+/* 
+  TODO: Extract remaining components:
+  - History components (history sidebar, detailed modal)
+  - Form components (inputs, dropdowns, etc.)
+  - Navigation components (tabs, menus)
+  - Modal/overlay components
+  - Analytics/charts components
+  - Settings components
+  - Animations and utilities
+*/
+
+/* Temporary: Remaining styles from original file */
+/* These will be gradually extracted into proper modules */
+
+/* Responsive Layout */
+@media (max-width: 1200px) {
+  .main-content {
+    gap: var(--spacing-xl);
+  }
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    max-width: 98vw;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+    gap: var(--spacing-lg);
+  }
+
+  .header {
+    max-width: 98vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-2xl);
+    height: auto;
+    min-height: auto;
+  }
+
+  .timer-container,
+  .history-section {
+    width: 100%;
+    max-width: 500px;
+    justify-self: center;
+    align-self: stretch;
+  }
+
+  .divider {
+    display: block; /* Show on mobile when stacked */
+  }
+
+  #app {
+    padding: var(--spacing-md);
+  }
+
+  .header {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .logo {
+    font-size: var(--text-2xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    gap: var(--spacing-xl);
+  }
+
+  .timer-container,
+  .history-section {
+    max-width: 100%;
+  }
+
+  #app {
+    padding: var(--spacing-sm);
+  }
+
+  .header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+}

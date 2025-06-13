@@ -1,0 +1,193 @@
+/* Button Components */
+/* Japanese Zen Minimalism - Clean & Tactile Interactions */
+
+/* Control Buttons - Minimal & Tactile */
+.control-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  min-width: 100px;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.control-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-emphasis);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.control-btn:active {
+  transform: translateY(0);
+}
+
+.control-btn:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  box-shadow: 0 0 0 2px var(--accent-light);
+  z-index: 2;
+}
+
+.control-btn.primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.control-btn.primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+/* General Button Styles */
+.btn {
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-emphasis);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  box-shadow: 0 0 0 2px var(--accent-light);
+  z-index: 2;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn:disabled:hover {
+  background: var(--surface);
+  border-color: var(--border-subtle);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Button Variants */
+.btn.btn-primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.btn.btn-primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.btn.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-color: var(--border-emphasis);
+}
+
+.btn.btn-secondary:hover {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
+.btn.btn-warning {
+  background: #f59e0b;
+  color: white;
+  border-color: #f59e0b;
+}
+
+.btn.btn-warning:hover {
+  background: #d97706;
+  border-color: #d97706;
+}
+
+/* Small Button Variant */
+.btn-sm {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--text-sm);
+  min-width: 80px;
+}
+
+/* Large Button Variant */
+.btn-lg {
+  padding: var(--spacing-lg) var(--spacing-2xl);
+  font-size: var(--text-lg);
+  min-width: 160px;
+}
+
+/* Icon Buttons */
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  min-width: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+}
+
+.btn-icon-sm {
+  width: 32px;
+  height: 32px;
+}
+
+.btn-icon-lg {
+  width: 48px;
+  height: 48px;
+}
+
+/* Responsive Button Adjustments */
+@media (max-width: 640px) {
+  .control-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    min-width: 80px;
+    font-size: var(--text-xs);
+  }
+
+  .btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    min-width: 100px;
+    font-size: var(--text-sm);
+  }
+}
