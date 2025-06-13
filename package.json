@@ -20,12 +20,13 @@
   "scripts": {
     "lint": "eslint .",
     "prepare": "husky",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "npm run dev --prefix client",
     "dev:server": "npm run dev --prefix server",
-    "build:client": "npm run build --prefix client"
+    "build": "npm run build --prefix client",
+    "build:client": "npm run build --prefix client",
+    "start:server": "npm start --prefix server",
+    "install:all": "npm install && npm install --prefix client && npm install --prefix server"
   },
   "lint-staged": {
     "**/*.js": [
