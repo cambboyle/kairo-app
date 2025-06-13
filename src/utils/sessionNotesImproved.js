@@ -157,6 +157,7 @@ const globalSessionNotesManager = new SessionNotesManager()
 // Exported functions for external use
 export const initializeSessionNotes = (container) =>
   globalSessionNotesManager.initialize(container)
+export const enhancedSessionNotesManager = globalSessionNotesManager
 export const showSessionNotes = () => globalSessionNotesManager.showNotes()
 export const hideSessionNotes = () => globalSessionNotesManager.hideNotes()
 export const clearSessionNotes = () => globalSessionNotesManager.clearNotes()
