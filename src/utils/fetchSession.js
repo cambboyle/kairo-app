@@ -7,7 +7,10 @@ export async function fetchSessions() {
     }
     return await response.json()
   } catch (error) {
-    console.error('Error fetching sessions:', error)
+    console.warn(
+      'API not available, using localStorage fallback:',
+      error.message,
+    )
     // Fallback to localStorage when API is not available
     const localSessions = localStorage.getItem('kairo-sessions')
     return localSessions ? JSON.parse(localSessions) : []
@@ -30,10 +33,14 @@ export async function saveSession(sessionData) {
 
     return await response.json()
   } catch (error) {
-    console.error('Error saving session:', error)
+    console.warn('API not available, saving to localStorage:', error.message)
     // Fallback to localStorage when API is not available
     const existingSessions = await fetchSessions()
-    const newSession = { ...sessionData, id: Date.now().toString() }
+    const newSession = {
+      ...sessionData,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+    }
     const updatedSessions = [...existingSessions, newSession]
     localStorage.setItem('kairo-sessions', JSON.stringify(updatedSessions))
     return newSession
@@ -52,7 +59,10 @@ export async function deleteSession(sessionId) {
 
     return await response.json()
   } catch (error) {
-    console.error('Error deleting session:', error)
+    console.warn(
+      'API not available, deleting from localStorage:',
+      error.message,
+    )
     // Fallback to localStorage when API is not available
     const existingSessions = await fetchSessions()
     const updatedSessions = existingSessions.filter(
