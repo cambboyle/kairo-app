@@ -1,0 +1,9 @@
+/* Analytics/Charts Styles (placeholder) */
+.analytics-container {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-subtle);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+}

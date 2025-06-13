@@ -1,0 +1,31 @@
+/* Session Notes Styles */
+.session-notes-container {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-subtle);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+}
+
+.session-notes-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--text-primary);
+}
+
+.session-notes-textarea {
+  width: 100%;
+  min-height: 60px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  padding: var(--spacing-sm);
+  font-size: var(--text-base);
+  margin-top: var(--spacing-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  resize: vertical;
+}

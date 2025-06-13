@@ -1,0 +1,51 @@
+/* Timer Container - Optimized for Side-by-Side Layout */
+.timer-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+  width: 100%;
+  max-width: 600px;
+  margin: 0;
+  min-height: 500px;
+  padding: 0;
+  overflow: hidden;
+  justify-self: end;
+}
+
+.timer-header {
+  padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-subtle);
+  background: linear-gradient(
+    135deg,
+    var(--surface) 0%,
+    var(--bg-tertiary) 100%
+  );
+}
+
+.timer-heading {
+  font-family: 'Crimson Text', serif;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.timer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xl);
+  width: 100%;
+  flex: 1;
+  padding: var(--spacing-xl);
+  background: none;
+}
