@@ -1,0 +1,98 @@
+/* Reset & Base Styles */
+/* Modern CSS Reset with Japanese Zen Principles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Skip Links for Accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--surface);
+  color: var(--text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  z-index: 1000;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-emphasis);
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Main Application Container */
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    var(--bg-tertiary) 100%
+  );
+  position: relative;
+  padding: var(--spacing-lg);
+}
+
+/* Header - Clean & Minimal */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  max-width: 1400px;
+  width: 95vw;
+  margin: 0 auto var(--spacing-2xl) auto;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.logo {
+  font-family: 'Crimson Text', serif;
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* Main Content Area - Improved Side-by-Side Layout */
+.main-content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: var(--spacing-2xl);
+  align-items: start;
+  justify-content: center;
+  max-width: 1400px;
+  width: 90vw;
+  margin: 0 auto;
+  min-height: calc(100vh - 120px);
+  box-sizing: border-box;
+}

@@ -99,23 +99,48 @@ class EnhancedSessionNotesManager {
         <div class="notes-editor">
           <textarea 
             class="session-notes-textarea" 
-            placeholder="Start typing your thoughts, ideas, or observations...&#10;&#10;Tip: Use templates for structured notes"
+            placeholder="Start typing your thoughts, insights, or observations...&#10;&#10;💡 Tips:&#10;• Use Ctrl+B for **bold** text&#10;• Use Ctrl+I for *italic* text&#10;• Try templates for structured notes&#10;• Press Tab to access templates"
             aria-label="Session notes"
             rows="4"
             spellcheck="true"
           ></textarea>
           <div class="notes-formatting-toolbar">
-            <button class="format-btn" data-format="bullet" title="Add bullet point" type="button">•</button>
-            <button class="format-btn" data-format="checkbox" title="Add checkbox" type="button">☐</button>
-            <button class="format-btn" data-format="arrow" title="Add arrow" type="button">→</button>
-            <button class="format-btn" data-format="star" title="Add star" type="button">★</button>
+            <div class="formatting-tools">
+              <button class="format-btn" data-format="bold" title="Bold (Ctrl+B)" type="button">
+                <strong>B</strong>
+              </button>
+              <button class="format-btn" data-format="italic" title="Italic (Ctrl+I)" type="button">
+                <em>I</em>
+              </button>
+              <button class="format-btn" data-format="bullet" title="Add bullet point" type="button">•</button>
+              <button class="format-btn" data-format="checkbox" title="Add checkbox" type="button">☐</button>
+              <button class="format-btn" data-format="heading" title="Heading" type="button">H1</button>
+            </div>
+            <div class="quick-actions">
+              <button class="quick-action-btn" data-action="timestamp" title="Insert timestamp" type="button">
+                🕐
+              </button>
+              <button class="quick-action-btn" data-action="divider" title="Insert divider" type="button">
+                ⎯
+              </button>
+              <button class="format-btn" data-format="arrow" title="Add arrow" type="button">→</button>
+              <button class="format-btn" data-format="star" title="Add star" type="button">★</button>
+            </div>
           </div>
         </div>
         
         <div class="notes-footer">
+          <div class="typing-indicator" style="display: none;">
+            <span class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <span class="typing-text">Typing...</span>
+          </div>
           <div class="notes-hints">
             <span class="hint-text">Auto-saves every 2 seconds</span>
-            <span class="hint-shortcut">Press Ctrl+Enter to add bullet</span>
+            <span class="hint-shortcut">Press Ctrl+B for bold, Tab for templates</span>
           </div>
           <div class="notes-actions">
             <button class="clear-notes-btn" title="Clear all notes" type="button">
@@ -187,7 +212,17 @@ class EnhancedSessionNotesManager {
     formatBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const format = btn.dataset.format
-        this.insertFormatting(format)
+        this.applyFormatting(format)
+      })
+    })
+
+    // Quick actions
+    const quickActionBtns =
+      this.notesContainer.querySelectorAll('.quick-action-btn')
+    quickActionBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action
+        this.performQuickAction(action)
       })
     })
 
@@ -196,13 +231,12 @@ class EnhancedSessionNotesManager {
       this.clearNotesWithConfirmation()
     })
 
-    // Auto-save notes with debouncing
+    // Auto-save notes with debouncing and typing indicator
     textarea.addEventListener('input', (e) => {
       this.notes = e.target.value
-      this.isTyping = true
-      this.updateStatus('typing')
-      this.debouncedAutoSave()
+      this.handleTyping()
       this.updateWordCount()
+      this.scheduleAutoSave()
     })
 
     // Focus/blur events for better UX
@@ -212,8 +246,7 @@ class EnhancedSessionNotesManager {
 
     textarea.addEventListener('blur', () => {
       this.notesContainer.classList.remove('notes-focused')
-      this.isTyping = false
-      this.updateStatus('saved')
+      this.stopTyping()
     })
 
     // Close templates dropdown when clicking outside
@@ -230,6 +263,18 @@ class EnhancedSessionNotesManager {
     )
 
     textarea.addEventListener('keydown', (e) => {
+      // Ctrl/Cmd + B for bold
+      if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+        e.preventDefault()
+        this.applyFormatting('bold')
+      }
+
+      // Ctrl/Cmd + I for italic
+      if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
+        e.preventDefault()
+        this.applyFormatting('italic')
+      }
+
       // Ctrl+Enter for bullet points
       if (e.ctrlKey && e.key === 'Enter') {
         e.preventDefault()
@@ -242,10 +287,22 @@ class EnhancedSessionNotesManager {
         this.insertAtCursor('☐ ')
       }
 
-      // Tab for indentation
+      // Tab for templates or indentation
       if (e.key === 'Tab') {
         e.preventDefault()
-        this.insertAtCursor('  ')
+        const templatesDropdown = this.notesContainer.querySelector(
+          '.notes-templates-dropdown',
+        )
+        const isTemplatesVisible = templatesDropdown.style.display !== 'none'
+
+        if (isTemplatesVisible) {
+          // If templates are visible, close them and insert indentation
+          templatesDropdown.style.display = 'none'
+          this.insertAtCursor('  ')
+        } else {
+          // Show templates
+          templatesDropdown.style.display = 'block'
+        }
       }
     })
   }
@@ -266,18 +323,59 @@ class EnhancedSessionNotesManager {
     textarea.dispatchEvent(new Event('input'))
   }
 
-  insertFormatting(format) {
-    const formatMap = {
-      bullet: '• ',
-      checkbox: '☐ ',
-      arrow: '→ ',
-      star: '★ ',
+  applyFormatting(format) {
+    const textarea = this.notesContainer.querySelector(
+      '.session-notes-textarea',
+    )
+    const start = textarea.selectionStart
+    const end = textarea.selectionEnd
+    const selectedText = textarea.value.substring(start, end)
+    let formattedText = ''
+
+    switch (format) {
+      case 'bold':
+        formattedText = `**${selectedText || 'bold text'}**`
+        break
+      case 'italic':
+        formattedText = `*${selectedText || 'italic text'}*`
+        break
+      case 'bullet':
+        formattedText = selectedText
+          ? selectedText
+              .split('\n')
+              .map((line) => (line.trim() ? `• ${line}` : line))
+              .join('\n')
+          : '• '
+        break
+      case 'checkbox':
+        formattedText = '☐ '
+        break
+      case 'arrow':
+        formattedText = '→ '
+        break
+      case 'star':
+        formattedText = '★ '
+        break
+      case 'heading':
+        formattedText = `# ${selectedText || 'Heading'}`
+        break
     }
 
-    const text = formatMap[format] || ''
-    if (text) {
-      this.insertAtCursor(text)
-    }
+    // Replace selected text with formatted text
+    const newValue =
+      textarea.value.substring(0, start) +
+      formattedText +
+      textarea.value.substring(end)
+    textarea.value = newValue
+    this.notes = newValue
+
+    // Update cursor position
+    const newCursorPos = start + formattedText.length
+    textarea.setSelectionRange(newCursorPos, newCursorPos)
+
+    this.updateWordCount()
+    this.scheduleAutoSave()
+    textarea.focus()
   }
 
   insertTemplate(templateName) {
@@ -331,55 +429,13 @@ class EnhancedSessionNotesManager {
     wordCountEl.textContent = `${count} word${count === 1 ? '' : 's'}`
   }
 
-  updateStatus(status) {
-    const statusEl = this.notesContainer.querySelector('.save-status')
-
-    switch (status) {
-      case 'typing':
-        statusEl.textContent = '⋯'
-        statusEl.title = 'Typing...'
-        statusEl.className = 'save-status typing'
-        break
-      case 'saving':
-        statusEl.textContent = '💾'
-        statusEl.title = 'Saving...'
-        statusEl.className = 'save-status saving'
-        break
-      case 'saved':
-        statusEl.textContent = '✓'
-        statusEl.title = 'Auto-saved'
-        statusEl.className = 'save-status saved'
-        break
-      case 'error':
-        statusEl.textContent = '⚠️'
-        statusEl.title = 'Save failed'
-        statusEl.className = 'save-status error'
-        break
-    }
-  }
-
-  debouncedAutoSave() {
-    clearTimeout(this.autoSaveTimeout)
-    this.autoSaveTimeout = setTimeout(() => {
-      this.autosave()
-    }, 2000)
-  }
-
   autosave() {
-    if (!this.isTyping) return
-
-    this.updateStatus('saving')
-
     try {
       // Save to localStorage as backup
       localStorage.setItem('kairo-session-notes-temp', this.notes)
-
-      setTimeout(() => {
-        this.updateStatus('saved')
-      }, 500)
     } catch (error) {
       console.error('Failed to auto-save notes:', error)
-      this.updateStatus('error')
+      this.updateSaveStatus('error')
     }
   }
 
@@ -498,6 +554,108 @@ class EnhancedSessionNotesManager {
     localStorage.removeItem('kairo-session-notes-temp')
     this.expandedMode = false
     this.notesContainer.classList.remove('notes-expanded')
+  }
+
+  performQuickAction(action) {
+    const textarea = this.notesContainer.querySelector(
+      '.session-notes-textarea',
+    )
+
+    switch (action) {
+      case 'timestamp':
+        const timestamp = new Date().toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        })
+        this.insertAtCursor(`[${timestamp}] `)
+        break
+
+      case 'divider':
+        this.insertAtCursor('\n\n---\n\n')
+        break
+
+      case 'clear':
+        if (confirm('Clear all notes? This cannot be undone.')) {
+          textarea.value = ''
+          this.notes = ''
+          this.updateWordCount()
+          this.scheduleAutoSave()
+        }
+        break
+    }
+  }
+
+  handleTyping() {
+    if (!this.isTyping) {
+      this.isTyping = true
+      this.showTypingIndicator()
+    }
+
+    // Clear existing timeout
+    if (this.typingTimeout) {
+      clearTimeout(this.typingTimeout)
+    }
+
+    // Set new timeout to hide typing indicator
+    this.typingTimeout = setTimeout(() => {
+      this.stopTyping()
+    }, 1000)
+  }
+
+  stopTyping() {
+    this.isTyping = false
+    this.hideTypingIndicator()
+    this.updateSaveStatus('saved')
+  }
+
+  showTypingIndicator() {
+    const indicator = this.notesContainer.querySelector('.typing-indicator')
+    if (indicator) {
+      indicator.style.display = 'flex'
+    }
+  }
+
+  hideTypingIndicator() {
+    const indicator = this.notesContainer.querySelector('.typing-indicator')
+    if (indicator) {
+      indicator.style.display = 'none'
+    }
+  }
+
+  scheduleAutoSave() {
+    // Clear existing timeout
+    if (this.autoSaveTimeout) {
+      clearTimeout(this.autoSaveTimeout)
+    }
+
+    // Show saving indicator
+    this.updateSaveStatus('saving')
+
+    // Schedule auto-save
+    this.autoSaveTimeout = setTimeout(() => {
+      this.autosave()
+      this.updateSaveStatus('saved')
+    }, 2000)
+  }
+
+  updateSaveStatus(status) {
+    const saveStatus = this.notesContainer.querySelector('.save-status')
+    if (!saveStatus) return
+
+    if (status === 'saving') {
+      saveStatus.textContent = '⋯'
+      saveStatus.title = 'Saving...'
+      saveStatus.style.opacity = '0.6'
+    } else if (status === 'saved') {
+      saveStatus.textContent = '✓'
+      saveStatus.title = 'Auto-saved'
+      saveStatus.style.opacity = '1'
+    } else if (status === 'error') {
+      saveStatus.textContent = '⚠'
+      saveStatus.title = 'Save failed'
+      saveStatus.style.opacity = '1'
+    }
   }
 }
 

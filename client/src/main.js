@@ -1,5 +1,5 @@
 // main.js - Japanese Zen Minimalism Design
-import './style.css'
+import './styles/index.css'
 import { startTimer } from './components/timer'
 import { sessionHistory } from './components/history'
 import {

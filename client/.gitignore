@@ -6,6 +6,8 @@ package-lock.json
 .env
 .env.local
 .env.*.local
+.env.development
+.env.production
 
 # Production build
 dist/
@@ -30,6 +32,18 @@ progress-test.html
 
 # Development utilities
 SECURITY.md
+keyboardManager.js
+
+# Documentation and summary files (local development only)
+*_SUMMARY.md
+*SUMMARY.md
+TESTING.md
+
+# Experimental/alternative files (not for production)
+*New.js
+*Old.js
+*Enhanced.js
+*Experimental.js
 
 # Logs
 *.log
