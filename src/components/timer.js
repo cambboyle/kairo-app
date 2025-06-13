@@ -357,7 +357,7 @@ export function startTimer(container) {
 
     // Get session notes if available
     const sessionNotes = window.sessionNotesManager
-      ? window.sessionNotesManager.onSessionSave()
+      ? window.sessionNotesManager.getNotes()
       : ''
 
     container.innerHTML = `
@@ -477,7 +477,7 @@ export function startTimer(container) {
 
     // Get session notes
     const sessionNotes = window.sessionNotesManager
-      ? window.sessionNotesManager.onSessionSave()
+      ? window.sessionNotesManager.getNotes()
       : ''
 
     saveBtn.disabled = true
