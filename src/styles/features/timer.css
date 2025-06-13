@@ -164,7 +164,45 @@
   text-align: center;
 }
 
-/* Timer Progress - Removed conflicting styles, using main CSS instead */
+/* Timer Progress - Positioned correctly within timer circle */
+.timer-progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  width: 200px;
+  height: 200px;
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+.progress-ring-progress {
+  stroke-dasharray: calc(2 * 3.14159 * 95);
+  stroke-dashoffset: calc(2 * 3.14159 * 95);
+  transition: stroke-dashoffset 0.5s ease;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px rgba(79, 86, 79, 0.3));
+}
+
+/* Reduced motion support for progress ring */
+@media (prefers-reduced-motion: reduce) {
+  .progress-ring-progress {
+    transition: none;
+  }
+}
+
+/* Dark mode adjustments for progress ring */
+[data-theme='dark'] .progress-ring-progress {
+  filter: drop-shadow(0 0 3px rgba(156, 163, 160, 0.4));
+}
 
 /* Breathing Animation - Zen Mindfulness */
 @keyframes breathe {

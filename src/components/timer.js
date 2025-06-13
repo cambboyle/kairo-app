@@ -249,12 +249,12 @@ export function startTimer(container) {
 
         if (display) {
           display.textContent = formatTime(timeLeft)
-        }        // Update progress ring
+        } // Update progress ring
         if (progressRing) {
           const progress = ((totalTime - timeLeft) / totalTime) * 100
           const circumference = 2 * Math.PI * 95 // radius = 95
           const offset = circumference * (1 - progress / 100)
-          
+
           progressRing.style.strokeDasharray = circumference
           progressRing.style.strokeDashoffset = offset
           progressRing.style.setProperty('--progress', progress)

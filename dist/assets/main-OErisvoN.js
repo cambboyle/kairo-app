@@ -321,24 +321,24 @@
       <div class="timer-content">
         <div class="timer-circle active" role="timer" aria-live="polite">
           <div class="timer-progress">
-            <svg class="progress-ring" width="280" height="280">
+            <svg class="progress-ring" width="200" height="200">
               <circle
                 class="progress-ring-circle"
                 stroke="rgba(79, 86, 79, 0.2)"
                 stroke-width="3"
                 fill="transparent"
-                r="135"
-                cx="140"
-                cy="140"
+                r="95"
+                cx="100"
+                cy="100"
               />
               <circle
                 class="progress-ring-progress"
                 stroke="var(--primary)"
                 stroke-width="3"
                 fill="transparent"
-                r="135"
-                cx="140"
-                cy="140"
+                r="95"
+                cx="100"
+                cy="100"
                 style="--progress: 0"
               />
             </svg>
@@ -357,7 +357,7 @@
           <div id="stop-help" class="sr-only">Stop and end the current session</div>
         </div>
       </div>
-    `;const u=e;a=setInterval(()=>{if(!n&&e>0){e--;const h=document.getElementById("timer-display"),y=document.querySelector(".progress-ring-progress");if(h&&(h.textContent=r(e)),y){const g=(u-e)/u*100,k=2*Math.PI*135,w=k*(1-g/100);y.style.strokeDasharray=k,y.style.strokeDashoffset=w,y.style.setProperty("--progress",g),console.log(`Timer progress: ${g.toFixed(1)}% (${e}/${u})`)}e===0&&d(!0)}},1e3);const b=document.getElementById("pause-btn"),f=document.getElementById("stop-btn");b.onclick=async()=>{n=!n,b.textContent=n?"Resume":"Pause";const h=document.querySelector(".timer-circle");n?(h.classList.remove("active"),await S.notifySessionPause()):h.classList.add("active"),E.info(n?"Session paused":"Session resumed")},f.onclick=()=>d(!1),E.timer(`${t} session started (${l} min)`,"timer")}function d(l){if(console.log("endSession called, completed:",l),a&&(clearInterval(a),a=null),s=new Date,window.sessionNotesManager&&window.sessionNotesManager.onSessionEnd(),l){const u=Math.max(1,Math.round((s-o)/6e4));S.notifySessionComplete(t,u),m()}else{i.innerHTML=`
+    `;const u=e;a=setInterval(()=>{if(!n&&e>0){e--;const h=document.getElementById("timer-display"),y=document.querySelector(".progress-ring-progress");if(h&&(h.textContent=r(e)),y){const g=(u-e)/u*100,k=2*Math.PI*95,w=k*(1-g/100);y.style.strokeDasharray=k,y.style.strokeDashoffset=w,y.style.setProperty("--progress",g),console.log(`Timer progress: ${g.toFixed(1)}% (${e}/${u})`)}e===0&&d(!0)}},1e3);const b=document.getElementById("pause-btn"),f=document.getElementById("stop-btn");b.onclick=async()=>{n=!n,b.textContent=n?"Resume":"Pause";const h=document.querySelector(".timer-circle");n?(h.classList.remove("active"),await S.notifySessionPause()):h.classList.add("active"),E.info(n?"Session paused":"Session resumed")},f.onclick=()=>d(!1),E.timer(`${t} session started (${l} min)`,"timer")}function d(l){if(console.log("endSession called, completed:",l),a&&(clearInterval(a),a=null),s=new Date,window.sessionNotesManager&&window.sessionNotesManager.onSessionEnd(),l){const u=Math.max(1,Math.round((s-o)/6e4));S.notifySessionComplete(t,u),m()}else{i.innerHTML=`
         <div class="timer-content">
           <div class="timer-circle" role="timer" aria-live="polite">
             <div class="timer-display">—</div>
@@ -757,7 +757,7 @@
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-      `,document.head.appendChild(d)}const n=a.querySelector(".modal-close"),r=a.querySelector(".modal-backdrop"),v=()=>{a.remove()};n.addEventListener("click",v),r.addEventListener("click",d=>{d.target===r&&v()});const c=d=>{d.key==="Escape"&&(v(),document.removeEventListener("keydown",c))};document.addEventListener("keydown",c),U(async()=>{const{createDetailedSessionHistory:d}=await import("./sessionHistoryDetailed-BMTythZL.js");return{createDetailedSessionHistory:d}},[]).then(({createDetailedSessionHistory:d})=>{const m=a.querySelector("#detailed-history-container");try{const p=d(m);console.log("Detailed history loaded successfully:",p),setTimeout(()=>{const x=a.querySelector("button, select, input, [tabindex]");x&&x.focus()},100)}catch(p){console.error("Error loading detailed history:",p),m.innerHTML=`
+      `,document.head.appendChild(d)}const n=a.querySelector(".modal-close"),r=a.querySelector(".modal-backdrop"),v=()=>{a.remove()};n.addEventListener("click",v),r.addEventListener("click",d=>{d.target===r&&v()});const c=d=>{d.key==="Escape"&&(v(),document.removeEventListener("keydown",c))};document.addEventListener("keydown",c),U(async()=>{const{createDetailedSessionHistory:d}=await import("./sessionHistoryDetailed-1_ISLoJP.js");return{createDetailedSessionHistory:d}},[]).then(({createDetailedSessionHistory:d})=>{const m=a.querySelector("#detailed-history-container");try{const p=d(m);console.log("Detailed history loaded successfully:",p),setTimeout(()=>{const x=a.querySelector("button, select, input, [tabindex]");x&&x.focus()},100)}catch(p){console.error("Error loading detailed history:",p),m.innerHTML=`
             <div class="error-message" style="text-align: center; padding: var(--spacing-xl); color: var(--text-muted);">
               <div style="font-size: 2rem; margin-bottom: var(--spacing-md);">⚠️</div>
               <h3 style="margin-bottom: var(--spacing-sm); color: var(--text-secondary);">Failed to load detailed history</h3>
