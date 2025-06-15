@@ -71,16 +71,16 @@ export function createSettingsPanel() {
           <div class="setting-section">
             <h4>📊 Data</h4>
             <div class="setting-item">
-              <button class="setting-button export-btn" id="export-data">
+              <button class="setting-button export-btn" id="export-data" aria-label="Export session data as CSV">
                 📄 Export Session Data
               </button>
               <p class="setting-description">Download your session history as CSV</p>
             </div>
             <div class="setting-item">
-              <button class="setting-button danger-btn" id="clear-data">
+              <button class="setting-button danger-btn" id="clear-data" aria-label="Delete all session data (irreversible)">
                 🗑️ Clear All Data
               </button>
-              <p class="setting-description">Remove all local session data and stats</p>
+              <p class="setting-description">Remove all local session data and stats <strong>(this cannot be undone)</strong></p>
             </div>
           </div>
         </div>
@@ -109,9 +109,18 @@ export function createSettingsPanel() {
     const clearDataBtn = modal.querySelector('#clear-data')
 
     // Close modal
-    closeBtn.onclick = () => modal.remove()
+    closeBtn.onclick = () => {
+      modal.remove()
+      // Return focus to settings button for accessibility
+      const settingsBtn = document.querySelector('.settings-btn')
+      if (settingsBtn) settingsBtn.focus()
+    }
     modal.onclick = (e) => {
-      if (e.target === modal) modal.remove()
+      if (e.target === modal) {
+        modal.remove()
+        const settingsBtn = document.querySelector('.settings-btn')
+        if (settingsBtn) settingsBtn.focus()
+      }
     }
 
     // Keyboard navigation
@@ -155,11 +164,20 @@ export function createSettingsPanel() {
     clearDataBtn.onclick = () => {
       if (
         confirm(
-          'Are you sure you want to clear all session data? This cannot be undone.',
+          'Are you absolutely sure you want to delete ALL session data? This action is irreversible and will remove all your history, notes, and stats.\n\nType YES to confirm.',
         )
       ) {
-        clearAllData()
-        modal.remove()
+        const userInput = prompt('Type YES to confirm deletion of all data:')
+        if (userInput && userInput.trim().toUpperCase() === 'YES') {
+          clearAllData()
+          modal.remove()
+          notifications.showBrowserNotification(
+            '🗑️ Data Deleted',
+            'All session data has been permanently deleted.',
+          )
+        } else {
+          alert('Data deletion cancelled.')
+        }
       }
     }
   }

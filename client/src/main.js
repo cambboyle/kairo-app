@@ -9,6 +9,11 @@ import {
 import { addSettingsButton, injectSettingsStyles } from './components/settings'
 import { initializeTheme } from './utils/theme'
 import { enhancedSessionNotesManager } from './utils/sessionNotesImproved'
+import {
+  createOnboardingModal,
+  showOnboardingModal,
+  addOnboardingButton,
+} from './components/onboardingModal'
 
 let historyApi
 let analyticsApi
@@ -78,6 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Make managers available globally for component integration
   window.sessionNotesManager = enhancedSessionNotesManager
   window.analyticsApi = analyticsApi
+
+  // Onboarding/help modal integration
+  createOnboardingModal()
+  addOnboardingButton()
+  if (!localStorage.getItem('kairoOnboardingShown')) {
+    showOnboardingModal()
+    localStorage.setItem('kairoOnboardingShown', 'true')
+  }
 })
 
 export { historyApi, analyticsApi, enhancedSessionNotesManager }

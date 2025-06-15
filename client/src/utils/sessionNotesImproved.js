@@ -508,7 +508,7 @@ class EnhancedSessionNotesManager {
     this.attachToTimer()
     this.clearNotes()
     this.showNotes()
-    this.updateStatus('saved')
+    this.updateSaveStatus('saved')
   }
 
   // Called when timer stops
@@ -529,7 +529,7 @@ class EnhancedSessionNotesManager {
     )
     textarea.value = ''
     this.updateWordCount()
-    this.updateStatus('saved')
+    this.updateSaveStatus('saved')
   }
 
   setNotes(notes) {

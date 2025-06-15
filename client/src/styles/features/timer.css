@@ -115,44 +115,173 @@
   max-width: 120px;
 }
 
-/* Timer Circle - The Heart of Focus */
+/* Zen Timer Circle - Pure and Simple */
 .timer-circle {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
-  background: var(--surface);
-  border: 3px solid var(--border-subtle);
+  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   transition: all var(--transition-slow);
-  box-shadow:
-    inset 0 2px 4px rgba(0, 0, 0, 0.02),
-    0 4px 8px rgba(0, 0, 0, 0.04);
+  margin: 0 auto;
+  transform-origin: center;
 }
 
-.timer-circle.active {
-  border-color: var(--primary);
-  animation: breathe 4s var(--breath-timing) infinite;
+/* Subtle zen-inspired visual states - no bright backgrounds */
+.timer-circle[data-progress='high'] {
+  /* Remain clean and minimal */
 }
 
+.timer-circle[data-progress='medium'] {
+  /* Subtle hint of awareness */
+  background: radial-gradient(
+    circle,
+    rgba(79, 86, 79, 0.02) 0%,
+    transparent 70%
+  );
+}
+
+.timer-circle[data-progress='low'] {
+  /* Gentle reminder without urgency */
+  background: radial-gradient(
+    circle,
+    rgba(79, 86, 79, 0.04) 0%,
+    transparent 70%
+  );
+}
+
+.timer-circle[data-progress='low'] {
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.05) 0%,
+    transparent 70%
+  );
+}
+
+/* Timer Progress Ring Container */
+.timer-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Progress Ring SVG */
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  transition: stroke-dasharray var(--transition-normal);
+}
+
+/* Zen Minimalist Progress Ring */
+.progress-ring-circle,
+.progress-ring-progress {
+  stroke-dasharray: 816; /* 2 * π * 130 = circumference */
+  stroke-dashoffset: 0;
+}
+
+.progress-ring-circle {
+  stroke: rgba(79, 86, 79, 0.08); /* Very subtle background ring */
+  stroke-width: 2;
+  opacity: 1;
+}
+
+.progress-ring-progress {
+  stroke-dashoffset: calc(
+    816 - (816 * var(--progress, 0) / 100)
+  ); /* Fill clockwise from 12 o'clock */
+  transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1); /* Slower, more meditative transition */
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke: var(--text-secondary); /* Subtle, monochromatic color */
+  opacity: 0.7;
+}
+
+/* Subtle zen-like visual feedback - no bright colors */
+.timer-circle[data-progress='high'] .progress-ring-progress {
+  stroke: var(--text-secondary);
+  opacity: 0.6;
+}
+
+.timer-circle[data-progress='medium'] .progress-ring-progress {
+  stroke: var(--text-primary);
+  opacity: 0.7;
+}
+
+.timer-circle[data-progress='low'] .progress-ring-progress {
+  stroke: var(--text-primary);
+  opacity: 0.9;
+}
+
+/* Reduced motion support for progress ring */
+@media (prefers-reduced-motion: reduce) {
+  .progress-ring-progress {
+    transition: none;
+  }
+}
+
+/* Zen Timer Display - Calm and Centered */
 .timer-display {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
   font-family: 'Inter', monospace;
   font-size: var(--text-4xl);
   font-weight: 300;
   color: var(--text-primary);
   letter-spacing: -0.02em;
-  margin-bottom: var(--spacing-xs);
   padding: 0;
+  margin: 0;
   text-align: center;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+/* Zen-like visual feedback - subtle changes only */
+.timer-circle[data-progress='low'] .timer-display {
+  opacity: 1; /* Slightly more prominent when time is low */
+}
+
+.timer-circle[data-progress='medium'] .timer-display {
+  opacity: 0.95; /* Very subtle change */
+}
+
+.timer-circle[data-progress='high'] .timer-display {
+  opacity: 0.9; /* Calm and understated */
+}
+
+/* Pulse animation for urgency */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
 }
 
 .timer-label {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 3rem));
   z-index: 2;
   font-size: var(--text-xs);
   color: var(--text-muted);
@@ -162,23 +291,39 @@
   padding: 0;
   margin: 0;
   text-align: center;
+  white-space: nowrap;
 }
 
-/* Timer Progress (if needed) */
-.timer-progress {
+/* Progress Percentage Indicator */
+.progress-percentage {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: conic-gradient(
-    var(--primary) 0deg,
-    var(--primary-light) var(--progress-angle, 0deg),
-    transparent var(--progress-angle, 0deg)
-  );
-  transition: all var(--transition-normal);
-  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% - 4rem));
+  z-index: 3;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 500;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.timer-circle[data-progress='low'] .progress-percentage {
+  color: #ef4444;
+  opacity: 1;
+  font-weight: 600;
+}
+
+.timer-circle[data-progress='medium'] .progress-percentage {
+  color: #f59e0b;
+  opacity: 0.9;
+}
+
+.timer-circle[data-progress='high'] .progress-percentage {
+  color: var(--primary);
+  opacity: 0.8;
 }
 
 /* Breathing Animation - Zen Mindfulness */
@@ -186,15 +331,11 @@
   0%,
   100% {
     transform: scale(1);
-    box-shadow:
-      inset 0 2px 4px rgba(0, 0, 0, 0.02),
-      0 4px 8px rgba(0, 0, 0, 0.04);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.04));
   }
   50% {
-    transform: scale(1.05);
-    box-shadow:
-      inset 0 2px 4px rgba(0, 0, 0, 0.02),
-      0 12px 24px rgba(0, 0, 0, 0.12);
+    transform: scale(1.02);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
   }
 }
 
@@ -220,11 +361,15 @@
   }
 
   .timer-circle {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
   }
 
   .timer-display {
     font-size: var(--text-3xl);
+  }
+
+  .timer-label {
+    font-size: var(--text-2xs);
   }
 }

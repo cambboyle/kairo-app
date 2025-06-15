@@ -1,0 +1,82 @@
+/* Onboarding/help modal styles */
+.onboarding-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.onboarding-modal-overlay[style*='display: flex'] {
+  display: flex !important;
+}
+.onboarding-modal-content {
+  background: #fff;
+  color: #222;
+  border-radius: 12px;
+  max-width: 90vw;
+  width: 400px;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.18);
+  position: relative;
+  outline: none;
+}
+.onboarding-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+}
+.onboarding-close:focus {
+  outline: 2px solid #222;
+}
+.onboarding-modal-content h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+.onboarding-modal-content ul {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+}
+.onboarding-help-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  color: #222;
+  border: 1px solid #ddd;
+  font-size: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  z-index: 1100;
+  transition: background 0.2s;
+}
+.onboarding-help-btn:hover,
+.onboarding-help-btn:focus {
+  background: #e0e0e0;
+  outline: 2px solid #222;
+}
+@media (max-width: 500px) {
+  .onboarding-modal-content {
+    width: 95vw;
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+  .onboarding-help-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}

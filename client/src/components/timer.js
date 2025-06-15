@@ -202,21 +202,28 @@ export function startTimer(container) {
         <div class="timer-circle active" role="timer" aria-live="polite">
           <div class="timer-progress">
             <svg class="progress-ring" width="280" height="280">
+              <!-- Minimal zen gradient - subtle and monochromatic -->
+              <defs>
+                <linearGradient id="zenProgress" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:var(--text-secondary);stop-opacity:0.8" />
+                  <stop offset="100%" style="stop-color:var(--text-primary);stop-opacity:0.6" />
+                </linearGradient>
+              </defs>
               <circle
                 class="progress-ring-circle"
-                stroke="rgba(79, 86, 79, 0.2)"
-                stroke-width="3"
+                stroke="rgba(79, 86, 79, 0.08)"
+                stroke-width="2"
                 fill="transparent"
-                r="135"
+                r="130"
                 cx="140"
                 cy="140"
               />
               <circle
                 class="progress-ring-progress"
-                stroke="var(--primary)"
-                stroke-width="3"
+                stroke="var(--text-secondary)"
+                stroke-width="2"
                 fill="transparent"
-                r="135"
+                r="130"
                 cx="140"
                 cy="140"
                 style="--progress: 0"
@@ -255,6 +262,24 @@ export function startTimer(container) {
         if (progressRing) {
           const progress = ((totalTime - timeLeft) / totalTime) * 100
           progressRing.style.setProperty('--progress', progress)
+
+          // Add visual feedback based on progress
+          const timerCircle = document.querySelector('.timer-circle')
+          if (timerCircle) {
+            // Update progress data attribute for CSS styling
+            if (progress < 25) {
+              timerCircle.setAttribute('data-progress', 'high')
+            } else if (progress < 75) {
+              timerCircle.setAttribute('data-progress', 'medium')
+            } else {
+              timerCircle.setAttribute('data-progress', 'low')
+            }
+          }
+
+          // Console log for debugging
+          console.log(
+            `Progress: ${progress.toFixed(1)}% (${timeLeft}s remaining of ${totalTime}s)`,
+          )
         }
 
         // Check if timer is complete
