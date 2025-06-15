@@ -39,7 +39,7 @@
 .notes-header {
   background: var(--surface);
   border-bottom: 1px solid var(--border-subtle);
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-xl) var(--spacing-2xl);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,7 +48,7 @@
 .notes-title-area {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
 }
 
 .notes-icon {
@@ -65,8 +65,8 @@
 .notes-status {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  margin-left: var(--spacing-md);
+  gap: var(--spacing-md);
+  margin-left: var(--spacing-lg);
 }
 
 .word-count {
@@ -102,7 +102,7 @@
 .notes-controls {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
 }
 
 .notes-template-btn,
@@ -210,9 +210,9 @@
   font-family: 'Inter', sans-serif;
   font-size: var(--text-sm);
   line-height: 1.6;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
   resize: vertical;
-  min-height: 120px;
+  min-height: 140px;
   transition: all var(--transition-fast);
 }
 
@@ -318,7 +318,7 @@
 
 /* Notes Footer */
 .notes-footer {
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-xl);
   background: var(--bg-tertiary);
   border-top: 1px solid var(--border-subtle);
   display: flex;

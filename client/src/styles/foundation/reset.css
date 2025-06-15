@@ -54,7 +54,7 @@ body {
   flex-direction: column;
   background: var(--bg-primary);
   position: relative;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
 }
 
 /* Header - Clean & Minimal */
@@ -65,7 +65,7 @@ body {
   padding: 0;
   max-width: 1400px;
   width: 95vw;
-  margin: 0 auto var(--spacing-2xl) auto;
+  margin: 0 auto var(--spacing-3xl) auto;
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -83,7 +83,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
-  gap: var(--spacing-2xl);
+  gap: var(--spacing-4xl);
   align-items: start;
   justify-content: center;
   max-width: 1400px;

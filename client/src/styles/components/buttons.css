@@ -3,7 +3,7 @@
 
 /* Control Buttons - Minimal & Tactile */
 .control-btn {
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-xl);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   background: var(--surface);
@@ -14,13 +14,13 @@
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
-  min-width: 100px;
+  min-width: 120px;
   text-align: center;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
 }
 
 .control-btn:hover {

@@ -1,7 +1,7 @@
 /* Responsive tweaks for main content and header */
 @media (max-width: 1200px) {
   .main-content {
-    gap: var(--spacing-xl);
+    gap: var(--spacing-3xl);
   }
 }
 
@@ -10,7 +10,7 @@
     max-width: 98vw;
     padding-left: var(--spacing-md);
     padding-right: var(--spacing-md);
-    gap: var(--spacing-lg);
+    gap: var(--spacing-2xl);
   }
   .header {
     max-width: 98vw;

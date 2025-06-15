@@ -21,7 +21,7 @@
 }
 
 .history-header {
-  padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
+  padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-xl);
   border-bottom: 1px solid var(--border-subtle);
   background: var(--surface);
 }
@@ -108,8 +108,8 @@
 .history-row-main {
   display: flex;
   align-items: center;
-  padding: var(--spacing-xl);
-  padding-right: var(--spacing-xl);
+  padding: var(--spacing-2xl);
+  padding-right: var(--spacing-2xl);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -122,15 +122,15 @@
   width: 100%;
   text-align: left;
   position: relative;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-xl);
   flex: 1;
 }
 
 /* Actions container for inline buttons */
 .history-actions {
   position: absolute;
-  top: var(--spacing-lg);
-  right: var(--spacing-lg);
+  top: var(--spacing-xl);
+  right: var(--spacing-xl);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,7 +176,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
   min-width: 0;
 }
 
@@ -193,11 +193,11 @@
 .history-session-details {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
   font-size: var(--text-sm);
   color: var(--text-muted);
   font-weight: 400;
-  margin-top: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
 }
 
 .history-session-time {
@@ -297,7 +297,7 @@
 
 /* Expanded content area */
 .history-expanded-content {
-  padding: 0 var(--spacing-xl) var(--spacing-xl);
+  padding: 0 var(--spacing-2xl) var(--spacing-2xl);
   background: var(--bg-tertiary);
   border-top: 1px solid var(--border-subtle);
   animation: slideDown 0.3s ease-out;
@@ -309,8 +309,8 @@
 
 .history-notes,
 .history-reflection {
-  margin-top: var(--spacing-md);
-  padding: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
   background: var(--surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
@@ -333,7 +333,7 @@
   max-width: 200px;
   height: 1px;
   background: var(--border-subtle);
-  margin: var(--spacing-3xl) auto;
+  margin: var(--spacing-4xl) auto;
   position: relative;
   opacity: 0.6;
 }

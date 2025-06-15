@@ -22,7 +22,7 @@
 }
 
 .timer-header {
-  padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
+  padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-xl);
   border-bottom: 1px solid var(--border-subtle);
   background: var(--surface);
 }
@@ -43,17 +43,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-2xl);
+  gap: var(--spacing-3xl);
   width: 100%;
   flex: 1;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-2xl);
   background: none;
   min-height: 360px;
 }
 
 .timer-controls {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
