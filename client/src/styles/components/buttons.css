@@ -131,14 +131,14 @@
 }
 
 .btn.btn-warning {
-  background: #f59e0b;
-  color: white;
-  border-color: #f59e0b;
+  background: var(--warning);
+  color: var(--stone-50);
+  border-color: var(--warning);
 }
 
 .btn.btn-warning:hover {
-  background: #d97706;
-  border-color: #d97706;
+  background: var(--warm-700);
+  border-color: var(--warm-700);
 }
 
 /* Small Button Variant */

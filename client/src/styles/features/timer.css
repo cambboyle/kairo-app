@@ -24,20 +24,17 @@
 .timer-header {
   padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
   border-bottom: 1px solid var(--border-subtle);
-  background: linear-gradient(
-    135deg,
-    var(--surface) 0%,
-    var(--bg-tertiary) 100%
-  );
+  background: var(--surface);
 }
 
 .timer-heading {
-  font-family: 'Crimson Text', serif;
-  font-size: var(--text-xl);
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
   text-align: center;
 }
 
@@ -131,35 +128,20 @@
   transform-origin: center;
 }
 
-/* Subtle zen-inspired visual states - no bright backgrounds */
+/* Subtle zen-inspired visual states - minimal and clean */
 .timer-circle[data-progress='high'] {
-  /* Remain clean and minimal */
+  /* Clean and minimal - explicit transparent background */
+  background: transparent;
 }
 
 .timer-circle[data-progress='medium'] {
   /* Subtle hint of awareness */
-  background: radial-gradient(
-    circle,
-    rgba(79, 86, 79, 0.02) 0%,
-    transparent 70%
-  );
+  background: rgba(156, 163, 160, 0.03);
 }
 
 .timer-circle[data-progress='low'] {
   /* Gentle reminder without urgency */
-  background: radial-gradient(
-    circle,
-    rgba(79, 86, 79, 0.04) 0%,
-    transparent 70%
-  );
-}
-
-.timer-circle[data-progress='low'] {
-  background: radial-gradient(
-    circle,
-    rgba(239, 68, 68, 0.05) 0%,
-    transparent 70%
-  );
+  background: rgba(120, 113, 108, 0.05);
 }
 
 /* Timer Progress Ring Container */
@@ -241,16 +223,18 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  font-family: 'Inter', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-4xl);
   font-weight: 300;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
   padding: 0;
   margin: 0;
   text-align: center;
   white-space: nowrap;
   transition: opacity 0.3s ease;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Zen-like visual feedback - subtle changes only */
@@ -283,11 +267,13 @@
   left: 50%;
   transform: translate(-50%, calc(-50% + 3rem));
   z-index: 2;
+  font-family: var(--font-primary);
   font-size: var(--text-xs);
+  font-weight: 500;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 500;
+  letter-spacing: var(--tracking-widest);
+  line-height: var(--leading-normal);
   padding: 0;
   margin: 0;
   text-align: center;
@@ -311,13 +297,13 @@
 }
 
 .timer-circle[data-progress='low'] .progress-percentage {
-  color: #ef4444;
+  color: var(--error);
   opacity: 1;
   font-weight: 600;
 }
 
 .timer-circle[data-progress='medium'] .progress-percentage {
-  color: #f59e0b;
+  color: var(--warning);
   opacity: 0.9;
 }
 

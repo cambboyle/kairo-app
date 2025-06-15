@@ -23,11 +23,7 @@
 .history-header {
   padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
   border-bottom: 1px solid var(--border-subtle);
-  background: linear-gradient(
-    135deg,
-    var(--surface) 0%,
-    var(--bg-tertiary) 100%
-  );
+  background: var(--surface);
 }
 
 .history-title {
@@ -156,7 +152,7 @@
   bottom: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
+  background: var(--primary);
   transition: width var(--transition-normal);
 }
 
@@ -302,21 +298,13 @@
 /* Expanded content area */
 .history-expanded-content {
   padding: 0 var(--spacing-xl) var(--spacing-xl);
-  background: linear-gradient(
-    135deg,
-    rgba(var(--stone-100-rgb, 245, 245, 244), 0.3) 0%,
-    rgba(var(--sage-400-rgb, 156, 163, 160), 0.1) 100%
-  );
+  background: var(--bg-tertiary);
   border-top: 1px solid var(--border-subtle);
   animation: slideDown 0.3s ease-out;
 }
 
 [data-theme='dark'] .history-expanded-content {
-  background: linear-gradient(
-    135deg,
-    rgba(var(--stone-700-rgb, 68, 64, 60), 0.3) 0%,
-    rgba(var(--sage-400-rgb, 156, 163, 160), 0.1) 100%
-  );
+  background: var(--bg-tertiary);
 }
 
 .history-notes,
@@ -344,14 +332,7 @@
   width: 100%;
   max-width: 200px;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--border-subtle) 20%,
-    var(--border-emphasis) 50%,
-    var(--border-subtle) 80%,
-    transparent 100%
-  );
+  background: var(--border-subtle);
   margin: var(--spacing-3xl) auto;
   position: relative;
   opacity: 0.6;

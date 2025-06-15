@@ -16,19 +16,16 @@
 .history-header {
   padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
   border-bottom: 1px solid var(--border-subtle);
-  background: linear-gradient(
-    135deg,
-    var(--surface) 0%,
-    var(--bg-tertiary) 100%
-  );
+  background: var(--surface);
 }
 
 .history-title {
-  font-family: 'Crimson Text', serif;
-  font-size: var(--text-xl);
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
   text-align: center;
 }

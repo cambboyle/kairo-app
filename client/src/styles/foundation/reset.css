@@ -52,11 +52,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(
-    135deg,
-    var(--bg-primary) 0%,
-    var(--bg-tertiary) 100%
-  );
+  background: var(--bg-primary);
   position: relative;
   padding: var(--spacing-lg);
 }

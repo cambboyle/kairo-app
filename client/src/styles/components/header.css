@@ -11,9 +11,10 @@
 }
 
 .logo {
-  font-family: 'Crimson Text', serif;
+  font-family: var(--font-serif);
   font-size: var(--text-3xl);
   font-weight: 600;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
 }

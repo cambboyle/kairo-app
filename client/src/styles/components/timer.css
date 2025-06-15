@@ -21,11 +21,7 @@
 .timer-header {
   padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
   border-bottom: 1px solid var(--border-subtle);
-  background: linear-gradient(
-    135deg,
-    var(--surface) 0%,
-    var(--bg-tertiary) 100%
-  );
+  background: var(--surface);
 }
 
 .timer-heading {

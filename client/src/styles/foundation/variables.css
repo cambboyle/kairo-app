@@ -53,9 +53,11 @@
   --stone-100-rgb: 245, 245, 244;
   --stone-700-rgb: 68, 64, 60;
 
-  /* Error colors for delete buttons */
-  --error: #dc2626;
-  --error-light: #fee2e2;
+  /* Error colors - Subtle & Natural */
+  --error: var(--stone-600);
+  --error-light: var(--stone-200);
+  --warning: var(--warm-600);
+  --warning-light: var(--warm-200);
 
   /* Light Mode Colors (Default) */
   --bg-primary: var(--stone-50);
@@ -98,17 +100,41 @@
   --spacing-4xl: 6rem; /* 96px */
   --spacing-5xl: 8rem; /* 128px */
 
-  /* Typography Scale - Harmonious Proportions */
-  --text-xs: 0.75rem; /* 12px */
-  --text-sm: 0.875rem; /* 14px */
-  --text-base: 1rem; /* 16px */
-  --text-lg: 1.125rem; /* 18px */
-  --text-xl: 1.25rem; /* 20px */
-  --text-2xl: 1.5rem; /* 24px */
-  --text-3xl: 1.875rem; /* 30px */
-  --text-4xl: 2.25rem; /* 36px */
-  --text-5xl: 3rem; /* 48px */
-  --text-6xl: 3.75rem; /* 60px */
+  /* Typography Scale - Japanese Harmony & Natural Proportions */
+  /* Based on traditional Japanese ma (間) spacing and golden ratio */
+
+  /* Font Families - Refined Pairing */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Crimson Text', Georgia, serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+
+  /* Type Scale - More Organic Progression */
+  --text-2xs: 0.6875rem; /* 11px - Fine details */
+  --text-xs: 0.75rem; /* 12px - Captions, meta */
+  --text-sm: 0.875rem; /* 14px - Body small */
+  --text-base: 1rem; /* 16px - Body text */
+  --text-md: 1.0625rem; /* 17px - Comfortable reading */
+  --text-lg: 1.1875rem; /* 19px - Emphasis */
+  --text-xl: 1.375rem; /* 22px - Subheadings */
+  --text-2xl: 1.625rem; /* 26px - Headings */
+  --text-3xl: 2rem; /* 32px - Large headings */
+  --text-4xl: 2.5rem; /* 40px - Display */
+  --text-5xl: 3.125rem; /* 50px - Hero text */
+
+  /* Line Heights - Breathing Room for Text */
+  --leading-tight: 1.25; /* Dense text */
+  --leading-snug: 1.375; /* UI elements */
+  --leading-normal: 1.5; /* Body text */
+  --leading-relaxed: 1.625; /* Comfortable reading */
+  --leading-loose: 1.75; /* Spacious text */
+
+  /* Letter Spacing - Subtle Refinement */
+  --tracking-tighter: -0.025em;
+  --tracking-tight: -0.0125em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
 
   /* Animation & Transition - Gentle & Natural */
   --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
@@ -117,6 +143,43 @@
 
   /* Breathing Animation for Timer */
   --breath-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Japanese Typography Principles - Applied */
+
+/* Text Styles - Semantic & Purposeful */
+.text-zen-heading {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+  color: var(--text-primary);
+}
+
+.text-zen-body {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+}
+
+.text-zen-caption {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wider);
+  line-height: var(--leading-normal);
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.text-zen-mono {
+  font-family: var(--font-mono);
+  font-weight: 300;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Dark Mode */
