@@ -3,7 +3,6 @@
   background: var(--surface);
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-soft);
   width: 100%;
   max-width: 600px;
   margin: 0;
@@ -14,7 +13,7 @@
 }
 
 .history-header {
-  padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
+  padding: var(--spacing-2xl) var(--spacing-xl) var(--spacing-xl);
   border-bottom: 1px solid var(--border-subtle);
   background: var(--surface);
 }

@@ -341,8 +341,8 @@ export function createDetailedSessionHistory(container) {
         display: flex;
         align-items: center;
         gap: var(--spacing-lg);
-        padding: var(--spacing-lg);
-        background: linear-gradient(135deg, var(--surface) 0%, var(--bg-tertiary) 100%);
+        padding: var(--spacing-2xl);
+        background: var(--surface);
         border-bottom: 1px solid var(--border-subtle);
         flex-wrap: wrap;
       }
@@ -356,16 +356,16 @@ export function createDetailedSessionHistory(container) {
 
       .filter-label,
       .sort-label {
-        font-weight: 600;
+        font-weight: 500;
         color: var(--text-secondary);
         font-size: var(--text-sm);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: var(--tracking-normal);
+        font-family: var(--font-primary);
       }
 
       .filter-select,
       .sort-select {
-        padding: var(--spacing-xs) var(--spacing-sm);
+        padding: var(--spacing-sm) var(--spacing-md);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
         background: var(--surface);
@@ -373,6 +373,8 @@ export function createDetailedSessionHistory(container) {
         font-size: var(--text-sm);
         min-width: 140px;
         transition: all var(--transition-fast);
+        font-family: var(--font-primary);
+        font-weight: 400;
       }
 
       .filter-select:hover,
@@ -425,8 +427,10 @@ export function createDetailedSessionHistory(container) {
       }
 
       .detailed-sessions-grid {
-        display: grid;
-        gap: var(--spacing-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xl);
+        padding: var(--spacing-md);
       }
 
       .detailed-session-card {
@@ -436,11 +440,10 @@ export function createDetailedSessionHistory(container) {
         overflow: hidden;
         transition: all var(--transition-normal);
         position: relative;
-        box-shadow: var(--shadow-soft);
+        margin-bottom: var(--spacing-lg);
       }
 
       .detailed-session-card:hover {
-        box-shadow: var(--shadow-medium);
         border-color: var(--border-emphasis);
         transform: translateY(-2px);
       }
@@ -448,24 +451,25 @@ export function createDetailedSessionHistory(container) {
       .session-card-header {
         display: flex;
         align-items: center;
-        gap: var(--spacing-md);
-        padding: var(--spacing-lg);
+        gap: var(--spacing-lg);
+        padding: var(--spacing-2xl);
         position: relative;
-        background: linear-gradient(135deg, var(--surface) 0%, var(--bg-tertiary) 100%);
+        background: var(--surface);
+        border-bottom: 1px solid var(--border-subtle);
       }
 
       .session-card-icon {
         font-size: var(--text-xl);
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--primary-lighter);
-        color: var(--primary);
-        border-radius: var(--radius-lg);
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        border-radius: var(--radius-md);
         flex-shrink: 0;
-        border: 2px solid rgba(var(--primary-rgb), 0.1);
+        border: 1px solid var(--border-subtle);
       }
 
       .session-card-meta {
@@ -474,12 +478,13 @@ export function createDetailedSessionHistory(container) {
       }
 
       .session-card-title {
-        font-family: 'Crimson Text', serif;
+        font-family: var(--font-serif);
         font-size: var(--text-lg);
         font-weight: 600;
         color: var(--text-primary);
         margin: 0 0 var(--spacing-xs) 0;
-        letter-spacing: -0.01em;
+        letter-spacing: var(--tracking-tight);
+        line-height: var(--leading-snug);
       }
 
       .session-card-datetime {
@@ -488,6 +493,9 @@ export function createDetailedSessionHistory(container) {
         font-size: var(--text-sm);
         color: var(--text-muted);
         font-variant-numeric: tabular-nums;
+        font-family: var(--font-primary);
+        font-weight: 400;
+        letter-spacing: var(--tracking-normal);
       }
 
       .session-date::after {
@@ -500,74 +508,75 @@ export function createDetailedSessionHistory(container) {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2px;
-        padding: var(--spacing-sm);
-        background: var(--bg-primary);
+        gap: var(--spacing-xs);
+        padding: var(--spacing-md);
+        background: var(--bg-tertiary);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
-        min-width: 60px;
+        min-width: 64px;
       }
 
       .duration-value {
-        font-size: var(--text-xl);
-        font-weight: 700;
+        font-size: var(--text-lg);
+        font-weight: 600;
         color: var(--text-primary);
-        line-height: 1;
+        line-height: var(--leading-tight);
         font-variant-numeric: tabular-nums;
+        font-family: var(--font-primary);
       }
 
       .duration-unit {
         font-size: var(--text-xs);
         color: var(--text-muted);
         text-transform: uppercase;
-        letter-spacing: 0.1em;
-        font-weight: 500;
+        letter-spacing: var(--tracking-wide);
+        font-weight: 400;
+        font-family: var(--font-primary);
       }
 
       .session-delete-btn {
         position: absolute;
-        top: var(--spacing-md);
-        right: var(--spacing-md);
-        background: var(--surface);
-        border: 1px solid var(--border-subtle);
+        top: var(--spacing-lg);
+        right: var(--spacing-lg);
+        background: transparent;
+        border: none;
         color: var(--text-muted);
         cursor: pointer;
         padding: var(--spacing-xs);
         border-radius: var(--radius-sm);
-        font-size: var(--text-base);
+        font-size: var(--text-sm);
         opacity: 0;
         transition: all var(--transition-fast);
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
       .detailed-session-card:hover .session-delete-btn {
-        opacity: 1;
+        opacity: 0.6;
       }
 
       .session-delete-btn:hover {
-        background: var(--error-light);
-        border-color: var(--error);
-        color: var(--error);
-        transform: scale(1.1);
+        background: var(--bg-tertiary);
+        color: var(--text-secondary);
+        opacity: 1;
       }
 
       .session-card-content {
-        padding: 0 var(--spacing-lg) var(--spacing-lg);
+        padding: var(--spacing-xl) var(--spacing-2xl) var(--spacing-2xl);
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-md);
+        gap: var(--spacing-xl);
       }
 
       .session-notes-section,
       .session-reflection-section {
-        background: var(--bg-primary);
+        background: var(--bg-tertiary);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
-        padding: var(--spacing-md);
+        padding: var(--spacing-lg);
         transition: border-color var(--transition-fast);
       }
 
@@ -579,13 +588,13 @@ export function createDetailedSessionHistory(container) {
       .section-title {
         display: flex;
         align-items: center;
-        gap: var(--spacing-xs);
+        gap: var(--spacing-sm);
         font-size: var(--text-sm);
-        font-weight: 600;
+        font-weight: 500;
         color: var(--text-secondary);
-        margin: 0 0 var(--spacing-sm) 0;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        margin: 0 0 var(--spacing-md) 0;
+        letter-spacing: var(--tracking-normal);
+        font-family: var(--font-primary);
       }
 
       .section-icon {
@@ -595,21 +604,24 @@ export function createDetailedSessionHistory(container) {
 
       .section-content {
         color: var(--text-primary);
-        line-height: 1.6;
+        line-height: var(--leading-relaxed);
         font-size: var(--text-sm);
+        font-family: var(--font-primary);
+        font-weight: 400;
+        letter-spacing: var(--tracking-normal);
       }
 
       .notes-content {
         white-space: pre-wrap;
         word-wrap: break-word;
-        font-family: 'Inter', sans-serif;
+        font-family: var(--font-primary);
       }
 
       .reflection-content {
         font-style: italic;
-        font-family: 'Crimson Text', serif;
-        font-size: var(--text-base);
-        line-height: 1.7;
+        font-family: var(--font-serif);
+        font-size: var(--text-sm);
+        line-height: var(--leading-relaxed);
       }
 
       .session-card-footer {
@@ -641,26 +653,28 @@ export function createDetailedSessionHistory(container) {
 
       .no-sessions {
         text-align: center;
-        padding: var(--spacing-4xl);
+        padding: var(--spacing-4xl) var(--spacing-2xl);
         color: var(--text-muted);
       }
 
       .no-sessions-icon {
-        font-size: 4rem;
-        margin-bottom: var(--spacing-lg);
-        opacity: 0.5;
+        font-size: 3rem;
+        margin-bottom: var(--spacing-xl);
+        opacity: 0.6;
       }
 
       .no-sessions h3 {
-        font-size: var(--text-xl);
-        margin-bottom: var(--spacing-sm);
+        font-size: var(--text-lg);
+        margin-bottom: var(--spacing-md);
         color: var(--text-secondary);
-        font-family: 'Crimson Text', serif;
+        font-family: var(--font-serif);
+        font-weight: 600;
       }
 
       .no-sessions p {
-        font-size: var(--text-base);
+        font-size: var(--text-sm);
         opacity: 0.8;
+        font-family: var(--font-primary);
       }
 
       .loading {
@@ -712,24 +726,25 @@ export function createDetailedSessionHistory(container) {
       }
 
       [data-theme='dark'] .detailed-session-card {
-        background: var(--stone-800);
-        border-color: var(--stone-700);
+        background: var(--surface);
+        border-color: var(--border-subtle);
       }
 
       [data-theme='dark'] .session-card-header {
-        background: linear-gradient(135deg, var(--stone-800) 0%, var(--stone-700) 100%);
+        background: var(--surface);
+        border-bottom: 1px solid var(--border-subtle);
       }
 
       [data-theme='dark'] .session-card-icon {
-        background: rgba(var(--sage-400-rgb), 0.15);
-        color: var(--sage-400);
-        border-color: rgba(var(--sage-400-rgb), 0.2);
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        border-color: var(--border-subtle);
       }
 
       [data-theme='dark'] .session-notes-section,
       [data-theme='dark'] .session-reflection-section {
-        background: var(--stone-900);
-        border-color: var(--stone-700);
+        background: var(--bg-tertiary);
+        border-color: var(--border-subtle);
       }
     `
 
