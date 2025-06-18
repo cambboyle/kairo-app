@@ -183,7 +183,9 @@
 }
 
 .progress-ring-progress {
-  stroke-dashoffset: calc(816 * (1 - var(--progress, 0) / 100)); /* Fill clockwise from 12 o'clock as progress increases */
+  stroke-dashoffset: calc(
+    816 * (1 - var(--progress, 0) / 100)
+  ); /* Fill clockwise from 12 o'clock as progress increases */
   transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1); /* Slower, more meditative transition */
   stroke-width: 2;
   stroke-linecap: round;
