@@ -1,0 +1,794 @@
+/* History Components - Full Japanese Zen Minimalism Transformation */
+/* Ma (間) • Kanso (簡素) • Wabi-Sabi (侘寂) • Shizen (自然) */
+
+/* ========================================
+   QUICK SUMMARY HISTORY - SIDEBAR ZEN
+   ======================================== */
+
+.quick-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md); /* Ma: Generous breathing room */
+  padding: var(--spacing-lg) 0;
+}
+
+.quick-summary-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl) var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all var(--transition-slow); /* Shizen: Natural, unhurried */
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Wabi-Sabi: Subtle imperfection through asymmetric hover */
+.quick-summary-item:hover {
+  background: linear-gradient(
+    135deg,
+    var(--bg-tertiary) 0%,
+    rgba(var(--sage-400-rgb), 0.03) 100%
+  );
+  border-color: var(--border-subtle);
+  transform: translateX(4px); /* Natural, organic movement */
+  box-shadow:
+    -2px 0 0 rgba(var(--primary-rgb), 0.1),
+    var(--shadow-soft);
+}
+
+.quick-summary-item:focus {
+  outline: none;
+  background: rgba(var(--primary-rgb), 0.02);
+  border-color: var(--primary);
+  box-shadow:
+    -3px 0 0 var(--primary),
+    0 0 0 1px rgba(var(--primary-rgb), 0.1);
+}
+
+.summary-icon {
+  font-size: var(--text-xl);
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  transition: all var(--transition-normal);
+  flex-shrink: 0;
+}
+
+.quick-summary-item:hover .summary-icon {
+  background: var(--surface);
+  color: var(--text-primary);
+  border-color: var(--border-emphasis);
+  transform: scale(1.05); /* Subtle life-like response */
+}
+
+.summary-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.summary-type {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+  margin: 0;
+}
+
+.summary-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-family: var(--font-primary);
+}
+
+.summary-duration {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.summary-date {
+  position: relative;
+  font-weight: 400;
+}
+
+.summary-meta .summary-date::before {
+  content: '•';
+  margin-right: var(--spacing-sm);
+  color: var(--border-emphasis);
+  font-weight: bold;
+}
+
+.summary-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.6;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.quick-summary-item:hover .summary-indicator {
+  opacity: 1;
+  background: var(--accent);
+  transform: scale(1.2);
+}
+
+/* Empty State - Zen Encouragement */
+.quick-summary-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-xl);
+  opacity: 0.4;
+}
+
+.empty-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.empty-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* View All Button - Zen Action */
+.quick-summary-footer {
+  padding: var(--spacing-xl) var(--spacing-2xl) var(--spacing-lg);
+  border-top: 1px solid var(--border-subtle);
+  margin-top: var(--spacing-md);
+}
+
+.view-all-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.view-all-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--primary-rgb), 0.05),
+    transparent
+  );
+  transition: left var(--transition-slow);
+}
+
+.view-all-btn:hover::before {
+  left: 100%;
+}
+
+.view-all-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-emphasis);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.view-all-icon {
+  font-size: var(--text-base);
+  transition: transform var(--transition-fast);
+}
+
+.view-all-btn:hover .view-all-icon {
+  transform: scale(1.1);
+}
+
+/* ========================================
+   DETAILED HISTORY MODAL - ZEN DEPTH
+   ======================================== */
+
+.detailed-history-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.modal-content {
+  position: relative;
+  width: 90vw;
+  max-width: 1200px;
+  height: 85vh;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 0 0 1px var(--border-subtle);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-xl);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface);
+}
+
+.modal-header h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: var(--tracking-tight);
+}
+
+.modal-close {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-xl);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+.modal-body {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================================
+   SESSION CARDS - ZEN INFORMATION DESIGN
+   ======================================== */
+
+.detailed-sessions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl); /* Ma: Generous vertical rhythm */
+  padding: var(--spacing-2xl);
+}
+
+.detailed-session-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-slow);
+  position: relative;
+  box-shadow: var(--shadow-subtle);
+}
+
+/* Wabi-Sabi: Natural asymmetric response */
+.detailed-session-card:hover {
+  border-color: var(--border-emphasis);
+  transform: translateY(-4px) translateX(2px);
+  box-shadow:
+    -4px 8px 25px rgba(0, 0, 0, 0.08),
+    -1px 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.session-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xl);
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.session-card-icon {
+  font-size: var(--text-xl);
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  transition: all var(--transition-normal);
+}
+
+.detailed-session-card:hover .session-card-icon {
+  background: var(--surface);
+  border-color: var(--border-emphasis);
+  transform: scale(1.08);
+  box-shadow: var(--shadow-soft);
+}
+
+.session-card-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.session-card-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+}
+
+.session-card-datetime {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-primary);
+}
+
+.session-date::after {
+  content: '•';
+  margin-left: var(--spacing-sm);
+  opacity: 0.6;
+}
+
+.session-card-duration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-lg);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  min-width: 80px;
+  transition: all var(--transition-fast);
+}
+
+.detailed-session-card:hover .session-card-duration {
+  background: var(--surface);
+  border-color: var(--border-emphasis);
+}
+
+.duration-value {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-primary);
+}
+
+.duration-unit {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  font-weight: 500;
+}
+
+/* Session Content - Natural Information Hierarchy */
+.session-card-content {
+  padding: var(--spacing-2xl) var(--spacing-3xl) var(--spacing-3xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl); /* Ma: Spacious content breathing */
+}
+
+.session-notes-section,
+.session-reflection-section {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle zen interaction */
+.session-notes-section:hover,
+.session-reflection-section:hover {
+  border-color: var(--border-emphasis);
+  background: var(--surface);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-lg) 0;
+  letter-spacing: var(--tracking-normal);
+  font-family: var(--font-primary);
+}
+
+.section-icon {
+  font-size: var(--text-lg);
+  opacity: 0.8;
+}
+
+.section-content {
+  color: var(--text-primary);
+  line-height: var(--leading-relaxed);
+  font-size: var(--text-sm);
+  font-family: var(--font-primary);
+  letter-spacing: var(--tracking-normal);
+}
+
+.notes-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: var(--font-primary);
+}
+
+.reflection-content {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+}
+
+/* Delete Button - Subtle & Zen */
+.session-delete-btn {
+  position: absolute;
+  top: var(--spacing-xl);
+  right: var(--spacing-xl);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  opacity: 0;
+  transition: all var(--transition-normal);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailed-session-card:hover .session-delete-btn {
+  opacity: 0.5;
+}
+
+.session-delete-btn:hover {
+  background: rgba(var(--stone-700-rgb), 0.1);
+  color: var(--text-secondary);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Controls & Filters - Zen Functionality */
+.detailed-history-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xl);
+  padding: var(--spacing-2xl);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+
+.history-filters,
+.history-sort {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.filter-label,
+.sort-label {
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-normal);
+  font-family: var(--font-primary);
+}
+
+.filter-select,
+.sort-select {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  min-width: 160px;
+  transition: all var(--transition-fast);
+  font-family: var(--font-primary);
+  cursor: pointer;
+}
+
+.filter-select:hover,
+.sort-select:hover {
+  border-color: var(--border-emphasis);
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.05);
+}
+
+.filter-select:focus,
+.sort-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
+}
+
+.history-stats {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Loading & Empty States - Zen Patience */
+.loading-detailed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4xl);
+  gap: var(--spacing-xl);
+  color: var(--text-muted);
+  min-height: 400px;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--border-subtle);
+  border-top: 2px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.no-sessions {
+  text-align: center;
+  padding: var(--spacing-5xl) var(--spacing-2xl);
+  color: var(--text-muted);
+}
+
+.no-sessions-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-2xl);
+  opacity: 0.4;
+}
+
+.no-sessions h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.no-sessions p {
+  font-size: var(--text-base);
+  opacity: 0.8;
+  line-height: var(--leading-relaxed);
+}
+
+/* ========================================
+   ANIMATIONS - NATURAL MOVEMENT
+   ======================================== */
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   RESPONSIVE - ZEN ADAPTATION
+   ======================================== */
+
+@media (max-width: 768px) {
+  .detailed-history-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-lg);
+  }
+
+  .history-filters,
+  .history-sort {
+    justify-content: space-between;
+  }
+
+  .history-stats {
+    margin-left: 0;
+    text-align: center;
+    order: -1;
+  }
+
+  .session-card-header {
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+  }
+
+  .session-card-duration {
+    order: -1;
+    align-self: flex-start;
+  }
+
+  .session-delete-btn {
+    position: static;
+    opacity: 1;
+    margin-left: auto;
+  }
+
+  .detailed-sessions-grid {
+    padding: var(--spacing-lg);
+    gap: var(--spacing-xl);
+  }
+
+  .session-card-content {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .quick-summary-item {
+    padding: var(--spacing-lg) var(--spacing-xl);
+  }
+}
+
+/* ========================================
+   DARK MODE - ZEN HARMONY
+   ======================================== */
+
+[data-theme='dark'] .detailed-session-card {
+  background: var(--surface);
+  border-color: var(--border-subtle);
+}
+
+[data-theme='dark'] .session-card-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+[data-theme='dark'] .session-card-icon {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+[data-theme='dark'] .session-notes-section,
+[data-theme='dark'] .session-reflection-section {
+  background: var(--bg-tertiary);
+  border-color: var(--border-subtle);
+}
+
+[data-theme='dark'] .session-notes-section:hover,
+[data-theme='dark'] .session-reflection-section:hover {
+  background: var(--surface);
+}
+
+[data-theme='dark'] .detailed-history-controls {
+  background: var(--bg-secondary);
+}
+
+[data-theme='dark'] .modal-content {
+  background: var(--bg-primary);
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px var(--border-subtle);
+}

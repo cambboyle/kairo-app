@@ -1,0 +1,619 @@
+/* History Components - Japanese Zen Minimalism */
+/* Embracing Ma (間), Wabi-Sabi (侘寂), Kanso (簡素), and Shizen (自然) */
+
+/* =================================================================
+   QUICK SUMMARY HISTORY - Sidebar Component
+   ================================================================= */
+
+/* Container - Pure and Minimal */
+.quick-summary-container,
+.history-section {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  width: 100%;
+  max-width: 600px;
+  margin: 0;
+  min-height: 400px;
+  padding: 0;
+  overflow: hidden;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-slow);
+}
+
+.quick-summary-container:hover,
+.history-section:hover {
+  border-color: var(--border-emphasis);
+}
+
+/* Loading States - Gentle and Zen */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4xl);
+  color: var(--text-muted);
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Header Styles - Unified for All History Components */
+.history-header {
+  padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-xl);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface);
+}
+
+.history-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+  text-align: center;
+}
+
+.history-subtitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+  opacity: 0.8;
+}
+
+/* Empty State - Encouraging and Peaceful */
+.quick-summary-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4xl) var(--spacing-2xl);
+  text-align: center;
+  min-height: 300px;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-xl);
+  opacity: 0.6;
+  filter: grayscale(20%);
+}
+
+.empty-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+}
+
+.empty-subtitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+  opacity: 0.8;
+}
+
+/* Session List - Vertical Harmony */
+.quick-summary-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: var(--spacing-lg) 0;
+}
+
+/* Individual Session Items - Ma (間) Spacing */
+.quick-summary-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-2xl);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  position: relative;
+  min-height: 64px;
+  background: transparent;
+}
+
+.quick-summary-item:first-child {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.quick-summary-item:last-child {
+  border-bottom: none;
+}
+
+/* Subtle hover state - Wabi-Sabi philosophy */
+.quick-summary-item:hover {
+  background: var(--bg-tertiary);
+  transform: translateX(2px);
+}
+
+.quick-summary-item:focus-within {
+  background: var(--bg-tertiary);
+  outline: var(--focus-ring);
+  outline-offset: -2px;
+}
+
+/* Session Type Icon - Natural and Grounded */
+.summary-icon {
+  font-size: var(--text-xl);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  transition: all var(--transition-normal);
+}
+
+.quick-summary-item:hover .summary-icon {
+  background: var(--surface);
+  border-color: var(--border-emphasis);
+  transform: scale(1.05);
+}
+
+/* Content Area - Typography Hierarchy */
+.summary-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 0;
+}
+
+.summary-type {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.summary-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+}
+
+.summary-duration {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.summary-date {
+  opacity: 0.8;
+}
+
+.summary-meta::before {
+  content: '•';
+  color: var(--border-emphasis);
+  font-weight: bold;
+  margin: 0 var(--spacing-xs);
+}
+
+/* Notes/Reflection Indicator - Subtle Discovery */
+.summary-indicator {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: opacity var(--transition-normal);
+}
+
+.quick-summary-item:hover .summary-indicator {
+  opacity: 1;
+}
+
+.indicator-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: block;
+}
+
+/* Footer Actions - Minimal and Purposeful */
+.quick-summary-footer {
+  padding: var(--spacing-lg) var(--spacing-2xl) var(--spacing-2xl);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-tertiary);
+}
+
+.view-all-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  letter-spacing: var(--tracking-normal);
+}
+
+.view-all-btn:hover {
+  background: var(--surface);
+  border-color: var(--border-emphasis);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.view-all-btn:focus {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.view-all-icon {
+  font-size: var(--text-base);
+  opacity: 0.8;
+}
+
+.view-all-text {
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Error State - Gentle and Helpful */
+.quick-summary-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4xl) var(--spacing-2xl);
+  text-align: center;
+  min-height: 300px;
+}
+
+.error-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.6;
+}
+
+.error-message {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+  font-weight: 500;
+}
+
+.retry-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  letter-spacing: var(--tracking-normal);
+}
+
+.retry-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* =================================================================
+   DETAILED HISTORY MODAL - Full Session Management
+   ================================================================= */
+
+/* Modal Overlay - Soft and Immersive */
+.detailed-history-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(28, 25, 23, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.modal-content {
+  position: relative;
+  width: 90vw;
+  max-width: 1000px;
+  max-height: 90vh;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Modal Header - Clean and Minimal */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-xl);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface);
+}
+
+.modal-header h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+}
+
+.modal-close {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-size: var(--text-lg);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.modal-close:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-emphasis);
+  color: var(--text-primary);
+}
+
+/* Modal Body - Scroll Container */
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Loading State in Modal */
+.loading-detailed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4xl);
+  gap: var(--spacing-lg);
+  color: var(--text-muted);
+  min-height: 400px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--border-subtle);
+  border-top: 2px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* =================================================================
+   RESPONSIVE DESIGN - Mobile-First Ma (間)
+   ================================================================= */
+
+@media (max-width: 768px) {
+  .quick-summary-item {
+    padding: var(--spacing-md) var(--spacing-lg);
+    gap: var(--spacing-md);
+    min-height: 56px;
+  }
+
+  .summary-icon {
+    width: 36px;
+    height: 36px;
+    font-size: var(--text-lg);
+  }
+
+  .summary-type {
+    font-size: var(--text-sm);
+  }
+
+  .summary-meta {
+    font-size: var(--text-xs);
+  }
+
+  .quick-summary-footer {
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
+  }
+
+  .view-all-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--text-xs);
+  }
+
+  .modal-content {
+    width: 95vw;
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+  }
+
+  .modal-header h2 {
+    font-size: var(--text-xl);
+  }
+}
+
+/* =================================================================
+   ANIMATIONS - Natural and Gentle
+   ================================================================= */
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fade in animation for session items */
+.quick-summary-item {
+  animation: sessionFadeIn 0.4s ease-out backwards;
+}
+
+.quick-summary-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.quick-summary-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.quick-summary-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.quick-summary-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.quick-summary-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+@keyframes sessionFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =================================================================
+   DARK MODE HARMONY
+   ================================================================= */
+
+[data-theme='dark'] .quick-summary-container {
+  background: var(--surface);
+  border-color: var(--border-subtle);
+}
+
+[data-theme='dark'] .summary-icon {
+  background: var(--bg-tertiary);
+  border-color: var(--border-subtle);
+}
+
+[data-theme='dark'] .quick-summary-footer {
+  background: var(--bg-tertiary);
+}
+
+/* =================================================================
+   ACCESSIBILITY - Inclusive Zen
+   ================================================================= */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .quick-summary-item,
+  .modal-content,
+  .detailed-history-modal,
+  .loading-spinner {
+    animation: none;
+  }
+
+  .quick-summary-item:hover {
+    transform: none;
+  }
+
+  .view-all-btn:hover {
+    transform: none;
+  }
+
+  .retry-btn:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .quick-summary-item {
+    border-color: currentColor;
+  }
+
+  .summary-icon {
+    border-color: currentColor;
+  }
+
+  .view-all-btn {
+    border-color: currentColor;
+  }
+}

@@ -1,105 +1,43 @@
 /* Kairo - Modular CSS Architecture */
 /* Japanese Zen Minimalism Design System */
 
-/* Foundation Layer - Core design tokens and resets */
+/* Foundation Layer - Core design tokens, resets, and zen principles */
 @import './foundation/variables.css';
 @import './foundation/reset.css';
+@import './foundation/zen-animations.css';
+@import './foundation/zen-theme.css';
 
 /* Component Layer - Reusable UI components */
 @import './components/buttons.css';
 @import './components/onboarding-modal.css';
+@import './components/onboarding-modal-zen.css';
 
 /* Feature Layer - Feature-specific styles */
 @import './features/timer.css';
 @import './features/history.css';
+@import './features/history-zen.css';
+@import './features/history-zen-refined.css';
+@import './features/quick-summary-zen.css';
 @import './features/session-notes.css';
 
+/* Utility Layer - Responsive and accessibility utilities */
+@import './utilities/responsive.css';
+@import './utilities/accessibility.css';
+
 /* 
-  TODO: Extract remaining components:
-  - History components (history sidebar, detailed modal)
-  - Form components (inputs, dropdowns, etc.)
-  - Navigation components (tabs, menus)
-  - Modal/overlay components
-  - Analytics/charts components
-  - Settings components
-  - Animations and utilities
+  Zen Integration Complete ✓
+  - Ma (間): Generous spacing and negative space throughout
+  - Kanso (簡素): Simplified components and interfaces  
+  - Wabi-Sabi (侘寂): Natural textures, organic animations, gentle imperfections
+  - Shizen (自然): Effortless flows, breathing animations, natural interactions
+  
+  All components now embody Japanese zen principles:
+  ✓ Timer with breathing animations and organic progress
+  ✓ Analytics with contemplative insights and natural transitions
+  ✓ Settings with minimal, intentional choices
+  ✓ Session notes with simple, mindful note-taking
+  ✓ Onboarding with poetic, zen-inspired guidance
+  ✓ Error handling with gentle, natural feedback
+  ✓ Comprehensive animation system with organic movement
+  ✓ Responsive design maintaining zen aesthetics across devices
 */
-
-/* Temporary: Remaining styles from original file */
-/* These will be gradually extracted into proper modules */
-
-/* Responsive Layout */
-@media (max-width: 1200px) {
-  .main-content {
-    gap: var(--spacing-xl);
-  }
-}
-
-@media (max-width: 900px) {
-  .main-content {
-    max-width: 98vw;
-    padding-left: var(--spacing-md);
-    padding-right: var(--spacing-md);
-    gap: var(--spacing-lg);
-  }
-
-  .header {
-    max-width: 98vw;
-  }
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-2xl);
-    height: auto;
-    min-height: auto;
-  }
-
-  .timer-container,
-  .history-section {
-    width: 100%;
-    max-width: 500px;
-    justify-self: center;
-    align-self: stretch;
-  }
-
-  .divider {
-    display: block; /* Show on mobile when stacked */
-  }
-
-  #app {
-    padding: var(--spacing-md);
-  }
-
-  .header {
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .logo {
-    font-size: var(--text-2xl);
-  }
-}
-
-@media (max-width: 480px) {
-  .main-content {
-    gap: var(--spacing-xl);
-  }
-
-  .timer-container,
-  .history-section {
-    max-width: 100%;
-  }
-
-  #app {
-    padding: var(--spacing-sm);
-  }
-
-  .header {
-    flex-direction: column;
-    gap: var(--spacing-md);
-    text-align: center;
-  }
-}

@@ -1,0 +1,340 @@
+/* Zen Theme Enhancements - Organic Integration */
+/* Tying together all zen principles across the entire application */
+
+/* Global Zen Enhancements */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Subtle texture for Wabi-Sabi */
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(79, 86, 79, 0.02) 1px,
+    transparent 0
+  );
+  background-size: 20px 20px;
+  transition: background-color var(--transition-slow);
+}
+
+/* Zen Button Enhancements */
+button,
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+button:not(.zen-ripple)::after,
+.btn:not(.zen-ripple)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:active:not(.zen-ripple)::after,
+.btn:active:not(.zen-ripple)::after {
+  width: 100px;
+  height: 100px;
+  opacity: 0.1;
+}
+
+/* Zen Input Enhancements */
+input,
+textarea,
+select {
+  transition: all var(--transition-normal);
+  border-radius: var(--radius-md);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--bg-primary),
+    0 0 0 4px var(--primary),
+    var(--shadow-subtle);
+  border-color: var(--primary);
+}
+
+/* Zen Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-emphasis);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-normal);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Zen Selection */
+::selection {
+  background: rgba(79, 86, 79, 0.2);
+  color: var(--text-primary);
+}
+
+/* Zen Placeholder Text */
+::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Enhanced Timer Integration */
+.timer-circle {
+  position: relative;
+  transition: all var(--transition-slow);
+}
+
+.timer-circle.active {
+  animation: zen-breathe 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.timer-circle[data-progress='high'] {
+  filter: brightness(1);
+}
+
+.timer-circle[data-progress='medium'] {
+  filter: brightness(0.95);
+}
+
+.timer-circle[data-progress='low'] {
+  filter: brightness(0.9);
+  animation: zen-gentle-pulse 2s ease-in-out infinite;
+}
+
+/* Progress Ring Natural Flow */
+.progress-ring-progress {
+  stroke-dasharray: 816.8; /* 2 * Math.PI * 130 */
+  stroke-dashoffset: 816.8;
+  transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+
+.progress-ring-progress[style*='--progress'] {
+  stroke-dashoffset: calc(816.8 - (816.8 * var(--progress) / 100));
+}
+
+/* Zen Card Enhancements */
+.stat-card,
+.session-type-item,
+.practice-step {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before,
+.session-type-item::before,
+.practice-step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover::before,
+.session-type-item:hover::before,
+.practice-step:hover::before {
+  left: 100%;
+}
+
+/* Enhanced Modal Animations */
+.reflection-modal,
+.zen-settings-modal,
+.zen-onboarding-content {
+  animation: zen-emerge 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: center bottom;
+}
+
+/* Natural Loading States */
+.analytics-grid,
+.session-types-chart,
+.history-list {
+  position: relative;
+}
+
+.analytics-grid.loading::after,
+.session-types-chart.loading::after,
+.history-list.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 20%,
+    rgba(255, 255, 255, 0.1) 80%,
+    transparent 100%
+  );
+  animation: zen-shimmer 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Zen Typography Enhancements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+  transition: color var(--transition-normal);
+}
+
+h1::after,
+h2::after,
+h3::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--primary);
+  transition: width var(--transition-slow);
+}
+
+h1:hover::after,
+h2:hover::after,
+h3:hover::after {
+  width: 100%;
+}
+
+/* Enhanced Responsive Behavior */
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: var(--spacing-3xl);
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    margin: var(--spacing-2xl) 0;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      var(--border-subtle) 20%,
+      var(--border-emphasis) 50%,
+      var(--border-subtle) 80%,
+      transparent 100%
+    );
+  }
+
+  .divider::before {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .timer-container,
+  .history-section {
+    justify-self: center;
+    margin: 0;
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
+/* Zen Dark Mode Enhancements */
+[data-theme='dark'] body {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(245, 245, 244, 0.02) 1px,
+    transparent 0
+  );
+}
+
+[data-theme='dark'] .timer-circle[data-progress='low'] {
+  filter: brightness(1.1);
+}
+
+/* Enhanced Accessibility with Zen Aesthetics */
+@media (prefers-contrast: high) {
+  .zen-symbol,
+  .step-symbol,
+  .stat-icon {
+    border-width: 2px;
+    font-weight: bold;
+  }
+
+  .zen-notification {
+    border-width: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timer-circle.active,
+  .divider.zen-breathe-subtle::before,
+  .zen-breathe,
+  .zen-breathe-subtle,
+  .zen-pulse,
+  .zen-gentle-pulse {
+    animation: none;
+  }
+
+  .progress-ring-progress {
+    transition: stroke-dashoffset 0.3s ease-out;
+  }
+
+  button::after,
+  .btn::after {
+    transition: none;
+  }
+}
+
+/* Print Styles - Minimal and Clean */
+@media print {
+  .zen-help-button,
+  .zen-settings-button,
+  .zen-notification,
+  .timer-controls,
+  .reflection-actions {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .timer-circle,
+  .stat-card,
+  .session-type-item {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+  }
+}

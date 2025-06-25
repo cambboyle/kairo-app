@@ -1,0 +1,307 @@
+/* Zen Animations - Organic Micro-interactions */
+/* Breathing, Natural Movement Inspired by Japanese Aesthetics */
+
+/* Breathing Animation - Core Zen Principle */
+@keyframes zen-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+}
+
+@keyframes zen-gentle-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+}
+
+/* Organic Emergence - Like plants growing */
+@keyframes zen-emerge {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Gentle Fade - Natural dissolution */
+@keyframes zen-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zen-fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+/* Subtle hover interactions */
+@keyframes zen-lift {
+  0% {
+    transform: translateY(0);
+    box-shadow: var(--shadow-subtle);
+  }
+  100% {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+/* Progress ring - organic growth */
+@keyframes zen-progress-flow {
+  0% {
+    stroke-dashoffset: 100%;
+    opacity: 0.3;
+  }
+  100% {
+    stroke-dashoffset: 0%;
+    opacity: 0.8;
+  }
+}
+
+/* Ripple effect - like water droplets */
+@keyframes zen-ripple {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(4);
+  }
+}
+
+/* Utility Classes for Organic Animations */
+
+/* Breathing elements - for active states */
+.zen-breathe {
+  animation: zen-breathe 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.zen-breathe-subtle {
+  animation: zen-breathe 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+/* Gentle pulse for notifications */
+.zen-pulse {
+  animation: zen-gentle-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Emergence - for elements appearing */
+.zen-emerge {
+  animation: zen-emerge 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.zen-emerge-delayed {
+  animation: zen-emerge 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+  opacity: 0;
+}
+
+/* Gentle fade transitions */
+.zen-fade-in {
+  animation: zen-fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.zen-fade-out {
+  animation: zen-fade-out 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Hover effects - subtle lift */
+.zen-lift-hover {
+  transition: all var(--transition-normal);
+}
+
+.zen-lift-hover:hover {
+  animation: zen-lift 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Interactive elements - ripple effect */
+.zen-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.zen-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zen-ripple:active::before {
+  animation: zen-ripple 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Organic loading states */
+.zen-loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.zen-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: zen-shimmer 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes zen-shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Zen Focus Ring - Natural, soft focus indicators */
+.zen-focus-ring {
+  position: relative;
+}
+
+.zen-focus-ring:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--bg-primary),
+    0 0 0 4px var(--primary);
+  border-radius: var(--radius-md);
+}
+
+.zen-focus-ring:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--bg-primary),
+    0 0 0 4px var(--primary);
+  border-radius: var(--radius-md);
+}
+
+/* Organic Transitions - Natural easing curves */
+.zen-transition {
+  transition: all var(--transition-normal);
+}
+
+.zen-transition-slow {
+  transition: all var(--transition-slow);
+}
+
+.zen-transition-fast {
+  transition: all var(--transition-fast);
+}
+
+/* Scale interactions - breathing effect */
+.zen-scale-hover {
+  transition: transform var(--transition-normal);
+}
+
+.zen-scale-hover:hover {
+  transform: scale(1.02);
+}
+
+.zen-scale-active {
+  transition: transform var(--transition-fast);
+}
+
+.zen-scale-active:active {
+  transform: scale(0.98);
+}
+
+/* Zen Stagger - For lists and grids */
+.zen-stagger-children > * {
+  animation: zen-emerge 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.zen-stagger-children > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.zen-stagger-children > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.zen-stagger-children > *:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.zen-stagger-children > *:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.zen-stagger-children > *:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.zen-stagger-children > *:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.zen-stagger-children > *:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.zen-stagger-children > *:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+/* Reduced Motion Respect */
+@media (prefers-reduced-motion: reduce) {
+  .zen-breathe,
+  .zen-breathe-subtle,
+  .zen-pulse,
+  .zen-emerge,
+  .zen-emerge-delayed,
+  .zen-fade-in,
+  .zen-fade-out,
+  .zen-lift-hover:hover,
+  .zen-loading::after {
+    animation: none;
+  }
+
+  .zen-stagger-children > * {
+    animation: none;
+    opacity: 1;
+  }
+
+  .zen-transition,
+  .zen-transition-slow,
+  .zen-transition-fast,
+  .zen-scale-hover,
+  .zen-scale-active {
+    transition: none;
+  }
+}

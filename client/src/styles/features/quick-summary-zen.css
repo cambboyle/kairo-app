@@ -1,0 +1,329 @@
+/* Quick Summary History - Japanese Zen Minimalism */
+/* Ma (間) • Kanso (簡素) • Wabi-Sabi (侘寂) • Shizen (自然) */
+
+/* Override existing quick summary styles with zen principles */
+
+/* Enhanced Quick Summary List - Ma (Negative Space) */
+.quick-summary-list {
+  padding: var(--spacing-2xl) var(--spacing-lg); /* Ma: More generous breathing room */
+  gap: var(--spacing-lg); /* Ma: Comfortable rhythm between items */
+}
+
+/* Quick Summary Item - Zen Interaction Design */
+.quick-summary-item {
+  padding: var(--spacing-2xl) var(--spacing-3xl); /* Ma: Spacious padding */
+  border-radius: var(--radius-xl); /* Shizen: More organic curves */
+  transition: all var(--transition-slow); /* Shizen: Unhurried, natural timing */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Wabi-Sabi: Natural imperfection through asymmetric movement */
+.quick-summary-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--primary-rgb), 0.03) 50%,
+    transparent 100%
+  );
+  transition: left var(--transition-slow);
+  z-index: 0;
+}
+
+.quick-summary-item:hover::before {
+  left: 100%;
+}
+
+.quick-summary-item:hover {
+  transform: translateX(6px) translateY(-2px); /* Wabi-Sabi: Subtle asymmetry */
+  box-shadow:
+    -3px 2px 12px rgba(0, 0, 0, 0.08),
+    -1px 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* Summary Icon - Enhanced Zen Design */
+.summary-icon {
+  width: 56px;
+  height: 56px;
+  font-size: var(--text-2xl);
+  border-radius: var(--radius-xl); /* More organic */
+  background: linear-gradient(
+    135deg,
+    var(--bg-tertiary) 0%,
+    rgba(var(--sage-400-rgb), 0.05) 100%
+  );
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-normal);
+  z-index: 1;
+  position: relative;
+}
+
+.quick-summary-item:hover .summary-icon {
+  background: linear-gradient(
+    135deg,
+    var(--surface) 0%,
+    rgba(var(--primary-rgb), 0.05) 100%
+  );
+  border-color: var(--border-emphasis);
+  transform: scale(1.08) translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Summary Content - Natural Typography Flow */
+.summary-content {
+  gap: var(--spacing-md); /* Ma: Better breathing room */
+  z-index: 1;
+  position: relative;
+}
+
+.summary-type {
+  font-size: var(--text-lg); /* Kanso: Clearer hierarchy */
+  margin-bottom: var(--spacing-xs);
+}
+
+.summary-meta {
+  gap: var(--spacing-lg); /* Ma: More spacious meta information */
+}
+
+/* Zen Separator Enhancement */
+.summary-meta .summary-date::before {
+  content: '◦'; /* Softer separator character */
+  margin-right: var(--spacing-md);
+  margin-left: var(--spacing-xs);
+  color: var(--border-emphasis);
+  font-size: var(--text-xs);
+  opacity: 0.8;
+}
+
+/* Summary Duration - Enhanced Readability */
+.summary-duration {
+  font-weight: 600; /* Stronger emphasis */
+  color: var(--text-primary); /* More prominent */
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: rgba(var(--primary-rgb), 0.08);
+  border-radius: var(--radius-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Summary Indicator - Organic Zen Response */
+.summary-indicator {
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+  transition: all var(--transition-normal);
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+}
+
+.quick-summary-item:hover .summary-indicator {
+  background: var(--accent);
+  transform: scale(1.4);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.3);
+}
+
+/* Empty State - Zen Encouragement Enhancement */
+.quick-summary-empty {
+  padding: var(--spacing-5xl) var(--spacing-2xl); /* Ma: More generous spacing */
+}
+
+.empty-icon {
+  font-size: 4rem; /* Larger, more impactful */
+  margin-bottom: var(--spacing-2xl);
+  opacity: 0.3;
+  filter: grayscale(0.3); /* Wabi-Sabi: Subtle imperfection */
+}
+
+.empty-title {
+  font-size: var(--text-xl); /* Clearer hierarchy */
+  margin-bottom: var(--spacing-lg);
+}
+
+.empty-subtitle {
+  font-size: var(--text-base); /* More readable */
+  line-height: var(--leading-relaxed);
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* Quick Summary Footer - Ensure visibility */
+.quick-summary-footer {
+  padding: var(--spacing-2xl) var(--spacing-3xl) var(--spacing-xl); /* Ma: Generous footer spacing */
+  border-top: 1px solid var(--border-subtle);
+  margin-top: var(--spacing-xl);
+  flex-shrink: 0; /* Prevent footer from being compressed */
+  background: var(--surface); /* Ensure visible background */
+  position: relative;
+  z-index: 10; /* Ensure it's above other content */
+}
+
+/* Enhanced View All Button - Zen Call-to-Action */
+.view-all-btn {
+  width: 100%;
+  padding: var(--spacing-lg) var(--spacing-2xl); /* Ma: More spacious button */
+  border-radius: var(--radius-xl); /* Organic curves */
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-height: 48px; /* Ensure proper touch target */
+}
+
+/* Subtle zen animation */
+.view-all-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    rgba(var(--primary-rgb), 0.1) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  transition: all var(--transition-normal);
+  border-radius: 50%;
+}
+
+.view-all-btn:hover::after {
+  width: 200px;
+  height: 200px;
+}
+
+.view-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(var(--primary-rgb), 0.1);
+}
+
+.view-all-icon {
+  font-size: var(--text-lg);
+  transition: all var(--transition-fast);
+  position: relative;
+  z-index: 1;
+}
+
+.view-all-text {
+  position: relative;
+  z-index: 1;
+}
+
+.view-all-btn:hover .view-all-icon {
+  transform: scale(1.15) translateX(2px);
+}
+
+/* Enhanced Error State - Zen Patience */
+.quick-summary-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  color: var(--text-muted);
+  gap: var(--spacing-lg);
+}
+
+.error-icon {
+  font-size: 3rem;
+  opacity: 0.4;
+  margin-bottom: var(--spacing-lg);
+}
+
+.error-message {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.retry-btn {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.retry-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-emphasis);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-subtle);
+}
+
+/* Loading State - Zen Patience */
+.loading {
+  text-align: center;
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+
+/* Responsive Zen Adaptation */
+@media (max-width: 768px) {
+  .quick-summary-list {
+    padding: var(--spacing-xl) var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .quick-summary-item {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .quick-summary-item:hover {
+    transform: translateX(3px) translateY(-1px);
+  }
+
+  .summary-icon {
+    width: 48px;
+    height: 48px;
+    font-size: var(--text-xl);
+  }
+
+  .quick-summary-footer {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .view-all-btn {
+    padding: var(--spacing-md) var(--spacing-xl);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .quick-summary-item,
+  .summary-icon,
+  .view-all-btn,
+  .summary-indicator {
+    transition: none;
+  }
+
+  .quick-summary-item::before {
+    display: none;
+  }
+
+  .view-all-btn::after {
+    display: none;
+  }
+}

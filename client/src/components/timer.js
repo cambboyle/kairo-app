@@ -40,18 +40,18 @@ export function startTimer(container) {
     const streakMessage = getStreakMessage(streakData)
 
     container.innerHTML = `
-      <div class="timer-content">
+      <div class="timer-content zen-stagger-children">
         ${
           streakData.currentStreak > 0
             ? `
-          <div class="streak-display" role="status" aria-live="polite">
+          <div class="streak-display zen-emerge" role="status" aria-live="polite">
             <div class="streak-counter">🔥 ${streakData.currentStreak} day streak</div>
             <div class="streak-message">${streakMessage}</div>
           </div>
         `
             : ''
         }
-        <div class="timer-settings">
+        <div class="timer-settings zen-emerge-delayed">
           <div class="setting-group">
             <label class="setting-label" for="timer-minutes">Duration (min)</label>
             <div class="duration-controls">
@@ -60,7 +60,7 @@ export function startTimer(container) {
                   (preset) => `
                   <button 
                     type="button" 
-                    class="duration-preset-btn" 
+                    class="duration-preset-btn zen-ripple zen-scale-hover" 
                     data-duration="${preset.value}" 
                     aria-label="${preset.label} session"
                     ${preset.value === 25 ? 'data-selected="true"' : ''}
@@ -76,7 +76,7 @@ export function startTimer(container) {
                 min="1" 
                 max="120" 
                 value="25" 
-                class="setting-input duration-input" 
+                class="setting-input duration-input zen-focus-ring" 
                 aria-label="Session duration in minutes"
                 placeholder="Custom"
               >
@@ -87,7 +87,7 @@ export function startTimer(container) {
             <label class="setting-label" for="timer-type">Session Type</label>
             <select 
               id="timer-type" 
-              class="setting-input"
+              class="setting-input zen-focus-ring"
               style="width: 140px;"
               aria-label="Select focus session type"
             >
@@ -101,12 +101,12 @@ export function startTimer(container) {
             </select>
           </div>
         </div>
-        <div class="timer-circle" role="timer" aria-live="polite">
-          <div class="timer-display" id="timer-display" aria-label="Timer display">25:00</div>
-          <div class="timer-label">Ready to Begin</div>
+        <div class="timer-circle zen-breathe-subtle" role="timer" aria-live="polite">
+          <div class="timer-display zen-fade-in" id="timer-display" aria-label="Timer display">25:00</div>
+          <div class="timer-label zen-fade-in">Ready to Begin</div>
         </div>
-        <div class="timer-controls">
-          <button id="start-btn" class="control-btn primary" aria-describedby="start-help">
+        <div class="timer-controls zen-emerge-delayed">
+          <button id="start-btn" class="control-btn primary zen-ripple zen-lift-hover" aria-describedby="start-help">
             Start Session
           </button>
           <div id="start-help" class="sr-only">Begin your focus session</div>
@@ -191,18 +191,18 @@ export function startTimer(container) {
     // Play start sound and notify
     await notifications.notifySessionStart(timerType, mins)
 
-    // Initialize session notes
-    if (window.sessionNotesManager) {
-      window.sessionNotesManager.onSessionStart()
+    // Initialize zen session notes
+    if (window.zenSessionNotes) {
+      window.zenSessionNotes.onSessionStart()
     }
 
-    // Show active timer UI
+    // Show active timer UI with zen animations
     container.innerHTML = `
-      <div class="timer-content">
-        <div class="timer-circle active" role="timer" aria-live="polite">
+      <div class="timer-content zen-emerge">
+        <div class="timer-circle active zen-breathe" role="timer" aria-live="polite">
           <div class="timer-progress">
             <svg class="progress-ring" width="280" height="280">
-              <!-- Minimal zen gradient - subtle and monochromatic -->
+              <!-- Zen gradient - subtle and organic -->
               <defs>
                 <linearGradient id="zenProgress" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" style="stop-color:var(--text-secondary);stop-opacity:0.8" />
@@ -219,7 +219,7 @@ export function startTimer(container) {
                 cy="140"
               />
               <circle
-                class="progress-ring-progress"
+                class="progress-ring-progress zen-transition"
                 stroke="var(--text-secondary)"
                 stroke-width="2"
                 fill="transparent"
@@ -230,14 +230,14 @@ export function startTimer(container) {
               />
             </svg>
           </div>
-          <div class="timer-display" id="timer-display">${formatTime(timeLeft)}</div>
-          <div class="timer-label">${timerType} Session</div>
+          <div class="timer-display zen-fade-in" id="timer-display">${formatTime(timeLeft)}</div>
+          <div class="timer-label zen-fade-in">${timerType} Session</div>
         </div>
-        <div class="timer-controls">
-          <button id="pause-btn" class="control-btn" aria-describedby="pause-help">
+        <div class="timer-controls zen-emerge-delayed">
+          <button id="pause-btn" class="control-btn zen-ripple zen-lift-hover" aria-describedby="pause-help">
             Pause
           </button>
-          <button id="stop-btn" class="control-btn" aria-describedby="stop-help">
+          <button id="stop-btn" class="control-btn zen-ripple zen-lift-hover" aria-describedby="stop-help">
             Stop
           </button>
           <div id="pause-help" class="sr-only">Pause the current session</div>
@@ -324,7 +324,12 @@ export function startTimer(container) {
     isEnded = true
     endTime = new Date()
 
-    // Handle session notes
+    // Handle zen session notes
+    if (window.zenSessionNotes) {
+      window.zenSessionNotes.onSessionEnd()
+    }
+
+    // Also handle legacy session notes
     if (window.sessionNotesManager) {
       window.sessionNotesManager.onSessionEnd()
     }
@@ -338,13 +343,13 @@ export function startTimer(container) {
     } else {
       // If session was stopped/cancelled, do not save
       container.innerHTML = `
-        <div class="timer-content">
-          <div class="timer-circle" role="timer" aria-live="polite">
+        <div class="timer-content zen-fade-in">
+          <div class="timer-circle zen-gentle-pulse" role="timer" aria-live="polite">
             <div class="timer-display">—</div>
             <div class="timer-label">Stopped</div>
           </div>
-          <div class="timer-controls">
-            <button id="new-session-btn" class="control-btn primary">
+          <div class="timer-controls zen-emerge-delayed">
+            <button id="new-session-btn" class="control-btn primary zen-ripple zen-lift-hover">
               New Session
             </button>
           </div>
@@ -373,13 +378,18 @@ export function startTimer(container) {
     console.log('showRefectionModal called')
     injectReflectionModalStyles()
 
-    // Get session notes if available
-    const sessionNotes = window.sessionNotesManager
+    // Get session notes from both systems
+    const legacyNotes = window.sessionNotesManager
       ? window.sessionNotesManager.onSessionSave()
       : ''
+    const zenNotes = window.zenSessionNotes
+      ? window.zenSessionNotes.getNotes()
+      : ''
+
+    const sessionNotes = zenNotes || legacyNotes
 
     container.innerHTML = `
-      <div id="reflectionModal" class="reflection-modal" role="dialog" aria-labelledby="reflection-title" aria-describedby="reflection-description">
+      <div id="reflectionModal" class="reflection-modal zen-emerge" role="dialog" aria-labelledby="reflection-title" aria-describedby="reflection-description">
         <div class="reflection-header">
           <h3 id="reflection-title">🎯 Session Complete!</h3>
           <p id="reflection-description">How was your session? Share your thoughts and mood.</p>
@@ -388,10 +398,10 @@ export function startTimer(container) {
         ${
           sessionNotes
             ? `
-        <div class="session-notes-summary">
+        <div class="session-notes-summary zen-fade-in">
           <div class="notes-summary-header">
-            <span class="notes-icon">📝</span>
-            <span class="notes-title">Your Session Notes</span>
+            <span class="notes-icon">◦</span>
+            <span class="notes-title">Your Reflection</span>
           </div>
           <div class="notes-summary-content">
             <div class="notes-text">${sessionNotes}</div>
@@ -401,14 +411,14 @@ export function startTimer(container) {
             : ''
         }
         
-        <div class="mood-selector-group">
+        <div class="mood-selector-group zen-emerge">
           <label class="mood-label">How did this session feel?</label>
-          <div class="mood-options" role="radiogroup" aria-labelledby="mood-label">
+          <div class="mood-options zen-stagger-children" role="radiogroup" aria-labelledby="mood-label">
             ${MOOD_OPTIONS.map(
               (mood) => `
               <button 
                 type="button" 
-                class="mood-btn" 
+                class="mood-btn zen-ripple zen-scale-hover" 
                 data-mood="${mood.id}"
                 aria-label="${mood.label}"
                 title="${mood.label}"
@@ -422,23 +432,23 @@ export function startTimer(container) {
           </div>
         </div>
         
-        <div class="reflection-input-group">
+        <div class="reflection-input-group zen-emerge-delayed">
           <label for="reflection-text">💭 Your Reflection</label>
           <input 
             type="text" 
             placeholder="What went well? Any insights or challenges?" 
             id="reflection-text" 
-            class="reflection-input"
+            class="reflection-input zen-focus-ring"
             aria-describedby="reflection-help"
             maxlength="500"
           >
           <div id="reflection-help" class="sr-only">Optional: Share your thoughts about this session (maximum 500 characters)</div>
         </div>
-        <div class="reflection-actions" role="group" aria-label="Session completion actions">
+        <div class="reflection-actions zen-emerge-delayed" role="group" aria-label="Session completion actions">
           <button 
             id="saveButton" 
             type="button" 
-            class="btn btn-primary"
+            class="btn btn-primary zen-ripple zen-lift-hover"
             aria-describedby="save-help"
           >
             <span aria-hidden="true">💾</span>
@@ -447,7 +457,7 @@ export function startTimer(container) {
           <button 
             id="dontSaveButton" 
             type="button" 
-            class="btn btn-secondary"
+            class="btn btn-secondary zen-ripple zen-lift-hover"
             aria-describedby="skip-help"
           >
             <span aria-hidden="true">❌</span>
@@ -493,10 +503,15 @@ export function startTimer(container) {
     const saveBtn = document.getElementById('saveButton')
     const reflection = document.getElementById('reflection-text').value
 
-    // Get session notes
-    const sessionNotes = window.sessionNotesManager
+    // Get session notes from both systems
+    const legacyNotes = window.sessionNotesManager
       ? window.sessionNotesManager.onSessionSave()
       : ''
+    const zenNotes = window.zenSessionNotes
+      ? window.zenSessionNotes.getNotes()
+      : ''
+
+    const sessionNotes = zenNotes || legacyNotes
 
     saveBtn.disabled = true
     saveBtn.textContent = '💾 Saving...'
@@ -512,14 +527,40 @@ export function startTimer(container) {
       endTime: endTime.toISOString(),
     }
     try {
+      console.log('Saving session data:', sessionData) // Debug log
       await saveSession(sessionData)
+      console.log('Session saved successfully to database') // Debug log
 
       // Record session for streak tracking
-      const { streakData } = recordSession(timerType, endTime)
+      let streakData
+      try {
+        const result = recordSession(timerType, endTime)
+        streakData = result.streakData
+        console.log('Streak recorded successfully:', streakData) // Debug log
+      } catch (streakError) {
+        console.warn('Error recording streak:', streakError)
+        // Don't fail the entire save for streak errors
+        streakData = { currentStreak: 0 }
+      }
 
       // Clean up session notes after successful save
-      if (window.sessionNotesManager) {
-        window.sessionNotesManager.cleanup()
+      try {
+        if (
+          window.zenSessionNotes &&
+          typeof window.zenSessionNotes.cleanup === 'function'
+        ) {
+          window.zenSessionNotes.cleanup()
+        }
+        if (
+          window.sessionNotesManager &&
+          typeof window.sessionNotesManager.cleanup === 'function'
+        ) {
+          window.sessionNotesManager.cleanup()
+        }
+        console.log('Session notes cleaned up') // Debug log
+      } catch (cleanupError) {
+        console.warn('Error cleaning up session notes:', cleanupError)
+        // Don't fail for cleanup errors
       }
 
       // Show appropriate success message based on streak
@@ -533,14 +574,44 @@ export function startTimer(container) {
 
       setTimeout(() => {
         showWelcomeScreen()
-        if (historyApi && typeof historyApi.refresh === 'function') {
-          historyApi.refresh()
+
+        // Refresh UI components safely
+        try {
+          if (historyApi && typeof historyApi.refresh === 'function') {
+            historyApi.refresh()
+            console.log('History refreshed') // Debug log
+          } else if (
+            window.historyApi &&
+            typeof window.historyApi.refresh === 'function'
+          ) {
+            window.historyApi.refresh()
+            console.log('History refreshed via window.historyApi') // Debug log
+          } else {
+            console.warn('History API not available for refresh')
+          }
+        } catch (historyError) {
+          console.warn('Error refreshing history:', historyError)
         }
-        if (analyticsApi && typeof analyticsApi.refresh === 'function') {
-          analyticsApi.refresh()
+
+        try {
+          if (analyticsApi && typeof analyticsApi.refresh === 'function') {
+            analyticsApi.refresh()
+            console.log('Analytics refreshed') // Debug log
+          } else if (
+            window.analyticsApi &&
+            typeof window.analyticsApi.refresh === 'function'
+          ) {
+            window.analyticsApi.refresh()
+            console.log('Analytics refreshed via window.analyticsApi') // Debug log
+          } else {
+            console.warn('Analytics API not available for refresh')
+          }
+        } catch (analyticsError) {
+          console.warn('Error refreshing analytics:', analyticsError)
         }
       }, 1000)
     } catch (err) {
+      console.error('Failed to save session:', err) // Enhanced error logging
       toast.error(
         'Failed to save session. Please check your connection and try again.',
       )

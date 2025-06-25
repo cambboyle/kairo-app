@@ -1,10 +1,11 @@
 /* Kairo - CSS Variables & Design Tokens */
 /* Japanese Zen Minimalism Design System */
+/* Ma (間) • Kanso (簡素) • Wabi-Sabi (侘寂) • Shizen (自然) */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-  /* Japanese Zen Color Palette - Earth & Stone */
+  /* Japanese Zen Color Palette - Natural Earth & Stone Harmony */
   --stone-50: #fafafa;
   --stone-100: #f5f5f4;
   --stone-200: #e7e5e4;
@@ -16,7 +17,29 @@
   --stone-800: #292524;
   --stone-900: #1c1917;
 
+  /* Sage - The Primary Zen Accent */
   --sage-50: #f6f7f6;
+  --sage-100: #f1f3f1;
+  --sage-200: #e4e7e4;
+  --sage-300: #d1d5d1;
+  --sage-400: #9ca3a0;
+  --sage-500: #6b7169;
+  --sage-600: #4f564f;
+  --sage-700: #3f443f;
+  --sage-800: #343734;
+  --sage-900: #2d302d;
+
+  /* Warm Earth Tones - Wabi-Sabi Imperfection */
+  --warm-50: #fdfcfb;
+  --warm-100: #faf9f7;
+  --warm-200: #f2f0ed;
+  --warm-300: #e8e4df;
+  --warm-400: #d3ccc4;
+  --warm-500: #b8ad9f;
+  --warm-600: #9c8f7d;
+  --warm-700: #7c6f5d;
+  --warm-800: #5d544a;
+  --warm-900: #4a4239;
   --sage-100: #f1f3f1;
   --sage-200: #e4e7e4;
   --sage-300: #d1d5d1;
@@ -200,6 +223,12 @@
   --border-emphasis: var(--stone-600);
   --error: #ef4444;
   --error-light: rgba(239, 68, 68, 0.1);
+}
+
+/* Ensure body gets dark theme background */
+[data-theme='dark'] body {
+  background-color: var(--stone-900);
+  color: var(--stone-100);
 }
 
 /* High Contrast Mode Support */

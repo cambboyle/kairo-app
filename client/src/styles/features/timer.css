@@ -119,13 +119,10 @@
   height: 280px;
   border-radius: 50%;
   background: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   transition: all var(--transition-slow);
   margin: 0 auto;
   transform-origin: center;
+  /* Remove flex properties that interfere with absolute positioning */
 }
 
 /* Subtle zen-inspired visual states - minimal and clean */
@@ -219,22 +216,25 @@
 /* Zen Timer Display - Calm and Centered */
 .timer-display {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
+  top: 140px; /* Exact center of 280px circle */
+  left: 140px; /* Exact center of 280px circle */
+  transform: translate(-50%, -50%); /* Center the text itself */
+  z-index: 10;
   font-family: var(--font-mono);
   font-size: var(--text-4xl);
   font-weight: 300;
   color: var(--text-primary);
   letter-spacing: var(--tracking-tight);
-  line-height: var(--leading-tight);
+  line-height: 1;
   padding: 0;
   margin: 0;
   text-align: center;
   white-space: nowrap;
   transition: opacity 0.3s ease;
   font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  width: fit-content;
+  height: fit-content;
 }
 
 /* Zen-like visual feedback - subtle changes only */
@@ -263,30 +263,33 @@
 
 .timer-label {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, calc(-50% + 3rem));
-  z-index: 2;
+  top: 196px; /* 140px (center) + 56px (3.5rem) */
+  left: 140px; /* Exact center of 280px circle */
+  transform: translate(-50%, -50%);
+  z-index: 10; /* Higher z-index to ensure proper layering */
   font-family: var(--font-primary);
   font-size: var(--text-xs);
   font-weight: 500;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: var(--tracking-widest);
-  line-height: var(--leading-normal);
+  line-height: 1; /* Ensure precise positioning */
   padding: 0;
   margin: 0;
   text-align: center;
   white-space: nowrap;
+  pointer-events: none; /* Allow clicks to pass through */
+  width: fit-content;
+  height: fit-content;
 }
 
 /* Progress Percentage Indicator */
 .progress-percentage {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, calc(-50% - 4rem));
-  z-index: 3;
+  top: 68px; /* 140px (center) - 72px (4.5rem) */
+  left: 140px; /* Exact center of 280px circle */
+  transform: translate(-50%, -50%);
+  z-index: 10; /* Higher z-index to ensure proper layering */
   font-size: var(--text-xs);
   color: var(--text-muted);
   font-weight: 500;
@@ -294,6 +297,10 @@
   transition: all 0.3s ease;
   text-align: center;
   letter-spacing: 0.05em;
+  line-height: 1; /* Ensure precise positioning */
+  pointer-events: none; /* Allow clicks to pass through */
+  width: fit-content;
+  height: fit-content;
 }
 
 .timer-circle[data-progress='low'] .progress-percentage {

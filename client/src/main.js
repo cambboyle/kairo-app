@@ -6,14 +6,25 @@ import {
   createAnalyticsDashboard,
   injectAnalyticsStyles,
 } from './components/analytics'
-import { addSettingsButton, injectSettingsStyles } from './components/settings'
-import { initializeTheme } from './utils/theme'
+import {
+  initializeTheme,
+  toggleTheme,
+  getCurrentTheme,
+  setTheme,
+} from './utils/theme'
 import { enhancedSessionNotesManager } from './utils/sessionNotesImproved'
 import {
-  createOnboardingModal,
-  showOnboardingModal,
-  addOnboardingButton,
+  createZenOnboardingModal,
+  showZenOnboardingModal,
+  addZenOnboardingButton,
 } from './components/onboardingModal'
+import { zenSessionNotes, injectZenNotesStyles } from './utils/zenSessionNotes'
+import {
+  zenSettings,
+  addZenSettingsButton,
+  injectZenSettingsStyles,
+} from './components/zenSettings'
+import { zenErrorHandler } from './utils/zenErrorHandler'
 
 let historyApi
 let analyticsApi
@@ -28,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </header>
     
     <main class="main-content" role="main">
-      <section class="timer-container" aria-labelledby="timer-heading">
+      <section class="timer-container zen-emerge" aria-labelledby="timer-heading">
         <div class="timer-header">
           <h2 id="timer-heading" class="timer-heading">Focus Timer</h2>
         </div>
@@ -37,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </section>
       
-      <div class="divider" aria-hidden="true"></div>
+      <div class="divider zen-breathe-subtle" aria-hidden="true"></div>
       
-      <aside class="history-section" aria-labelledby="history-heading">
+      <aside class="history-section zen-emerge-delayed" aria-labelledby="history-heading">
         <div class="history-header">
           <h2 id="history-heading" class="history-title">Session History</h2>
         </div>
@@ -49,20 +60,37 @@ document.addEventListener('DOMContentLoaded', () => {
     </main>
   `
 
-  // Inject styles
+  // Inject all zen styles
   injectAnalyticsStyles()
-  injectSettingsStyles()
+  injectZenSettingsStyles()
+  injectZenNotesStyles()
 
   // Initialize theme
   initializeTheme()
 
+  // Expose theme functions globally for zenSettings
+  window.toggleTheme = toggleTheme
+  window.getCurrentTheme = getCurrentTheme
+  window.setTheme = setTheme
+
+  // Initialize components with zen animations
   startTimer(document.getElementById('timer'))
   historyApi = sessionHistory(document.getElementById('history'))
   analyticsApi = createAnalyticsDashboard(document.getElementById('analytics'))
-  addSettingsButton()
 
-  // Make analytics API globally available for other components
+  // Add zen components
+  addZenSettingsButton()
+  addZenOnboardingButton()
+
+  // Initialize zen session notes
+  zenSessionNotes.init()
+
+  // Make APIs globally available for component integration
   window.analyticsApi = analyticsApi
+  window.historyApi = historyApi
+  window.sessionNotesManager = enhancedSessionNotesManager
+  window.zenSessionNotes = zenSessionNotes
+  window.zenSettings = zenSettings
 
   // Announce app readiness to screen readers
   const announcement = document.createElement('div')
@@ -80,17 +108,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 3000)
 
-  // Make managers available globally for component integration
-  window.sessionNotesManager = enhancedSessionNotesManager
-  window.analyticsApi = analyticsApi
-
-  // Onboarding/help modal integration
-  createOnboardingModal()
-  addOnboardingButton()
+  // Zen onboarding/help modal integration
+  createZenOnboardingModal()
   if (!localStorage.getItem('kairoOnboardingShown')) {
-    showOnboardingModal()
-    localStorage.setItem('kairoOnboardingShown', 'true')
+    setTimeout(() => {
+      showZenOnboardingModal()
+      localStorage.setItem('kairoOnboardingShown', 'true')
+    }, 1000) // Gentle delay for zen emergence
   }
+
+  // Apply zen stagger animation to main components
+  document.querySelector('.main-content').classList.add('zen-stagger-children')
 })
 
-export { historyApi, analyticsApi, enhancedSessionNotesManager }
+export {
+  historyApi,
+  analyticsApi,
+  enhancedSessionNotesManager,
+  zenSessionNotes,
+  zenSettings,
+  zenErrorHandler,
+}

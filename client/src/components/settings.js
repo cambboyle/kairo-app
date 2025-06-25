@@ -154,7 +154,20 @@ export function createSettingsPanel() {
 
     // Dark mode
     darkModeToggle.onchange = () => {
-      toggleTheme()
+      console.log(
+        'Dark mode toggle clicked, current checked state:',
+        darkModeToggle.checked,
+      )
+      console.log(
+        'Current data-theme before toggle:',
+        document.body.getAttribute('data-theme'),
+      )
+      const newDarkMode = toggleTheme()
+      console.log('Theme toggled, new dark mode state:', newDarkMode)
+      console.log(
+        'New data-theme after toggle:',
+        document.body.getAttribute('data-theme'),
+      )
     }
 
     // Export data
