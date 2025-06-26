@@ -132,6 +132,14 @@ export function injectAnalyticsStyles() {
       border-bottom: 1px solid var(--border-subtle);
     }
     
+    /* Prevent any hover effects on analytics header */
+    .analytics-header:hover,
+    .analytics-dashboard:hover .analytics-header {
+      border-bottom: 1px solid var(--border-subtle);
+      transform: none;
+      box-shadow: none;
+    }
+    
     .analytics-header h3 {
       font-family: var(--font-serif);
       font-size: var(--text-lg);

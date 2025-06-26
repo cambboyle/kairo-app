@@ -83,7 +83,7 @@ body {
   display: grid;
   grid-template-columns: 1fr auto 1fr; /* timer | divider | history */
   grid-template-rows: 1fr;
-  gap: 0; /* Remove gap, let divider handle spacing */
+  gap: var(--spacing-xl); /* Add some base gap for better visual separation */
   align-items: stretch; /* Full height alignment */
   justify-content: center;
   max-width: 1400px;
@@ -94,57 +94,24 @@ body {
   padding: var(--spacing-2xl) 0; /* Ma: Breathing room top/bottom */
 }
 
-/* Zen Divider - Vertical Separator */
+/* Zen Divider - Simple Vertical Line */
 .divider {
   width: 1px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--border-subtle) 20%,
-    var(--border-emphasis) 50%,
-    var(--border-subtle) 80%,
-    transparent 100%
-  );
-  margin: 0 var(--spacing-5xl); /* Ma: Even more generous spacing between sections */
-  opacity: 0.6;
+  background: var(--border-subtle);
+  margin: 0 var(--spacing-xl);
+  opacity: 0.4;
   position: relative;
   align-self: stretch;
   min-height: 400px;
 }
 
-/* Zen divider enhancement - breathing with life */
-.divider::before {
-  content: '◦';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--bg-primary);
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-  padding: var(--spacing-sm);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.8;
-  border: 1px solid var(--border-subtle);
-  transition: all var(--transition-slow);
-}
-
-.divider.zen-breathe-subtle::before {
-  animation: zen-breathe 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-}
-
-/* Timer and History containers - equal width */
+/* Timer and History containers - equal width with better spacing */
 .timer-container {
   justify-self: end; /* Align to right side of first column */
-  margin-right: 0;
+  margin-right: var(--spacing-lg); /* Add margin for visual separation */
 }
 
 .history-section {
   justify-self: start; /* Align to left side of third column */
-  margin-left: 0;
+  margin-left: var(--spacing-lg); /* Add margin for visual separation */
 }

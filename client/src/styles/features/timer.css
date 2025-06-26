@@ -21,6 +21,13 @@
   justify-self: end;
 }
 
+/* Wabi-Sabi: Subtle asymmetric response - matching history-section */
+.timer-container:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+  border-color: var(--border-emphasis);
+}
+
 .timer-header {
   padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-xl);
   border-bottom: 1px solid var(--border-subtle);
@@ -36,6 +43,27 @@
   letter-spacing: var(--tracking-tight);
   line-height: var(--leading-snug);
   text-align: center;
+  position: relative;
+  transition: all var(--transition-slow);
+}
+
+/* Zen enhancement: subtle breathing effect - matching history-title */
+.timer-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  opacity: 0.3;
+  transition: all var(--transition-slow);
+}
+
+.timer-container:hover .timer-heading::after {
+  width: 120px;
+  opacity: 0.6;
 }
 
 .timer-content {

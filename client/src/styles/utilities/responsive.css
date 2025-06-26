@@ -1,12 +1,12 @@
 /* Responsive Design - Zen Adaptation */
 @media (max-width: 1200px) {
   .main-content {
-    gap: 0; /* Keep grid layout */
+    gap: var(--spacing-lg); /* Maintain gap but smaller on medium screens */
     width: 95vw;
   }
 
   .divider {
-    margin: 0 var(--spacing-3xl);
+    margin: 0 var(--spacing-lg); /* Maintain good spacing on smaller screens */
   }
 }
 
@@ -18,7 +18,7 @@
   }
 
   .divider {
-    margin: 0 var(--spacing-3xl); /* Maintain good spacing */
+    margin: 0 var(--spacing-4xl); /* Maintain good spacing */
   }
 
   .timer-container,
@@ -34,7 +34,7 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    gap: 0;
+    gap: var(--spacing-2xl); /* Maintain gap in mobile stacked layout */
     width: 95vw;
     padding: var(--spacing-xl) var(--spacing-md);
   }
@@ -86,7 +86,7 @@
     padding-left: var(--spacing-md);
     padding-right: var(--spacing-md);
     box-sizing: border-box;
-    gap: 0;
+    gap: var(--spacing-xl); /* Maintain gap for smaller screens */
   }
   .divider {
     display: block;
