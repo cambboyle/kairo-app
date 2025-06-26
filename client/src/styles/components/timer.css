@@ -46,54 +46,8 @@
   background: none;
 }
 
-/* Timer circle and progress ring centering - improved */
-.timer-circle {
-  position: relative;
-  width: 280px;
-  height: 280px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-.timer-progress {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-
-.progress-ring {
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-.timer-display {
-  position: relative;
-  z-index: 1;
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--text-primary);
-  text-align: center;
-  margin: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.timer-label {
-  margin-top: 1.5rem;
-  text-align: center;
-}
+/* Timer circle and progress ring centering - deferred to features/timer.css */
+/* All timer-circle, timer-display, timer-label, and timer-progress styles are handled in features/timer.css */
 
 @media (max-width: 500px) {
   .timer-circle,

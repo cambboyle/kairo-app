@@ -114,15 +114,21 @@
 
 /* Zen Timer Circle - Pure and Simple */
 .timer-circle {
-  position: relative;
-  width: 280px;
-  height: 280px;
+  position: relative !important;
+  width: 280px !important;
+  height: 280px !important;
   border-radius: 50%;
   background: transparent;
   transition: all var(--transition-slow);
-  margin: 0 auto;
+  margin: 0 auto !important;
   transform-origin: center;
-  /* Remove flex properties that interfere with absolute positioning */
+  /* Bulletproof circle positioning - remove all flex/grid interference */
+  display: block !important;
+  flex: none !important;
+  justify-content: unset !important;
+  align-items: unset !important;
+  align-self: unset !important;
+  justify-self: unset !important;
 }
 
 /* Subtle zen-inspired visual states - minimal and clean */
@@ -215,26 +221,31 @@
 
 /* Zen Timer Display - Calm and Centered */
 .timer-display {
-  position: absolute;
-  top: 140px; /* Exact center of 280px circle */
-  left: 140px; /* Exact center of 280px circle */
-  transform: translate(-50%, -50%); /* Center the text itself */
-  z-index: 10;
+  position: absolute !important;
+  top: 140px !important; /* Exact center of 280px circle */
+  left: 140px !important; /* Exact center of 280px circle */
+  transform: translate(-50%, -50%) !important; /* Center the text itself */
+  z-index: 10 !important;
   font-family: var(--font-mono);
   font-size: var(--text-4xl);
   font-weight: 300;
   color: var(--text-primary);
   letter-spacing: var(--tracking-tight);
   line-height: 1;
-  padding: 0;
-  margin: 0;
+  padding: 0 !important;
+  margin: 0 !important;
   text-align: center;
   white-space: nowrap;
   transition: opacity 0.3s ease;
   font-variant-numeric: tabular-nums;
   pointer-events: none;
-  width: fit-content;
-  height: fit-content;
+  width: fit-content !important;
+  height: fit-content !important;
+  /* Bulletproof centering - override any flex/grid properties */
+  display: block !important;
+  float: none !important;
+  justify-self: unset !important;
+  align-self: unset !important;
 }
 
 /* Zen-like visual feedback - subtle changes only */
@@ -262,11 +273,11 @@
 }
 
 .timer-label {
-  position: absolute;
-  top: 196px; /* 140px (center) + 56px (3.5rem) */
-  left: 140px; /* Exact center of 280px circle */
-  transform: translate(-50%, -50%);
-  z-index: 10; /* Higher z-index to ensure proper layering */
+  position: absolute !important;
+  top: 196px !important; /* 140px (center) + 56px (3.5rem) */
+  left: 140px !important; /* Exact center of 280px circle */
+  transform: translate(-50%, -50%) !important;
+  z-index: 10 !important; /* Higher z-index to ensure proper layering */
   font-family: var(--font-primary);
   font-size: var(--text-xs);
   font-weight: 500;
@@ -274,22 +285,27 @@
   text-transform: uppercase;
   letter-spacing: var(--tracking-widest);
   line-height: 1; /* Ensure precise positioning */
-  padding: 0;
-  margin: 0;
+  padding: 0 !important;
+  margin: 0 !important;
   text-align: center;
   white-space: nowrap;
   pointer-events: none; /* Allow clicks to pass through */
-  width: fit-content;
-  height: fit-content;
+  width: fit-content !important;
+  height: fit-content !important;
+  /* Bulletproof centering - override any flex/grid properties */
+  display: block !important;
+  float: none !important;
+  justify-self: unset !important;
+  align-self: unset !important;
 }
 
 /* Progress Percentage Indicator */
 .progress-percentage {
-  position: absolute;
-  top: 68px; /* 140px (center) - 72px (4.5rem) */
-  left: 140px; /* Exact center of 280px circle */
-  transform: translate(-50%, -50%);
-  z-index: 10; /* Higher z-index to ensure proper layering */
+  position: absolute !important;
+  top: 68px !important; /* 140px (center) - 72px (4.5rem) */
+  left: 140px !important; /* Exact center of 280px circle */
+  transform: translate(-50%, -50%) !important;
+  z-index: 10 !important; /* Higher z-index to ensure proper layering */
   font-size: var(--text-xs);
   color: var(--text-muted);
   font-weight: 500;
@@ -299,8 +315,15 @@
   letter-spacing: 0.05em;
   line-height: 1; /* Ensure precise positioning */
   pointer-events: none; /* Allow clicks to pass through */
-  width: fit-content;
-  height: fit-content;
+  width: fit-content !important;
+  height: fit-content !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  /* Bulletproof centering - override any flex/grid properties */
+  display: block !important;
+  float: none !important;
+  justify-self: unset !important;
+  align-self: unset !important;
 }
 
 .timer-circle[data-progress='low'] .progress-percentage {
@@ -353,16 +376,29 @@
     max-width: 280px;
   }
 
+  /* Mobile timer circle - bulletproof 220px sizing */
   .timer-circle {
-    width: 220px;
-    height: 220px;
+    width: 220px !important;
+    height: 220px !important;
   }
 
+  /* Mobile timer display - bulletproof centering for 220px circle */
   .timer-display {
+    top: 110px !important; /* Exact center of 220px circle */
+    left: 110px !important;
     font-size: var(--text-3xl);
   }
 
+  /* Mobile timer label - bulletproof centering for 220px circle */
   .timer-label {
+    top: 154px !important; /* 110px (center) + 44px (mobile offset) */
+    left: 110px !important;
     font-size: var(--text-2xs);
+  }
+
+  /* Mobile progress percentage - bulletproof centering for 220px circle */
+  .progress-percentage {
+    top: 54px !important; /* 110px (center) - 56px (mobile offset) */
+    left: 110px !important;
   }
 }
