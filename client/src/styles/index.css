@@ -17,6 +17,7 @@
 @import './features/history.css';
 @import './features/history-zen.css';
 @import './features/history-zen-refined.css';
+@import './features/detailed-history-zen.css';
 @import './features/quick-summary-zen.css';
 @import './features/session-notes.css';
 

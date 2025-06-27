@@ -5,8 +5,15 @@
 
 /* Enhanced Quick Summary List - Ma (Negative Space) */
 .quick-summary-list {
-  padding: var(--spacing-2xl) var(--spacing-lg); /* Ma: More generous breathing room */
+  flex: 1 !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-subtle) transparent;
+  padding: var(--spacing-2xl) var(--spacing-lg) 0 !important; /* Ma: More generous breathing room, no bottom padding */
+  display: flex !important;
+  flex-direction: column !important;
   gap: var(--spacing-lg); /* Ma: Comfortable rhythm between items */
+  min-height: 0 !important;
 }
 
 /* Quick Summary Item - Zen Interaction Design */
@@ -128,7 +135,13 @@
 
 /* Empty State - Zen Encouragement Enhancement */
 .quick-summary-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: var(--spacing-5xl) var(--spacing-2xl); /* Ma: More generous spacing */
+  text-align: center;
 }
 
 .empty-icon {
@@ -152,13 +165,16 @@
 
 /* Quick Summary Footer - Ensure visibility */
 .quick-summary-footer {
-  padding: var(--spacing-2xl) var(--spacing-3xl) var(--spacing-xl); /* Ma: Generous footer spacing */
-  border-top: 1px solid var(--border-subtle);
-  margin-top: var(--spacing-xl);
-  flex-shrink: 0; /* Prevent footer from being compressed */
-  background: var(--surface); /* Ensure visible background */
-  position: relative;
-  z-index: 10; /* Ensure it's above other content */
+  padding: var(--spacing-2xl) var(--spacing-3xl) var(--spacing-xl) !important; /* Ma: Generous footer spacing */
+  border-top: 1px solid var(--border-subtle) !important;
+  margin-top: auto !important; /* Push to bottom of flex container */
+  flex-shrink: 0 !important; /* Prevent footer from being compressed */
+  background: var(--surface) !important; /* Ensure visible background */
+  position: relative !important;
+  z-index: 10 !important; /* Ensure it's above other content */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 /* Enhanced View All Button - Zen Call-to-Action */
@@ -278,6 +294,25 @@
   font-style: italic;
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
+}
+
+/* Scrollbar Styles - Zen Minimalism */
+.quick-summary-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.quick-summary-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.quick-summary-list::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.quick-summary-list::-webkit-scrollbar-thumb:hover {
+  background: var(--border-emphasis);
 }
 
 /* Responsive Zen Adaptation */

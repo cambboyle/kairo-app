@@ -1,0 +1,696 @@
+/* Detailed Session History - Japanese Zen Minimalism */
+/* Ma (間) • Kanso (簡素) • Wabi-Sabi (侘寂) • Shizen (自然) */
+
+/* ========================================
+   DETAILED HISTORY CONTAINER
+   ======================================== */
+
+.detailed-history-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 0; /* Kanso: Clean, architectural lines */
+  border: none; /* Kanso: Remove visual complexity */
+  border-top: 1px solid var(--border-subtle); /* Shizen: Subtle natural accent */
+  overflow: hidden;
+  box-shadow: none; /* Kanso: Remove unnecessary shadows */
+  transition: none; /* Kanso: Remove movement effects */
+}
+
+/* ========================================
+   CONTROLS SECTION - MINIMAL & FUNCTIONAL
+   ======================================== */
+
+.detailed-history-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl); /* Ma: Generous spacing */
+  padding: var(--spacing-xl) var(--spacing-lg);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  position: relative;
+}
+
+/* Zen enhancement: subtle breathing line */
+.detailed-history-controls::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  opacity: 0.1;
+  transition: none; /* Kanso: Remove movement effects */
+}
+
+.history-filters,
+.history-sort {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg); /* Ma: Natural spacing */
+}
+
+.filter-label,
+.sort-label {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-tight);
+  min-width: fit-content;
+}
+
+.filter-select,
+.sort-select {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-family: var(--font-primary);
+  font-weight: 500;
+  min-width: 160px;
+  transition: border-color var(--transition-normal);
+  cursor: pointer;
+}
+
+/* Shizen: Natural, gentle interactions - focus only */
+.filter-select:focus,
+.sort-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.history-stats {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  font-family: var(--font-primary);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-normal);
+}
+
+/* ========================================
+   CONTENT AREA - FLOWING & SPACIOUS
+   ======================================== */
+
+.detailed-history-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(
+    --spacing-lg
+  ); /* Ma: Reduced padding for more scrollable content */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-subtle) transparent;
+  min-height: 0;
+}
+
+/* Zen scrollbar */
+.detailed-history-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.detailed-history-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.detailed-history-content::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-normal);
+}
+
+.detailed-history-content::-webkit-scrollbar-thumb:hover {
+  background: var(--border-emphasis);
+}
+
+/* ========================================
+   SESSIONS GRID - VERTICAL RHYTHM
+   ======================================== */
+
+.detailed-sessions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(
+    --spacing-xl
+  ); /* Ma: Balanced spacing for readability while maintaining compactness */
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-sm) 0; /* Small vertical padding for breathing room */
+}
+
+/* ========================================
+   SESSION CARDS - ZEN MINIMALISM
+   ======================================== */
+
+.detailed-session-card {
+  background: var(--surface);
+  border: none; /* Kanso: Remove visual noise */
+  border-left: 3px solid var(--border-subtle); /* Shizen: Slightly stronger accent for readability */
+  border-radius: 0; /* Kanso: Clean, architectural lines */
+  overflow: hidden;
+  transition: border-left-color var(--transition-slow); /* Shizen: Gentle, natural response */
+  position: relative;
+  box-shadow: none; /* Kanso: Remove visual complexity */
+  background: rgba(var(--surface-rgb), 0.8); /* Subtle depth for readability */
+  backdrop-filter: blur(1px); /* Gentle depth without noise */
+}
+
+/* Wabi-Sabi: Subtle, contemplative response */
+.detailed-session-card:hover {
+  border-left-color: var(--primary); /* Focused accent, not overwhelming */
+  background: var(--surface); /* Slight contrast increase on hover */
+}
+
+/* ========================================
+   CARD HEADER - CLEAN HIERARCHY
+   ======================================== */
+
+.session-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg); /* Ma: Reduced spacing for compactness */
+  padding: var(--spacing-lg) var(--spacing-xl); /* Ma: More compact padding */
+  position: relative;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-subtle);
+  min-height: 64px; /* Ensure consistent height for readability */
+}
+
+.session-card-icon {
+  font-size: var(--text-xl); /* Slightly larger for better readability */
+  width: 52px; /* Slightly larger for balance */
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-radius: var(--radius-lg); /* Softer, more approachable */
+  flex-shrink: 0;
+  border: 1px solid var(--border-subtle); /* Subtle definition for readability */
+  transition: background-color var(--transition-normal); /* Gentle background change */
+}
+
+/* Gentle enhancement for readability */
+.detailed-session-card:hover .session-card-icon {
+  background: rgba(var(--primary-rgb), 0.05);
+  border-color: var(--border-emphasis);
+}
+
+.session-card-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm); /* Ma: Slightly more breathing room for readability */
+}
+
+.session-card-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl); /* Larger for better readability hierarchy */
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+}
+
+.session-card-datetime {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md); /* Slightly more gap for readability */
+  font-size: var(--text-sm);
+  color: var(--text-secondary); /* Better contrast for readability */
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-primary);
+  font-weight: 500; /* Slightly heavier for readability */
+  letter-spacing: var(--tracking-normal);
+  flex-wrap: wrap; /* Allow wrapping for compact mood */
+}
+
+.session-date {
+  position: relative;
+}
+
+.session-date::after {
+  content: '•';
+  margin-left: var(--spacing-md);
+  margin-right: var(--spacing-xs);
+  opacity: 0.6; /* Slightly more visible for readability */
+  color: var(--text-muted);
+}
+
+.session-time {
+  opacity: 0.9; /* Better readability */
+  font-weight: 500; /* Slightly heavier for clarity */
+}
+
+/* Compact mood display in meta area */
+.session-mood-compact {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-md); /* Slightly more padding for readability */
+  background: rgba(
+    var(--primary-rgb),
+    0.12
+  ); /* Slightly stronger for visibility */
+  color: var(--primary);
+  border-radius: var(--radius-md); /* Slightly larger for comfort */
+  font-size: var(--text-sm); /* Slightly larger for readability */
+  font-weight: 600; /* Bolder for better visibility */
+  margin-left: var(--spacing-md);
+  letter-spacing: var(--tracking-normal);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+  min-height: 24px; /* Ensure consistent height */
+}
+
+/* ========================================
+   DURATION DISPLAY - FOCUSED & CLEAR
+   ======================================== */
+
+.session-card-duration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md) var(--spacing-lg); /* Slightly more padding for readability */
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle); /* Gentle border for definition */
+  border-radius: var(--radius-lg); /* Softer for approachability */
+  min-width: 68px; /* Slightly wider for better proportion */
+  transition: background-color var(--transition-normal);
+}
+
+/* Gentle enhancement on hover */
+.detailed-session-card:hover .session-card-duration {
+  background: rgba(var(--primary-rgb), 0.05);
+  border-color: var(--border-emphasis);
+}
+
+.duration-value {
+  font-size: var(--text-xl); /* Larger for better readability */
+  font-weight: 700; /* Bolder for emphasis */
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-primary);
+}
+
+.duration-unit {
+  font-size: var(--text-xs);
+  color: var(--text-secondary); /* Better contrast */
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  font-weight: 600; /* Slightly bolder for readability */
+  font-family: var(--font-primary);
+}
+
+/* ========================================
+   DELETE BUTTON - DISCRETE & MINDFUL
+   ======================================== */
+
+.session-delete-btn {
+  /* Position as part of header layout, not absolute */
+  position: static;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  opacity: 0.7; /* Visible by default but discrete */
+  transition: all var(--transition-normal);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: var(--spacing-md); /* Space from duration */
+}
+
+/* Enhanced appearance on card hover */
+.detailed-session-card:hover .session-delete-btn {
+  opacity: 1;
+  border-color: var(--border-emphasis);
+  background: var(--surface);
+}
+
+/* Clear interactive feedback on direct hover */
+.session-delete-btn:hover {
+  background: rgba(var(--error-rgb), 0.1);
+  border-color: var(--error);
+  color: var(--error);
+  opacity: 1;
+  transform: scale(1.1); /* More pronounced feedback */
+  box-shadow: 0 2px 8px rgba(var(--error-rgb), 0.2);
+}
+
+/* Active state for better UX */
+.session-delete-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 3px rgba(var(--error-rgb), 0.3);
+}
+
+/* Focus state for accessibility */
+.session-delete-btn:focus {
+  outline: none;
+  border-color: var(--error);
+  box-shadow:
+    0 0 0 2px rgba(var(--error-rgb), 0.2),
+    0 2px 8px rgba(var(--error-rgb), 0.1);
+}
+
+/* Loading state when deleting */
+.session-delete-btn.deleting {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: none;
+}
+
+.delete-icon {
+  font-size: var(--text-sm);
+  line-height: 1;
+  font-weight: 600;
+  transition: transform var(--transition-fast);
+}
+
+/* Better delete icon interaction */
+.session-delete-btn:hover .delete-icon {
+  transform: rotate(90deg);
+}
+
+/* Confirmation pulse animation */
+@keyframes delete-confirm-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.session-delete-btn.confirm-delete {
+  animation: delete-confirm-pulse 0.3s ease-in-out;
+  background: rgba(var(--error-rgb), 0.15);
+  border-color: var(--error);
+  color: var(--error);
+}
+
+/* ========================================
+   CARD CONTENT - BREATHING & READABLE
+   ======================================== */
+
+.session-card-content {
+  padding: var(--spacing-lg) var(--spacing-xl); /* More compact padding */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg); /* Ma: Reduced spacing for compactness */
+}
+
+.session-notes-section,
+.session-reflection-section {
+  background: rgba(
+    var(--bg-tertiary-rgb),
+    0.3
+  ); /* Subtle background for readability */
+  border: none; /* Kanso: Remove unnecessary borders */
+  border-left: 2px solid var(--border-subtle); /* Shizen: Slightly stronger left accent */
+  border-radius: 0; /* Kanso: Clean lines */
+  padding: var(--spacing-lg) var(--spacing-xl); /* More generous padding for readability */
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  margin: var(--spacing-xs) 0; /* Small margin for separation */
+}
+
+/* Wabi-Sabi: Subtle enhancement on hover for better readability */
+.session-notes-section:hover,
+.session-reflection-section:hover {
+  border-left-color: var(--primary);
+  background: rgba(
+    var(--primary-rgb),
+    0.04
+  ); /* Slightly more visible background */
+  transform: translateX(2px); /* Very subtle shift for feedback */
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md); /* More space for readability */
+  font-family: var(--font-serif);
+  font-size: var(--text-base); /* Larger for better hierarchy */
+  font-weight: 600;
+  color: var(--text-primary); /* Stronger contrast for readability */
+  margin: 0 0 var(--spacing-md) 0; /* More margin for breathing */
+  letter-spacing: var(--tracking-tight);
+}
+
+.section-icon {
+  font-size: var(--text-base); /* Larger icons for visibility */
+  opacity: 0.8; /* Better visibility */
+  transition: opacity var(--transition-normal);
+}
+
+.session-notes-section:hover .section-icon,
+.session-reflection-section:hover .section-icon {
+  opacity: 1;
+}
+
+.section-content {
+  color: var(--text-primary);
+  line-height: var(--leading-relaxed);
+  font-size: var(--text-base); /* Larger for better readability */
+  font-family: var(--font-primary);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+  margin: 0;
+}
+
+.notes-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: var(--text-primary); /* Better contrast */
+  line-height: var(--leading-loose); /* More line height for readability */
+}
+
+.reflection-content {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-lg); /* Larger for better readability */
+  line-height: var(--leading-loose); /* More line height for readability */
+  color: var(--text-primary); /* Better contrast */
+  font-weight: 400;
+}
+
+/* ========================================
+   EMPTY & LOADING STATES - ZEN CALM
+   ======================================== */
+
+.no-sessions {
+  text-align: center;
+  padding: var(--spacing-6xl) var(--spacing-2xl);
+  color: var(--text-muted);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.no-sessions-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-2xl);
+  opacity: 0.4;
+  filter: grayscale(30%);
+}
+
+.no-sessions h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.no-sessions p {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  opacity: 0.8;
+  letter-spacing: var(--tracking-normal);
+}
+
+.loading {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--text-muted);
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-style: italic;
+  letter-spacing: var(--tracking-wide);
+  animation: zen-gentle-pulse 3s ease-in-out infinite;
+}
+
+/* Zen gentle pulse animation */
+@keyframes zen-gentle-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - NATURAL FLOW
+   ======================================== */
+
+@media (max-width: 768px) {
+  .detailed-history-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+  }
+
+  .history-filters,
+  .history-sort {
+    justify-content: space-between;
+    gap: var(--spacing-md);
+  }
+
+  .filter-select,
+  .sort-select {
+    min-width: 140px;
+  }
+
+  .history-stats {
+    margin-left: 0;
+    text-align: center;
+    order: -1;
+    align-self: center;
+  }
+
+  .detailed-history-content {
+    padding: var(--spacing-md);
+  }
+
+  .detailed-sessions-grid {
+    gap: var(--spacing-md);
+  }
+
+  .session-card-header {
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+  }
+
+  .session-card-duration {
+    order: -1;
+    align-self: flex-start;
+    min-width: 48px;
+  }
+
+  .session-delete-btn {
+    /* Already positioned statically, just adjust for mobile */
+    opacity: 1; /* More visible on mobile for better touch UX */
+    margin-left: auto;
+    order: 2;
+    width: 40px; /* Slightly larger for touch */
+    height: 40px;
+  }
+
+  .session-card-content {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .session-notes-section,
+  .session-reflection-section {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .detailed-history-wrapper {
+    border-radius: 0; /* Kanso: Clean edges for mobile */
+    margin: 0;
+  }
+
+  .detailed-history-controls {
+    padding: var(--spacing-md);
+  }
+
+  .session-card-title {
+    font-size: var(--text-base);
+  }
+
+  .session-card-datetime {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+
+  .session-date::after {
+    display: none;
+  }
+
+  .session-mood-compact {
+    margin-left: 0;
+    margin-top: var(--spacing-xs);
+  }
+}
+
+/* ========================================
+   THEME ADAPTATIONS
+   ======================================== */
+
+[data-theme='dark'] .detailed-history-wrapper {
+  background: var(--stone-900);
+  border-color: var(--stone-800);
+}
+
+[data-theme='dark'] .detailed-session-card {
+  background: var(--stone-800);
+  border-color: var(--stone-700);
+}
+
+[data-theme='dark'] .session-card-header {
+  background: var(--stone-800);
+  border-bottom-color: var(--stone-700);
+}
+
+[data-theme='dark'] .session-card-icon {
+  background: var(--stone-700);
+  border-color: var(--stone-600);
+}
+
+[data-theme='dark'] .session-notes-section,
+[data-theme='dark'] .session-reflection-section {
+  background: var(--stone-700);
+  border-color: var(--stone-600);
+}
+
+[data-theme='dark'] .session-notes-section:hover,
+[data-theme='dark'] .session-reflection-section:hover {
+  background: var(--stone-600);
+  border-color: var(--stone-500);
+}

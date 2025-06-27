@@ -1,0 +1,21 @@
+/* Temporary debug styles for layout verification */
+.debug-layout #history {
+  border: 2px solid red !important;
+}
+
+.debug-layout .quick-summary-list {
+  border: 2px solid blue !important;
+}
+
+.debug-layout .quick-summary-footer {
+  border: 2px solid green !important;
+  background: rgba(0, 255, 0, 0.1) !important;
+}
+
+.debug-layout .analytics-container {
+  border: 2px solid orange !important;
+}
+
+.debug-layout .history-section {
+  border: 2px solid purple !important;
+}
