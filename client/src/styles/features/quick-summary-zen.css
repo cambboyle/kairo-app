@@ -9,11 +9,12 @@
   overflow-y: auto !important;
   scrollbar-width: thin;
   scrollbar-color: var(--border-subtle) transparent;
-  padding: var(--spacing-2xl) var(--spacing-lg) 0 !important; /* Ma: More generous breathing room, no bottom padding */
+  padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-lg) !important; /* Ma: More generous breathing room, small bottom padding */
   display: flex !important;
   flex-direction: column !important;
   gap: var(--spacing-lg); /* Ma: Comfortable rhythm between items */
   min-height: 0 !important;
+  max-height: calc(100% - 120px) !important; /* Ensure space for footer */
 }
 
 /* Quick Summary Item - Zen Interaction Design */
@@ -165,7 +166,7 @@
 
 /* Quick Summary Footer - Ensure visibility */
 .quick-summary-footer {
-  padding: var(--spacing-2xl) var(--spacing-3xl) var(--spacing-xl) !important; /* Ma: Generous footer spacing */
+  padding: var(--spacing-xl) var(--spacing-3xl) var(--spacing-2xl) !important; /* Ma: Generous footer spacing, reduced bottom */
   border-top: 1px solid var(--border-subtle) !important;
   margin-top: auto !important; /* Push to bottom of flex container */
   flex-shrink: 0 !important; /* Prevent footer from being compressed */
@@ -175,6 +176,42 @@
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+  min-height: 80px !important; /* Ensure minimum height for visibility */
+  max-height: 120px !important; /* Prevent footer from being too large */
+}
+
+/* ======== FOOTER VISIBILITY ENFORCEMENT ======== */
+/* Additional rules to ensure footer is always visible */
+
+/* Ensure parent containers don't hide the footer */
+.history-section,
+.quick-summary-container {
+  box-sizing: border-box !important;
+}
+
+/* Force proper container height calculations */
+.history-section {
+  height: auto !important;
+  min-height: 500px !important;
+  max-height: calc(
+    100vh - 160px
+  ) !important; /* Account for header and margins */
+}
+
+/* Ensure the quick summary content area leaves space for footer */
+.quick-summary-list {
+  padding-bottom: var(
+    --spacing-lg
+  ) !important; /* Ensure content doesn't touch footer */
+  margin-bottom: 0 !important;
+}
+
+/* Footer must always be visible - ultimate fallback */
+.quick-summary-footer {
+  position: sticky !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 /* Enhanced View All Button - Zen Call-to-Action */
@@ -318,8 +355,11 @@
 /* Responsive Zen Adaptation */
 @media (max-width: 768px) {
   .quick-summary-list {
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md) !important;
     gap: var(--spacing-md);
+    max-height: calc(
+      100% - 100px
+    ) !important; /* Ensure footer space on mobile */
   }
 
   .quick-summary-item {
@@ -337,11 +377,18 @@
   }
 
   .quick-summary-footer {
-    padding: var(--spacing-xl) var(--spacing-lg);
+    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md) !important;
+    min-height: 70px !important; /* Smaller on mobile but still visible */
   }
 
   .view-all-btn {
     padding: var(--spacing-md) var(--spacing-xl);
+    min-height: 44px !important; /* Ensure touch target */
+  }
+
+  /* Ensure parent container is properly sized on mobile */
+  .history-section {
+    min-height: 400px !important;
   }
 }
 

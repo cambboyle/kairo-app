@@ -12,9 +12,6 @@
   transition: all var(--transition-slow); /* Shizen: Natural, unhurried */
   align-self: stretch;
   justify-self: start;
-  max-height: calc(
-    100vh - 120px
-  ); /* More space for content, accounting for header */
   min-height: 500px; /* Ensure minimum usable height */
   margin: 0;
   display: flex;

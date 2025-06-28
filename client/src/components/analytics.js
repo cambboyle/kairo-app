@@ -165,6 +165,7 @@ export function injectAnalyticsStyles() {
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: var(--spacing-lg);
       margin-bottom: var(--spacing-2xl);
+      margin-top: var(--spacing-2xl);
       padding: 0 var(--spacing-xl);
     }
     

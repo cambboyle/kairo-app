@@ -73,6 +73,7 @@ This project is also a personal challenge: building and scaling a full-stack app
 - Post-session reflections.
 - Local persistence or MongoDB
 - Switch between Focus, Short Break or Long Break timers
+- Dark/light mode toggle
 
 ---
 
@@ -90,7 +91,6 @@ This project is also a personal challenge: building and scaling a full-stack app
 - [ ] User accounts and MongoDB integration
 - [ ] Reflection tagging (emotions, themes)
 - [ ] Productivity analytics dashboard (basic)
-- [ ] Dark/light mode toggle
 - [ ] Shareable reflection exports
 - [ ] Chrome extension or mobile app
 - [ ] Account setup for deeper analytics and other goodies

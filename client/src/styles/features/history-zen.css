@@ -18,8 +18,8 @@
   padding: 0;
   overflow: hidden;
   justify-self: start;
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
   transition: all var(--transition-slow);
 }
 
@@ -111,7 +111,11 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding: var(--spacing-lg) 0;
+  padding: var(--spacing-lg) 0 var(--spacing-md) 0; /* Small bottom padding for footer breathing room */
+  min-height: 0; /* Allow flex item to shrink */
+  overflow-y: auto; /* Enable scrolling when content overflows */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-subtle) transparent;
 }
 
 /* Individual Session Items - Ma (間) Spacing */
@@ -246,9 +250,13 @@
 
 /* Footer Actions - Minimal and Purposeful */
 .quick-summary-footer {
-  padding: var(--spacing-lg) var(--spacing-2xl) var(--spacing-2xl);
+  padding: var(--spacing-lg) var(--spacing-2xl) var(--spacing-lg);
   border-top: 1px solid var(--border-subtle);
   background: var(--bg-tertiary);
+  margin-top: auto; /* Push to bottom */
+  flex-shrink: 0; /* Don't compress */
+  position: relative;
+  z-index: 10;
 }
 
 .view-all-btn {
